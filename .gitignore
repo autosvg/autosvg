@@ -1,0 +1,14 @@
+# Logs
+gs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directory
+node_modules
+
+# Production
+/public/
+
+# Nix environment
+*.nix

@@ -1,0 +1,36 @@
+{
+  "name": "autosvg",
+  "version": "0.0.1",
+  "description": "Draw automatas in your browser",
+  "scripts": {
+    "start": "(sleep 1 && chromium http://localhost:3333/ &> /dev/null) & brunch watch --server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "auto-reload-brunch": "^1.8.1",
+    "brunch": "^2.1.1",
+    "clean-css-brunch": "^1.8.0",
+    "css-brunch": "^1.7.0",
+    "eslint": "^1.10.3",
+    "javascript-brunch": "^1.8.0",
+    "uglify-js-brunch": "^1.7.8"
+  },
+  "dependencies": {
+    "loglevel": "^1.4.0",
+    "skeleton.css": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autosvg/autosvg.git"
+  },
+  "keywords": [
+    "automata",
+    "SVG"
+  ],
+  "author": "Tom Etienne, Achraf Hassani, Yacine Hmito, Thibaut Quentin",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/autosvg/autosvg/issues"
+  },
+  "homepage": "https://github.com/autosvg/autosvg#readme"
+}
