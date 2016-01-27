@@ -1,0 +1,140 @@
+= Premières refléxions
+:doctype: article
+:description: TODO
+:keywords: TODO
+:toc: left
+:imagesdir: images
+:title-separator: :: 
+:appendix-caption: Annexe
+
+== Cahier des charges
+
+=== Cas d'utilisation principal
+
+Dessiner un graphique en SVG via une description textuelle d'un automate.
+
+Suppose de définir un DSL pour créer un automate.
+
+=== Produit fonctionnel minimal
+
+Une application web côté client (Javascript) qui, étant donnée une
+spécification complète d'un automate à états fini sous format JSON le
+dessinera sur la même page en SVG.
+
+- un champ de texte de taille fixe sur la gauche invite l'utilisateur à écrire
+le JSON
+- un canvas de taille fixe sur la droite acceuille l'automate
+- un bouton en haut propose de dessiner l'automate
+- le positionnement des états sur le canvas est donné par l'utilisateur
+- les transitions sont dessinés comme des flêches droites
+- le positionnement des étiquettes et choisi naïvement
+
+=== Produit attendu
+
+- Une interface adaptative
+- Un canvas de taille variable
+- Un algorithme infére la position des états si omise
+- Les flêches sont des courbes et les étiquettes sont lisibles
+- Le langage de description de l'automate est le plus simple possible pour
+l'utilisateur (pas/peu de caractères spéciaux, inférence des états, etc.)
+- Les erreurs dans la description sont repérées et proprement signalées
+
+=== Améliorations envisageables
+
+Les améliorations suivantes sont présentées de façon désordonnées, bien que
+certaines semblent nécessaires tandis que d'autres sont probablement de l'ordre
+du fantasme. L'idée est de lister toutes les routes que peut prendre le
+développement de l'application déterminer ainsi les plus pertinents.
+
+- Proposer de sérialiser en SVG plutôt que de manipuler le DOM
+(permet un rendu côté serveur ; très simple à implémenter si l'architecture
+le permet)
+- Générer plusieurs automates
+(très simple à implémenter si on attend une liste)
+- Générer plusieurs automates en parallèle (via WebWorker)
+- "Drag'n'drop" pour repositionner les états à la main
+- Style customizable (couleurs, police, conventions)
+- Algorithmes de manipulation des automates (minimiser, standardiser, émonder,
+etc. ...)
+- Animations
+- Représentation textuelle (code LaTeX/MathML pour écrire l'automate
+formellement)
+- Formulaire de création d'automate
+- Interface "point'n'click" (création d'états et de transitions
+à la volée)
+- Génération incrémentielle ; recycle les opérations de la requête précédente
+si l'automate actuellement soumis est proche de l'automate précédemment soumis
+- Support de différents types d'automates (automates à pile, automates à
+réels, automates d'arborescence, etc.)
+
+=== Qui est le client ?
+
+Afin de déterminer les cas d'utilisation et les fonctionnalités prioritaires,
+il serait utile de savoir à qui pourrait s'adresser ce logiciel et dans
+quel contexte il serait utilisé.
+
+Il est de plus en plus populaire de générer du contenu statique sur le Web
+via un langage de markup minimal (ex : Markdown).
+Il serait possible d'enrichir un document crée par ce moyen avec notre DSL pour représenter
+des automates. Une extension du compilateur du langage de markup pourrait
+employer le moteur de notre application pour dessiner l'automate au sein
+du document. C'est, au vu de la définition du produit attendu, le cas
+d'utilisation le plus évident.
+
+== Architecture
+
+=== Trois étapes
+
+Le métier de l'application se décompose en trois étapes :
+
+- Parser la description de l'automate et opérer sur le résultat pour obtenir
+une représentation en mémoire complète d'un automate
+- Depuis un automate en mémoire "bien formé", créer un objet qui spécifie
+comment le dessiner ; on l'appelle le dessinable
+- Depuis le dessinable, enrichir le DOM des élements SVG pour constituer
+le dessin final
+
+Il y a donc 4 représentations de l'automate :
+
+- Un texte décrivant l'automate, potentiellement de façon incomplète
+- Un objet Javascript correspondant à l'automate (comme objet mathématique)
+- Un objet Javascript appelé dessinable contenant toutes les informations
+nécessaire pour dessiner l'automate à l'aide de primitives
+(formes, styles, positions, tailles)
+- Un document SVG
+
+L'objet automate et l'objet dessinable requièrent une attention particulière,
+puisqu'ils sont à la charnière de parties indépendantes de l'application.
+
+Au métier s'ajoute l'interface. Si celle-ci peut se permettre pour l'heure
+d'être très spartiate, certaines améliorations envisageables peuvent
+l'ammener à devenir très riche.
+
+=== Description de l'automate
+
+Le langage de représentation de l'automate peut être modifié facilement ; seule
+la première partie de l'application sera affectée par les changements.
+
+Afin de se mettre au travail le plus tôt possible, le langage sera dans un
+premier temps un schéma JSON très proche du format choisi pour la représentation
+de l'automate en mémoire.
+
+Un DSL adapté pour le produit final doit bénéficier des qualités suivantes :
+
+- Peu verbeux
+- Peu/pas de caractères spéciaux pour être le plus naturel possible
+- Valide même si la définition de l'automate est incomplète, c'est-à-dire:
+  * Inférer l'alphabet via les étiquettes des transitions
+  * Inférer les états via les transitions
+  * Inférer la position des états
+- Proprement documenté
+- Intuitif : quelques exemples doivent suffir pour en avoir une maitrise
+correcte
+
+Le DSL est parsé et l'application doit avertir des erreurs syntaxiques
+et des erreurs sémantiques. Le résultat de l'opération doit être un
+objet Javascript décrivant intégralement l'automate.
+
+Voici un exemple d'automate décrit dans un DSL (non défini pour le moment) :
+
+
