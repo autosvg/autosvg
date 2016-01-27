@@ -7,15 +7,17 @@
 :title-separator: :: 
 :appendix-caption: Annexe
 
-== Cahier des charges
+== Etude du produit
 
-=== Cas d'utilisation principal
+=== Cahier des charges
+
+==== Cas d'utilisation principal
 
 Dessiner un graphique en SVG via une description textuelle d'un automate.
 
 Suppose de définir un DSL pour créer un automate.
 
-=== Produit fonctionnel minimal
+==== Produit fonctionnel minimal
 
 Une application web côté client (Javascript) qui, étant donnée une
 spécification complète d'un automate à états fini sous format JSON le
@@ -29,7 +31,7 @@ le JSON
 - les transitions sont dessinés comme des flêches droites
 - le positionnement des étiquettes et choisi naïvement
 
-=== Produit attendu
+==== Produit attendu
 
 - Une interface adaptative
 - Un canvas de taille variable
@@ -39,9 +41,9 @@ le JSON
 l'utilisateur (pas/peu de caractères spéciaux, inférence des états, etc.)
 - Les erreurs dans la description sont repérées et proprement signalées
 
-=== Améliorations envisageables
+==== Améliorations envisageables
 
-Les améliorations suivantes sont présentées de façon désordonnées, bien que
+Les améliorations suivantes sont présentées de façon désordonnée, bien que
 certaines semblent nécessaires tandis que d'autres sont probablement de l'ordre
 du fantasme. L'idée est de lister toutes les routes que peut prendre le
 développement de l'application déterminer ainsi les plus pertinents.
@@ -66,6 +68,7 @@ formellement)
 si l'automate actuellement soumis est proche de l'automate précédemment soumis
 - Support de différents types d'automates (automates à pile, automates à
 réels, automates d'arborescence, etc.)
+- Support pour d'autres formats d'image (PNG, Webm, Canvas HTML5, TikZ, ...)
 
 === Qui est le client ?
 
@@ -80,6 +83,22 @@ des automates. Une extension du compilateur du langage de markup pourrait
 employer le moteur de notre application pour dessiner l'automate au sein
 du document. C'est, au vu de la définition du produit attendu, le cas
 d'utilisation le plus évident.
+
+=== Les alternatives
+
+Un moteur de rendu d'automate à partir d'un DSL existe déjà. Il s'agit
+de GraphViz qui, à partir d'une figure décrite dans le langage _dot_, peut
+produire un dessin sous format SVG. GraphViz peut représenter bien d'autres
+objets, et peut le faire dans bien d'autres formats.
+
+Toutefois, GraphViz et _dot_ requièrent pour une application Web un rendu
+côté serveur
+(une http://ushiroad.com/jsviz/[implémentation en Javascript] existe cependant).
+De plus, _dot_ s'attache à la sémantique des graphes et non des automates.
+
+Afin de justifier la pertinence de notre application, il nous faut déterminer
+les cas d'utilisation pour lesquels GraphViz et _dot_ pêchent et proposer
+ainsi une meilleure alternative.
 
 == Architecture
 
@@ -101,7 +120,8 @@ Il y a donc 4 représentations de l'automate :
 - Un objet Javascript appelé dessinable contenant toutes les informations
 nécessaire pour dessiner l'automate à l'aide de primitives
 (formes, styles, positions, tailles)
-- Un document SVG
+- Un document SVG (pas sous forme textuelle mais directement dans le DOM,
+à moins que la sérialisation ne soit proposée)
 
 L'objet automate et l'objet dessinable requièrent une attention particulière,
 puisqu'ils sont à la charnière de parties indépendantes de l'application.
@@ -110,7 +130,7 @@ Au métier s'ajoute l'interface. Si celle-ci peut se permettre pour l'heure
 d'être très spartiate, certaines améliorations envisageables peuvent
 l'ammener à devenir très riche.
 
-=== Description de l'automate
+==== Description de l'automate
 
 Le langage de représentation de l'automate peut être modifié facilement ; seule
 la première partie de l'application sera affectée par les changements.
@@ -139,7 +159,6 @@ Voici un exemple d'automate décrit dans un DSL (non défini pour le moment) :
 
 ----
 automata {
-  states: A, B, C
   init: A
   final: C
   trans: (a, A, B), (b, B, C)
@@ -151,9 +170,72 @@ automata {
 }
 ----
 
+On note `#E`, respectivement `#a`, la référence vers l'objet correspondant à
+l'état de nom `E`, respectivement la lettre de valeur `a`.
+La liste d'objets Javascript correspondante serait alors de la forme suivante :
 
+----
+[ {
+  symbols: [
+    { value: "a" }, { value: "b" }
+  ],
+  states: [
+    { name: "A" }, { name: "B" }, { name: "C" }
+  ],
+  init: [
+    #A
+  ]
+  final: [
+    #C
+  ],
+  transitions: [
+    { symbol: #a, from: #A, to: #B },
+    { symbol: #b, from: #B, to: #C }
+  ]
+}, {
+  <le deuxième automate>
+} ]
+----
 
+==== Calcul du dessin
 
+Cette étape doit créer un objet dessinable à partir de l'objet automate.
 
+Faut-t-il que l'objet dessinable conserve la sémantique de l'automate ou
+s'agit-t-il seulement de formes à dessiner en SVG ? Faut-il transformer l'objet
+automate en objet dessinable ou produire un nouvel objet et laisser le
+précedent intact ?
 
+Il nous est difficile de répondre à ces questions techniques à ce stade
+du projet mais un choix doit être fait rapidement, et celui-ci orientera
+les possibilités d'améliorations de l'application.
+
+L'objet dessinable obtenu doit permettre un passage au SVG le moins couteux
+possible : toute l'information nécessaire au dessin doit être déjà calculée ;
+toute opération non triviale doit déjà avoir été effectuée.
+
+==== Passage au SVG
+
+A partir du l'objet dessinable, on injecte des élements SVG dans le DOM pour
+afficher l'automate à l'écran.
+
+Manipuler le DOM peut rapidement devenir coûteux ; toutes les optimisations
+devraient être effectuées en amont pour qu'il n'y ait pas nécessité de
+rechercher l'information dans l'arbre. Pour illustrer le propos, imaginons
+qu'il faille dessiner une flêche entre deux le centre de deux cercles déjà
+dessinés. Il est préférable de connaître à l'avance les coordonnées des points
+qui composent la flêches plutôt que d'interroger le DOM sur la position des
+cercles à cette fin.
+
+En parvenant à réduire cette étape au maximum, on peut très facilement la
+remplacer par une autre chargée d'écrire un fichier SVG plutôt que de
+manipuler le DOM (voire, un autre format d'image complétement différent)
+
+=== Interface
+
+Pour l'heure, nous nous contenterons d'une interface minimale pour
+l'application : un panel pour le texte, un panel pour l'image, et un bouton
+pour passer du texte à l'image.
+
+Il convient de faire évoluer l'interface une fois le moteur implémenté
 
