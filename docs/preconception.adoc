@@ -137,4 +137,23 @@ objet Javascript décrivant intégralement l'automate.
 
 Voici un exemple d'automate décrit dans un DSL (non défini pour le moment) :
 
+----
+automata {
+  states: A, B, C
+  init: A
+  final: C
+  trans: (a, A, B), (b, B, C)
+  <éventuellement la position des états, le rayon minimal des cercles,
+   la convention à utiliser pour les états finaux...>
+}
+automata {
+  <un deuxième automate>
+}
+----
+
+
+
+
+
+
 
