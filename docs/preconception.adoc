@@ -3,9 +3,7 @@
 :description: TODO
 :keywords: TODO
 :toc: left
-:imagesdir: images
 :title-separator: :: 
-:appendix-caption: Annexe
 
 == Etude du produit
 
@@ -17,57 +15,63 @@ Dessiner un graphique en SVG via une description textuelle d'un automate.
 
 Suppose de définir un DSL pour créer un automate.
 
-==== Produit fonctionnel minimal
+==== Produit fonctionnel viable
 
-Une application web côté client (Javascript) qui, étant donnée une
-spécification complète d'un automate à états fini sous format JSON le
-dessinera sur la même page en SVG.
+Le premier objectif est de produire une application web côté client (Javascript)
+qui, étant donnée une spécification complète sous format JSON d'un automate fini,
+le dessinera sur la même page en SVG.
+
+L'application se compose de :
 
 - un champ de texte de taille fixe sur la gauche invite l'utilisateur à écrire
 le JSON
 - un canvas de taille fixe sur la droite acceuille l'automate
 - un bouton en haut propose de dessiner l'automate
+
+De plus :
+
 - le positionnement des états sur le canvas est donné par l'utilisateur
-- les transitions sont dessinés comme des flêches droites
-- le positionnement des étiquettes et choisi naïvement
+- les transitions sont représentées par des fléches droites
+- le positionnement des étiquettes est choisi naïvement
 
 ==== Produit attendu
+
+L'application soumise à l'issue du projet devra, à partir du produit minimum
+viable, posséder les fonctionnalités suivantes :
 
 - Une interface adaptative
 - Un canvas de taille variable
 - Un algorithme infére la position des états si omise
 - Les flêches sont des courbes et les étiquettes sont lisibles
+- Les transitions d'états identiques sont regroupées sous une même flêche
 - Le langage de description de l'automate est le plus simple possible pour
 l'utilisateur (pas/peu de caractères spéciaux, inférence des états, etc.)
 - Les erreurs dans la description sont repérées et proprement signalées
 
 ==== Améliorations envisageables
 
-Les améliorations suivantes sont présentées de façon désordonnée, bien que
-certaines semblent nécessaires tandis que d'autres sont probablement de l'ordre
+Les améliorations suivantes sont présentées de façon désordonnée.
+Certaines semblent nécessaires tandis que d'autres sont probablement de l'ordre
 du fantasme. L'idée est de lister toutes les routes que peut prendre le
-développement de l'application déterminer ainsi les plus pertinents.
+développement de l'application afin de déterminer les plus pertinentes.
 
 - Proposer de sérialiser en SVG plutôt que de manipuler le DOM
-(permet un rendu côté serveur ; très simple à implémenter si l'architecture
-le permet)
-- Générer plusieurs automates
-(très simple à implémenter si on attend une liste)
-- Générer plusieurs automates en parallèle (via WebWorker)
+- Dessiner plusieurs automates par requête
+- Dessiner plusieurs automates en parallèle (via WebWorker)
 - "Drag'n'drop" pour repositionner les états à la main
-- Style customizable (couleurs, police, conventions)
+- Style customisable (couleurs, police, conventions)
 - Algorithmes de manipulation des automates (minimiser, standardiser, émonder,
 etc. ...)
-- Animations
+- Animations et intéractions
 - Représentation textuelle (code LaTeX/MathML pour écrire l'automate
 formellement)
 - Formulaire de création d'automate
 - Interface "point'n'click" (création d'états et de transitions
 à la volée)
-- Génération incrémentielle ; recycle les opérations de la requête précédente
-si l'automate actuellement soumis est proche de l'automate précédemment soumis
+- Génération incrémentielle ; recycle les opérations entre requêtes successives
+si les automates sont suffisamment proches
 - Support de différents types d'automates (automates à pile, automates à
-réels, automates d'arborescence, etc.)
+réels, automates d'arborescences, etc.)
 - Support pour d'autres formats d'image (PNG, Webm, Canvas HTML5, TikZ, ...)
 
 === Qui est le client ?
@@ -112,6 +116,10 @@ une représentation en mémoire complète d'un automate
 comment le dessiner ; on l'appelle le dessinable
 - Depuis le dessinable, enrichir le DOM des élements SVG pour constituer
 le dessin final
+
+Le diagramme suivant résume ces étapes.
+
+image::preconception_diagram.svg["Diagramme des étapes"]
 
 Il y a donc 4 représentations de l'automate :
 
