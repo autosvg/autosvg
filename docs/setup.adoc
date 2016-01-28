@@ -1,0 +1,60 @@
+= Setup
+
+Ce dépot git ("repo" en anglais) est initialisé avec un squelette
+identique de celui du projet d'algo du semestre précécent de Yacine et Achraf.
+Quelques explications...
+
+== Installation
+
+Aller voir sur google pour une explication à chaque étape si nécessaire.
+
+=== Configurer git
+
+1. Installer git sur son PC
+2. Installer un agent SSH si ce n'est pas déjà fait (probablement présent
+par défaut)
+3. Créer une paire de clés SSH
+4. Configurer git via `git config --global`
+
+=== Configurer GitHub
+
+1. Créer un compte sur GitHub
+2. Ajouter la clé SSH publique
+3. Accepter l'invitation au groupe _autosvg_
+
+=== Initialiser le projet
+
+1. Cloner le dépot via SSH
+2. Configurer `package.json` en remplaçant `chromium` dans le champ `start` par
+la commande lançant votre navigateur
+3. https://nodejs.org/en/download/package-manager/Installer node et npm 
+4. `npm install` dans la racine du projet
+5. Créer une branche personnelle. Par exemple pour créer ma branche appelée
+`yacine`, je fais `git branch yacine`.
+6. Créer la branche personnelle sur le repo en ligne en faisant
+`git push origin yacine`
+
+== Développement
+
+=== Lancer le projet
+
+`npm start` dans la racine du projet lance un serveur. Une page dans le
+navigateur choisi est automatiquement ouverte. Si des modifications sont
+effectuées dans le code, la page est automatiquement rechargée avec les
+changements
+
+=== Travailler sur le projet
+
+*S'assurer à tout moment que vous travaillez dans votre branche en faisant
+`git branch`. La branche dans laquelle vous êtes porte une étoile.*
+
+Je vous conseille d'installer une extension pour votre ligne de commande qui
+affiche à tout moment la branche dans laquelle vous vous trouvez.
+
+Pour aller d'une branche à l'autre, faire `git checkout <la_branche>`.
+
+1. Aller dans sa branche. Exemple: `git checkout yacine`.
+2. Faire vos changements. Faites de petits changements.
+3. `git status` pour voir les changements effectués.
+
+
