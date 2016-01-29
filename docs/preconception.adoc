@@ -13,39 +13,42 @@
 
 Dessiner un graphique en SVG via une description textuelle d'un automate.
 
-Suppose de définir un DSL pour créer un automate.
+Suppose de définir un DSL (langage à domaine specifique) pour créer un automate.
 
-==== Produit fonctionnel viable
+==== Produit minimum viable
 
 Le premier objectif est de produire une application web côté client (Javascript)
 qui, étant donnée une spécification complète sous format JSON d'un automate fini,
 le dessinera sur la même page en SVG.
 
+Le produit minimum viable est l'application répondant au cas d'utilisation
+principal tel qu'elle puisse être développée le plus rapidement possible.
+
 L'application se compose de :
 
-- un champ de texte de taille fixe sur la gauche invite l'utilisateur à écrire
+- un champ de texte de taille fixe sur la gauche qui invite l'utilisateur à écrire
 le JSON
-- un canvas de taille fixe sur la droite acceuille l'automate
-- un bouton en haut propose de dessiner l'automate
+- un canvas de taille fixe sur la droite acceuillant l'automate
+- un bouton en haut permettant de dessiner l'automate
 
 De plus :
 
 - le positionnement des états sur le canvas est donné par l'utilisateur
 - les transitions sont représentées par des fléches droites
-- le positionnement des étiquettes est choisi naïvement
+- le positionnement des étiquettes des transitions est choisi naïvement
 
 ==== Produit attendu
 
 L'application soumise à l'issue du projet devra, à partir du produit minimum
 viable, posséder les fonctionnalités suivantes :
 
-- Une interface adaptative
-- Un canvas de taille variable
-- Un algorithme infére la position des états si omise
-- Les flêches sont des courbes et les étiquettes sont lisibles
-- Les transitions d'états identiques sont regroupées sous une même flêche
+- Une interface adaptative : pas prioritaire
+- Un canvas de taille variable : indispensable
+- Un algorithme infére la position des états si omise : oui
+- Les flêches sont des courbes et les étiquettes sont lisibles : attention
+- Les transitions d'états identiques sont regroupées sous une même flêche : oui
 - Le langage de description de l'automate est le plus simple possible pour
-l'utilisateur (pas/peu de caractères spéciaux, inférence des états, etc.)
+l'utilisateur (peu de structures imbriquées, attention aux caractères spéciaux, etc.)
 - Les erreurs dans la description sont repérées et proprement signalées
 
 ==== Améliorations envisageables
@@ -55,24 +58,24 @@ Certaines semblent nécessaires tandis que d'autres sont probablement de l'ordre
 du fantasme. L'idée est de lister toutes les routes que peut prendre le
 développement de l'application afin de déterminer les plus pertinentes.
 
-- Proposer de sérialiser en SVG plutôt que de manipuler le DOM
-- Dessiner plusieurs automates par requête
-- Dessiner plusieurs automates en parallèle (via WebWorker)
-- "Drag'n'drop" pour repositionner les états à la main
-- Style customisable (couleurs, police, conventions)
+- Rendu alternatif (Canvas HTML5)
+- Export de l'image (SVG, PNG, Webm, TikZ, ...)
+- Export de l'automate sous format LaTeX/MathML
+- Dessiner plusieurs automates par requête : pas forcément intéressant
+- Dessiner plusieurs automates en parallèle (via WebWorker) : pas utile
+- "Drag'n'drop" pour repositionner les états à la main :
+- Style customisable (couleurs, police, conventions) : tout à la fin
 - Algorithmes de manipulation des automates (minimiser, standardiser, émonder,
-etc. ...)
-- Animations et intéractions
-- Représentation textuelle (code LaTeX/MathML pour écrire l'automate
-formellement)
-- Formulaire de création d'automate
-- Interface "point'n'click" (création d'états et de transitions
-à la volée)
+etc. ...) : uniquement la simplification ? sur la fin
+- Acceptation d'un mot
+- Animations et intéractions : pas très intéressant
+- Formulaire de création d'automate : très secondaire
+- Interface WYSIWYG (création d'états et de transitions
+à la volée) : ambitieux
 - Génération incrémentielle ; recycle les opérations entre requêtes successives
-si les automates sont suffisamment proches
-- Support de différents types d'automates (automates à pile, automates à
-réels, automates d'arborescences, etc.)
-- Support pour d'autres formats d'image (PNG, Webm, Canvas HTML5, TikZ, ...)
+si les automates sont suffisamment proches : très compliqué, ne vaut pas le coup
+- Support de différents types d'automates (automates à pile : ok, automates à
+réels : facile, automates d'arborescences : non, etc.) : non
 
 === Qui est le client ?
 
@@ -126,7 +129,7 @@ Il y a donc 4 représentations de l'automate :
 - Un texte décrivant l'automate, potentiellement de façon incomplète
 - Un objet Javascript correspondant à l'automate (comme objet mathématique)
 - Un objet Javascript appelé dessinable contenant toutes les informations
-nécessaire pour dessiner l'automate à l'aide de primitives
+nécessaires pour dessiner l'automate à l'aide de primitives
 (formes, styles, positions, tailles)
 - Un document SVG (pas sous forme textuelle mais directement dans le DOM,
 à moins que la sérialisation ne soit proposée)
@@ -184,6 +187,7 @@ La liste d'objets Javascript correspondante serait alors de la forme suivante :
 
 ----
 [ {
+  type: "automata"
   symbols: [
     { value: "a" }, { value: "b" }
   ],
@@ -192,7 +196,7 @@ La liste d'objets Javascript correspondante serait alors de la forme suivante :
   ],
   init: [
     #A
-  ]
+  ],
   final: [
     #C
   ],
@@ -224,16 +228,16 @@ toute opération non triviale doit déjà avoir été effectuée.
 
 ==== Passage au SVG
 
-A partir du l'objet dessinable, on injecte des élements SVG dans le DOM pour
+A partir de l'objet dessinable, on injecte des élements SVG dans le DOM pour
 afficher l'automate à l'écran.
 
-Manipuler le DOM peut rapidement devenir coûteux ; toutes les optimisations
+Interroger le DOM est coûteux ; toutes les optimisations
 devraient être effectuées en amont pour qu'il n'y ait pas nécessité de
-rechercher l'information dans l'arbre. Pour illustrer le propos, imaginons
-qu'il faille dessiner une flêche entre deux le centre de deux cercles déjà
+rechercher l'information dans l'arbre. Pour illustrer ce propos, imaginons
+qu'il faille dessiner une flêche entre les centres de deux cercles déjà
 dessinés. Il est préférable de connaître à l'avance les coordonnées des points
-qui composent la flêches plutôt que d'interroger le DOM sur la position des
-cercles à cette fin.
+qui composent la flêche plutôt que d'interroger le DOM sur la position des
+cercles.
 
 En parvenant à réduire cette étape au maximum, on peut très facilement la
 remplacer par une autre chargée d'écrire un fichier SVG plutôt que de
@@ -245,5 +249,13 @@ Pour l'heure, nous nous contenterons d'une interface minimale pour
 l'application : un panel pour le texte, un panel pour l'image, et un bouton
 pour passer du texte à l'image.
 
-Il convient de faire évoluer l'interface une fois le moteur implémenté
+Il convient de faire évoluer l'interface une fois le moteur implémenté.
 
+== Compte-rendu RDV
+
+- Quelle unité de placement : px, pc, cm, em, ex ?
+- Limite paramétrable sur la "taille" des automates
+- Un nom pour les automates ?
+- Identifiants variés, mais représentation canonique des états sous forme d'entiers
+- Champ facultatif pour l'alphabet ; afficher au moment du rendu l'alphabet
+- Modèle MVC
