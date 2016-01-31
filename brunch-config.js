@@ -23,9 +23,12 @@ exports.config = {
     globals: {log: "loglevel"}
   },
   modules: {
-    nameCleaner: function(path) {
-      console.log(path);
-      return path;
+    nameCleaner: (path) => path,
+  },
+  plugins: {
+    babel: {
+      presets: [ "es2015" ],
+      ignore: [ ]
     }
   }
 };

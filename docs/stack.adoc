@@ -8,6 +8,19 @@ L'https://www.codecademy.com/courses/javascript-intro/0/1[intro au Javascript de
 Le site https://developer.mozilla.org/en-US/docs/Web/JavaScript[MDN] est absolument excellent. Outre les tutoriaux (parfois de niveau très avancé), on y
 trouve la documentation complète des API Javascript. C'est la référence.
 
+Pour les fonctionnalités de la dernière version de Javascript
+(appelée ES6 ou ES2015), http://putaindecode.io/fr/articles/[Putain de code]
+propose une série d'articles en français.
+
+== Babel
+
+*Transpilateur ES6 -> ES5*
+
+La dernière version de Javascript, ES6, est par certains aspects bien meilleure
+que la précédente, ES5. Toutefois, tous les navigateurs ne se sont pas encore
+mis à la page. Babel permet de convertir le code ES6 en code ES5 pour qu'il
+reste compatible.
+
 == Git
 
 *Système de versionnement*
@@ -57,8 +70,12 @@ dans `app` et `lib` sont concaténés dans un long fichier `app.js` situé dans
 le dossier `public`. On peut alors utiliser la convention CommonJS de façon
 totalement transparente.
 
-En plus de cela, Brunch fait la même chose pour les fichiers CSS (situés 
-dans `app/styles`) et permet de lancer un serveur qui observera toutes les
+En plus de cela :
+- Brunch appelle automatiquement Babel pour s'assurer que le code soit
+compatible avec une plus large gamme de navigateurs
+- Les fichiers CSS situés dans `app/styles` sont concaténés en un seul fichier
+`app.css` situé dans `public`
+- Brunch permet de lancer un serveur qui observe toutes les
 modifications du code et recharge automatiquement la fenêtre du navigateur.
 
 Pour mieux comprendre, https://github.com/brunch/brunch-guide/blob/master/content/fr/README.md[lire le guide en français] (attention, il n'est pas complétement
