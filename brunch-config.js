@@ -20,7 +20,8 @@ exports.config = {
   },
   npm: {
     enabled: true,
-    globals: {log: "loglevel"}
+    globals: { log: "loglevel" },
+    styles: { "skeleton.css": [ "skeleton.css" ] }
   },
   modules: {
     nameCleaner: (path) => path,

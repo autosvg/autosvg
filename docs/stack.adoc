@@ -119,3 +119,10 @@ Plus de détails sur https://github.com/pimterry/loglevel[le projet GitHub].
 
 Il n'est pas nécessaire d'appeler la fonction `require("loglevel")`.
 La variable `log` est définie comme variable globale.
+
+== skeleton.css
+
+*Framework CSS léger*
+
+Un framework CSS très léger, histoire d'avoir une interface un poil plus jolie
+sans réel effort.
