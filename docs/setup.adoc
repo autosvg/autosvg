@@ -56,5 +56,17 @@ Pour aller d'une branche à l'autre, faire `git checkout <la_branche>`.
 1. Aller dans sa branche. Exemple: `git checkout yacine`.
 2. Faire vos changements. Faites de petits changements.
 3. `git status` pour voir les changements effectués.
+4. `git add <fichiers>` pour enregistrer les changements effectués sur
+les fichiers nommés
+5. `git commit` pour confirmer les changements ; ils sont référencés par un
+_hash_ et il est nécessaire d'écrire un message de commit pour expliquer les
+changements
+6. `git push` pour envoyer le commit sur GitHub
 
+Vous pouvez naturellement travailler sur d'autres branches. C'est utile si vous
+travaillez sur une fonctionnalité particulière ou que vous faites une séance
+de travail à plusieurs.
 
+Il faudra ensuite _merge_ les commits sur la branche master qui est la branche
+de référence. Faites faire ce travail par une autre personne qui relira le
+code, le testera et gérera les conflits.

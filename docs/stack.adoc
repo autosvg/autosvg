@@ -1,0 +1,104 @@
+= Les technologies qu'on utilise
+
+== JavaScript
+
+*Langage Web*
+
+L'https://www.codecademy.com/courses/javascript-intro/0/1[intro au Javascript de codecademy] est très bien foutue.
+Le site https://developer.mozilla.org/en-US/docs/Web/JavaScript[MDN] est absolument excellent. Outre les tutoriaux (parfois de niveau très avancé), on y
+trouve la documentation complète des API Javascript. C'est la référence.
+
+== Git
+
+*Système de versionnement*
+
+Un outil collaboratif indispensable.
+Quelques ressources :
+
+- Un http://rogerdudler.github.io/git-guide/index.fr.html[guide en français] qui rappelle les commande essentielles
+- Le https://openclassrooms.com/courses/gerez-vos-codes-source-avec-git[cours] d'OpenClassroms
+
+== node
+
+*Un moteur Javascript*
+
+A priori nous n'utiliserons pas node directement mais il faut https://nodejs.org/en/download/package-manager/[l'installer].
+La version 4 est requise.
+
+== npm
+
+*Un gestionnaire de paquets pour Javascript*
+
+npm est le gestionnaire de paquets, dits modules, fourni avec node (à moins
+d'être sous Arch Linux, où il s'agit de logiciels séparés).
+On s'en sert pour organiser nos dépendances.
+
+Chaque module npm contient un fichier `package.json` dans sa racine.
+Le champs `dependencies` contient les dépendances à l'éxecution. Ces modules
+seront automatiquement rajoutés à l'application.
+Le champ `devDependencies` contient les dépendances pour le développement.
+Ces modules ne sont pas rajoutés à l'application mais sont nécessaires pour
+développer (contient notamment Brunch et ESLint).
+
+Faites `npm install` dans la racine du projet pour installer les dépendances.
+Les fichiers téléchargés sont placés dans le dossier `node_modules`.
+La fonction `require` en Javascript permet de charger un module.
+
+== Brunch
+
+*Task-runner Javascript*
+
+Node adhère à la convention CommonJS qui définit des fonctions et des
+variables permettant d'implémenter un système de modules en Javascript.
+Toutefois, les navigateurs n'implémentent pas cette convention.
+
+Brunch permet toutefois de l'utiliser. Tous les fichiers Javascript contenus
+dans `app` et `lib` sont concaténés dans un long fichier `app.js` situé dans
+le dossier `public`. On peut alors utiliser la convention CommonJS de façon
+totalement transparente.
+
+En plus de cela, Brunch fait la même chose pour les fichiers CSS (situés 
+dans `app/styles`) et permet de lancer un serveur qui observera toutes les
+modifications du code et recharge automatiquement la fenêtre du navigateur.
+
+Pour mieux comprendre, https://github.com/brunch/brunch-guide/blob/master/content/fr/README.md[lire le guide en français] (attention, il n'est pas complétement
+à jour).
+
+== ESLint
+
+*Linter Javascript*
+
+ESLint vérifie que notre code Javascript ne contienne pas d'erreurs évidentes
+ou de problèmes de style. Le fichier `.eslintrc` définit les conventions.
+Il existe très certainement un plugin ESLint pour votre éditeur préféré.
+A télécharger !
+
+== Asciidoc
+
+*Markup léger*
+
+Asciidoc est un langage de markup très simple. GitHub traduit automatiquement
+les fichiers Asciidoc d'extension `.adoc` en page HTML.
+Un bref tour de la syntaxe sur http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[cette page].
+
+== Loglevel
+
+*Logger Javascript*
+
+Si vous voulez écrire quelque chose dans la console du navigateur, vous devez
+utiliser la fonction `console.log`. Loglevel est un logger léger qui rend
+cette fonctione obsolète. Il existe 5 fonctions pour log un message :
+
+- `log.trace(msg)` log le message avec une stacktrace pour déterminer les
+fonctions appelantes
+- `log.debug(msg)` se contente d'écrire le message
+- `log.info(msg)` se contente d'écrire le message avec une icone d'info
+- `log.warn(msg)` se contente d'écrire le message avec une icone de warning ;
+le navigateur peut filtrer les messages de warning
+- `log.error(msg)` écrit le message sur fond rouge avec une stacktrace ;
+le navigateur peut filtrer les messages d'erreur
+
+Plus de détails sur https://github.com/pimterry/loglevel[le projet GitHub].
+
+Il n'est pas nécessaire d'appeler la fonction `require("loglevel")`.
+La variable `log` est définie comme variable globale.

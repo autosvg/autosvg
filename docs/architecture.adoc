@@ -1,0 +1,29 @@
+= Architecture
+
+Contenu des dossier :
+
+- `app` : le code de l'application web
+- `lib` : le moteur de rendu ; y placer le code indépendant
+- `build` : des fichiers générés par node
+- `public` : l'application web finale générée par brunch
+- `node_modules` : les dépendances téléchargées par npm
+- `docs` : tous les documents pour le projet
+- `.git` : repo git local
+
+Les fichiers :
+
+- `LICENSE` : la license en vigueur (pour le moment AGPL v3)
+- `package.json` : description du module node associé au projet
+- `brunch-config.js` : code de configuration de brunch
+- `default.nix` : ne vous en occupez que si vous êtes sous NixOS
+- `.gitignore` : fichiers qui doivent être ignorés par git
+- `.npmignore` : fichiers qui doivent être ignorés par npm
+- `.eslintrc` : configuration du linter ESLint
+
+Dans `app` :
+
+- `assets` : tout ce qui doit être directement copié dans l'arborescence
+du site ; pour le moment, ne contient que `index.html`
+- `styles` : les fichiers CSS
+- `index.js` : point d'entrée de l'application ; la fonction `main()` est
+lancée au chargement du script par `index.html`
