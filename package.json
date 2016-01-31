@@ -7,13 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "auto-reload-brunch": "^1.8.1",
-    "brunch": "^2.1.1",
-    "clean-css-brunch": "^1.8.0",
-    "css-brunch": "^1.7.0",
+    "auto-reload-brunch": "^2.0.0",
+    "brunch": "=2.2.1",
+    "clean-css-brunch": "^2.0.0",
+    "css-brunch": "^2.0.0",
     "eslint": "^1.10.3",
-    "javascript-brunch": "^1.8.0",
-    "uglify-js-brunch": "^1.7.8"
+    "javascript-brunch": "^2.0.0",
+    "uglify-js-brunch": "^2.0.1"
   },
   "dependencies": {
     "loglevel": "^1.4.0",

@@ -1,3 +1,17 @@
+# Front-end
+/app/
+brunch-config.js
+
+# Docs
+/docs/
+
+# Nix environment
+*.nix
+
+# Git
+.gitignore
+/.git
+
 # Logs
 gs
 logs
