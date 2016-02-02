@@ -8,10 +8,7 @@ exports.config = {
       joinTo: "app.js"
     },
     stylesheets: {
-      joinTo: "app.css",
-      order: {
-        before: "app/styles/frameworks/*.css"
-      }
+      joinTo: "app.css"
     }
   },
   sourceMaps: "absoluteUrl",
@@ -30,6 +27,10 @@ exports.config = {
     babel: {
       presets: [ "es2015" ],
       ignore: [ ]
+    },
+    stylus: {
+      linenos: true,
+      firebug: true
     }
   }
 };
