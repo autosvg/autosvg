@@ -126,3 +126,11 @@ La variable `log` est définie comme variable globale.
 
 Un framework CSS très léger, histoire d'avoir une interface un poil plus jolie
 sans réel effort.
+
+== SVG
+
+*Langage de dessin vectoriel pour le Web*
+
+Quelques ressources :
+
+- https://css-tricks.com/scale-svg/[Un SVG qui se redimensionne automatiquement]
