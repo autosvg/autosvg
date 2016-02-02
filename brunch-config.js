@@ -25,7 +25,7 @@ exports.config = {
   },
   overrides: {
     deploy: {
-      optimize: true,
+      optimize: false,
       sourceMaps: true,
       paths: {
         public: "pages"
