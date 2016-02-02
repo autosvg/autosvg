@@ -23,6 +23,20 @@ exports.config = {
   modules: {
     nameCleaner: (path) => path,
   },
+  overrides: {
+    deploy: {
+      optimize: true,
+      sourceMaps: true,
+      paths: {
+        public: "pages"
+      },
+      plugins: {
+        autoReload: {
+          enable: false
+        }
+      }
+    }
+  },
   plugins: {
     babel: {
       presets: [ "es2015" ],
