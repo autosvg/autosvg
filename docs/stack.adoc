@@ -126,3 +126,11 @@ La variable `log` est définie comme variable globale.
 
 Un framework CSS très léger, histoire d'avoir une interface un poil plus jolie
 sans réel effort.
+
+== Stylus
+
+*Preprocesseur CSS*
+
+Un langage http://stylus-lang.com/[un poil plus agréable à lire et à écrire que CSS]. Brunch le traduit automatiquement en CSS.
+Les fichiers portent l'extension `.styl` et sont à placer dans le dossier
+`app/styles`.
