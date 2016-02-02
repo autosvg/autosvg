@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Draw automatas in your browser",
   "scripts": {
-    "start": "(sleep 1 && chromium-browser http://localhost:3333/ &> /dev/null) & brunch watch --server",
+    "start": "(sleep 1 && firefox http://localhost:3333/ &> /dev/null) & brunch watch --server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
