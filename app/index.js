@@ -7,5 +7,6 @@ function App() {
   this.main = function() {
     log.info("Main");
     create_controller();
+    log.info(require("../lib").automata());
   };
 }

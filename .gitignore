@@ -10,6 +10,7 @@ node_modules
 # Production
 /public/
 /build/
+/pages/
 
 # Asciidoctor output
 docs/*.html
