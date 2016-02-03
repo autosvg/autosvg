@@ -134,3 +134,11 @@ sans réel effort.
 Quelques ressources :
 
 - https://css-tricks.com/scale-svg/[Un SVG qui se redimensionne automatiquement]
+
+== Stylus
+
+*Preprocesseur CSS*
+
+Un langage http://stylus-lang.com/[un poil plus agréable à lire et à écrire que CSS]. Brunch le traduit automatiquement en CSS.
+Les fichiers portent l'extension `.styl` et sont à placer dans le dossier
+`app/styles`.
