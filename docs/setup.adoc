@@ -70,3 +70,11 @@ de travail à plusieurs.
 Il faudra ensuite _merge_ les commits sur la branche master qui est la branche
 de référence. Faites faire ce travail par une autre personne qui relira le
 code, le testera et gérera les conflits.
+
+=== Mettre à jour le site
+
+Avant toute choses, faire `npm run init-deploy` **une seule fois** pour
+initialiser le dossier `pages` qui contient le site.
+
+Pour mettre à jour le site, lancer `npm run deploy`. Cela ne fonctionnera
+que si tous les changements ont été commit.
