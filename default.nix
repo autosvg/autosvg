@@ -3,6 +3,6 @@ stdenv.mkDerivation {
   name = "autosvg";
   buildInputs = [ nodejs python ];
   shellHook = ''
-    export $BROWSER=chromium-browser
+    export BROWSER=chromium-browser
   '';
 }
