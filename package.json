@@ -5,6 +5,7 @@
   "scripts": {
     "start": "(sleep 1 && chromium-browser http://localhost:3333/ &> /dev/null) & brunch watch --server",
     "deploy": "./deploy.sh",
+    "init-deploy": "git clone git@github.com:autosvg/autosvg.github.io.git pages",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
