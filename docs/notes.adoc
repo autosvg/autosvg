@@ -1,0 +1,4 @@
+= Des notes en vrac
+
+On pourrait s'inspirer largement de l'architecture des https://github.com/mbostock/d3/wiki/Layouts[layouts de d3].
+C'est exactement ce qu'on cherche à faire pour la partie `automate => dessinable`.
