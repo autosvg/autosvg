@@ -34,10 +34,11 @@ require_clean_work_tree_git () {
 if require_clean_work_tree_git; then
   REV=$(git rev-parse --short HEAD)
   BRANCH=$(git rev-parse --abbrev-ref HEAD)
-  
+
   rm -rf pages/*
   brunch build -e deploy
   cd pages
+  echo "In repository $(git rev-parse --show-toplevel)"
   git add -A
   git commit -m "Commit $REV in branch $BRANCH"
   git push

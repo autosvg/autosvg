@@ -8,6 +8,9 @@ Contenu des dossier :
 - `public` : l'application web finale générée par brunch
 - `node_modules` : les dépendances téléchargées par npm
 - `docs` : tous les documents pour le projet
+- `pages` : le repo git pour `autosvg.github.io` ; initialisé par
+`npm run init-deploy`
+- `scripts` : scripts d'intégration
 - `.git` : repo git local
 
 Les fichiers :
@@ -15,10 +18,11 @@ Les fichiers :
 - `LICENSE` : la license en vigueur (pour le moment AGPL v3)
 - `package.json` : description du module node associé au projet
 - `brunch-config.js` : code de configuration de brunch
-- `default.nix` : ne vous en occupez que si vous êtes sous NixOS
 - `.gitignore` : fichiers qui doivent être ignorés par git
 - `.npmignore` : fichiers qui doivent être ignorés par npm
 - `.eslintrc` : configuration du linter ESLint
+- `default.nix` : expression Nix pour configurer l'environnement de travail ;
+ ne sont concernés que les utilisateurs de Nix
 
 Dans `app` :
 
