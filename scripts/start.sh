@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [[ -z "$BROWSER" ]]; then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+if [ -z "$BROWSER" ]; then
+  if [ "$OSTYPE" = "darwin"* ]; then
     echo "Set the BROWSER environment variable to use a specific browser"
     BROWSER=open
   elif command -v xdg-open 2>/dev/null; then
