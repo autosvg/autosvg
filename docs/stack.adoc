@@ -12,6 +12,12 @@ Pour les fonctionnalités de la dernière version de Javascript
 (appelée ES6 ou ES2015), http://putaindecode.io/fr/articles/[Putain de code]
 propose une série d'articles en français.
 
+Justification:: Nécessaire pour une application Web côté client.
+ES6 est le standard actuel ; les projets majeurs de l'écosystème Javascript
+l'ont unanimement adopté. Le langage apporte quelques constructions qui
+facilitent la lecture et l'écriture du code (lambdas, valeurs par défaut
+des arguments, enrichissement de la bibliothèque standard, let/const, etc.).
+
 == Babel
 
 *Transpilateur ES6 -> ES5*
@@ -20,6 +26,9 @@ La dernière version de Javascript, ES6, est par certains aspects bien meilleure
 que la précédente, ES5. Toutefois, tous les navigateurs ne se sont pas encore
 mis à la page. Babel permet de convertir le code ES6 en code ES5 pour qu'il
 reste compatible.
+
+Justification:: Tous les navigateurs n'ont pas intégralement implémenté le
+standard ES6. Babel nous affranchit des problèmes de compatibilité.
 
 == Git
 
@@ -31,12 +40,17 @@ Quelques ressources :
 - Un http://rogerdudler.github.io/git-guide/index.fr.html[guide en français] qui rappelle les commande essentielles
 - Le https://openclassrooms.com/courses/gerez-vos-codes-source-avec-git[cours] d'OpenClassroms
 
+Justification:: Partage, collaboration et gestion grandement facilitées.
+Un outil qui fait l'unanimité.
+
 == node
 
 *Un moteur Javascript*
 
 A priori nous n'utiliserons pas node directement mais il faut https://nodejs.org/en/download/package-manager/[l'installer].
 La version 4 est requise.
+
+Justification:: Nécessaire pour d'autres outils.
 
 == npm
 
@@ -56,6 +70,10 @@ développer (contient notamment Brunch et ESLint).
 Faites `npm install` dans la racine du projet pour installer les dépendances.
 Les fichiers téléchargés sont placés dans le dossier `node_modules`.
 La fonction `require` en Javascript permet de charger un module.
+
+Justification:: Gestion des dépendances facilitée. Plusieurs alternatives
+comme `bower` et `spm`. Toutefois, `npm` est le plus utilisé et permet
+de déployer l'application côté serveur sans effort supplémentaire.
 
 == Brunch
 
@@ -81,6 +99,13 @@ modifications du code et recharge automatiquement la fenêtre du navigateur.
 Pour mieux comprendre, https://github.com/brunch/brunch-guide/blob/master/content/fr/README.md[lire le guide en français] (attention, il n'est pas complétement
 à jour).
 
+Justification:: Execute Babel et Stylus automatiquement de façon transparente.
+Permet de modulariser le code plutôt que d'utiliser des variables globales.
+Lance un serveur qui observe les changements dans le code et rafraichit
+automatiquement la page du navigateur, ce qui réduit la durée des _feedback
+loops_.
+
+
 == ESLint
 
 *Linter Javascript*
@@ -90,6 +115,8 @@ ou de problèmes de style. Le fichier `.eslintrc` définit les conventions.
 Il existe très certainement un plugin ESLint pour votre éditeur préféré.
 A télécharger !
 
+Justification:: Style consistant et erreurs bêtes attrapées plus tôt.
+
 == Asciidoc
 
 *Markup léger*
@@ -97,6 +124,10 @@ A télécharger !
 Asciidoc est un langage de markup très simple. GitHub traduit automatiquement
 les fichiers Asciidoc d'extension `.adoc` en page HTML.
 Un bref tour de la syntaxe sur http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[cette page].
+
+Justification:: Format texte plutôt que binaire. La syntaxe rend la source
+extrémement lisible (bien plus que LaTeX). Syntaxe standard et consistante, 
+contrairement à Markdown.
 
 == Loglevel
 
@@ -120,12 +151,16 @@ Plus de détails sur https://github.com/pimterry/loglevel[le projet GitHub].
 Il n'est pas nécessaire d'appeler la fonction `require("loglevel")`.
 La variable `log` est définie comme variable globale.
 
+Justification:: Un logger, c'est bien. Faut-il une autre raison ?
+
 == skeleton.css
 
 *Framework CSS léger*
 
 Un framework CSS très léger, histoire d'avoir une interface un poil plus jolie
 sans réel effort.
+
+Justification:: Une meilleure interface sans effort. Potentiellement provisoire.
 
 == SVG
 
@@ -135,6 +170,8 @@ Quelques ressources :
 
 - https://css-tricks.com/scale-svg/[Un SVG qui se redimensionne automatiquement]
 
+Justification:: Evidente.
+
 == Stylus
 
 *Preprocesseur CSS*
@@ -142,3 +179,7 @@ Quelques ressources :
 Un langage http://stylus-lang.com/[un poil plus agréable à lire et à écrire que CSS]. Brunch le traduit automatiquement en CSS.
 Les fichiers portent l'extension `.styl` et sont à placer dans le dossier
 `app/styles`.
+
+Justification:: Syntaxe plus agréable. Le CSS généré est hautement lisible,
+donc on peut s'affranchir de cet outil s'il ne nous intéresse plus.
+Accepte du CSS en entrée, donc toutes les fonctionnalités sont optionnelles.
