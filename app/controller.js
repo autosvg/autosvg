@@ -8,6 +8,10 @@ function create_controller () {
   var bGeneration = document.getElementById("bGeneration");
   bGeneration.addEventListener("click", function () {
     var canvas_container = document.getElementById("autoimg"); 
+    // Remove the old svg and others things added by a user
+    while(canvas_container.firstChild) {
+       canvas_container.removeChild(canvas_container.firstChild); 
+    }
     var canvas = document.createElementNS(namespace, "svg");
     var circle = document.createElementNS(namespace, "circle");
     /* The three followings lines defines a circle of center 0,0 and radius 10*/
