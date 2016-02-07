@@ -1,4 +1,158 @@
 = Des notes en vrac
 
+== Inspiration
+
 On pourrait s'inspirer largement de l'architecture des https://github.com/mbostock/d3/wiki/Layouts[layouts de d3].
 C'est exactement ce qu'on cherche à faire pour la partie `automate => dessinable`.
+
+== Discussion Achraf/Yacine 06/02
+
+=== Rajout d'une étape intermédiaire
+
+----
+Text-area => Objet incomplet => Objet automate => Objet dessinable => SVG
+----
+
+Il faut donc définir 4 représentations.
+
+L'objet incomplet et l'objet Javascript issu du parsing, sans modification.
+C'est donc l'automate avec des "trous", qu'il va falloir normaliser pour
+obtenir l'objet automate.
+
+=== Au sujet du two-way binding
+
+Le professeur suggère d'avoir deux vues pour le modèle.
+Chaque vue fonctionnerait en _two-way binding_, c'est-à-dire que une vue
+modifie le modèle et le modèle modifie la vue.
+On s'inquiète de cet état des choses pour le text-area. En effet, on risque
+de perdre la façon dont le texte original est formaté.
+
+Suivant la façon dont on définit le langage d'entrée, il peut y avoir
+beaucoup d'expressions possibles pour des automates identiques. Il serait
+impossible (ou très complexe) d'enrichir l'expression sans perdre ses
+spécificités. On préfère alors conserver du _one-way binding_ pour la texte
+area mais proposer tout de même à l'utilisateur de récupérer une expression
+permettant de générer l'automate du modèle via une fonction d'export.
+
+=== Embryon d'algorithme pour l'inférence des états
+
+Pour obtenir les états:
+
+- On récupère la liste des transitions
+- On considère que les départs et arrivées de mêmes noms correspondent aux
+même états
+- On rajoute les états déclarés dans la liste des états quand ils n'ont
+pas été trouvés dans la liste des transitions
+
+=== TODO (pas fini)
+
+== Discusion Thibaut/Yacine 07/02
+
+
+=== Séparation style/métier
+
+Se pose sur le long terme le problème du style.
+
+==== Proposition avortée : cutomisation maximal
+
+On pourrait proposer un style hautement configurable, avec un système de
+classes et un langage à partir duquel on peut intégrer du CSS et un template
+SVG. De cette façon, états et transitions peuvent être représentées de façon
+complétement arbitraire. L'application propose des valeurs pas défaut saine
+que l'utilisateur peut écraser à loisir.
+
+Problème : cela va hautement compliqué l'ensemble de l'application.
+La spécification du langage d'entrée sera plus difficile à concevoir ; le
+parser devra définir des _passthrough_ tout en vérifiant la validité de leur
+contenu ; la représentation du dessinable sera plus compliquée ; le rendeur
+devra dispatcher les styles.
+
+==== Un moteur hautement configurable au centre de l'application
+
+.Architecture
+----
+          /-----------------------------------------------------------\
+          |                                                           |
+          |                                                           v
+      Transpiler ---------------------> Motor -------------------> Renderer
+(Parser -> Convertir x2) -> (Compléter -> Calculer dessinable) -> (Dessiner)
+----
+
+Le moteur est indépendant du langage d'entrée ou du style à appliquer.
+Il s'agit seulement d'un module qui, à partir d'une spécification d'automate
+dans un objet javascript ou un fichier JSON (potentiellement incomplète)
+retourne un objet dessinable (analogue aux _layouts_ de D3).
+
+A supposer qu'on ne fournisse que le moteur, ce serait à l'utilisateur de
+fournir l'objet en entrée et de dessiner lui-même l'automate à partir de
+l'objet de sortie. Cet objet doit être construit de façon à ce qu'il soit
+trivial de créer un automate simple ; il suffit de boucler sur la liste des
+états puis des transitions et d'insérer un l'élément SVG correspondant dans le
+DOM depuis les attributs.
+
+L'application va "entourer" le moteur. En entrée, le _transpiler_ converti
+le texte DSL en objet compréhensible par le moteur. Comme le moteur ne
+s'inquiète pas du style, on génère également un objet de configuration.
+Cet objet de configuration va directement alimenter le _renderer_, chargé
+de dessiner un automate simple à partir de l'objet dessinable.
+
+Le moteur peut être utilisé de façon très versatile. Il est indépendant du
+format de spécification, indépendant du style et indépendant du format
+d'image ou de la méthode de rendu. On peut le réemployer pour implémenter
+un rendu côté serveur, une application point'n'click ou pour permettre à
+l'utilisateur de configurer son automate à sa guise.
+
+En revanche, l'application Web finale ne proposera qu'un ensemble d'options
+limité pour rester contenue, simple d'utilisation et simple à implémenter.
+
+=== Exemple
+
+On veut représenter l'automate suivant.
+
+.Dessin d'un automate
+----
+->(Napoleon) ---a---> (1) <---b---> ((2)) ---a---> (Bonjour)
+
+->((Salut))
+----
+
+.Le même automate exprimé en JSON à l'aide d'un format succint
+----
+{
+  states: [
+    { name:"Napoléon", init:true },
+    { name:"2", final:true },
+    { name:"Salut", init:true, final:true }
+  ],
+  transitions: [
+    { source:"Napoleon", target:"1", symbol:"a" },
+    { source:"1", target:"2", symbol:"b" },
+    { source:"2", target:"1", symbol:"b" },
+    { source:"2", target:"Bonjour", symbol:"a" }
+  ],
+}
+----
+
+.Le même automate exprimé en JSON à l'aide d'un format exhaustif
+----
+{
+  type: "finite-state",
+  alphabets: [
+    { name:"a" },
+    { name:"b" }
+  ],
+  states: [
+    { name:"Napoleon", init:true, final:false },
+    { name:"2", init:false, final:true },
+    { name:"Salut", init:true, final:true }
+    { name:"1", init:false, final:false },
+    { name:"Bonjour, init:false, final:false },
+  ],
+  transitions: [
+    { source:0, target:3, symbol: 1 },
+    { source:1, target:3, symbol: 2 },
+    { source:3, target:1, symbol: 2 },
+    { source:1, target:4, symbol: 1 }
+  ],
+}
+----
