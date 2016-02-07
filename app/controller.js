@@ -1,24 +1,28 @@
 "use strict";
 
-module.exports = create_controller;
+module.exports = controller;
 
-function create_controller () {
-  //SVG namespace
-  var namespace = "http://www.w3.org/2000/svg";
-  var bGeneration = document.getElementById("bGeneration");
-  bGeneration.addEventListener("click", function () {
-    var canvas_container = document.getElementById("autoimg"); 
-    // Remove the old svg and others things added by a user
-    while(canvas_container.firstChild) {
-       canvas_container.removeChild(canvas_container.firstChild); 
-    }
-    var canvas = document.createElementNS(namespace, "svg");
-    var circle = document.createElementNS(namespace, "circle");
-    /* The three followings lines defines a circle of center 0,0 and radius 10*/
-    circle.setAttribute("cx", 0);
-    circle.setAttribute("cy", 0);
-    circle.setAttribute("r", 10);
-    canvas.appendChild(circle);
-    canvas_container.appendChild(canvas);
-  });
+const draw = require("./draw");
+const layout = require("./layout");
+
+function cleanup(container) {
+  let child;
+  while((child = container.firstChild)) {
+    container.removeChild(child); 
+  }
+}
+
+function controller() {
+  document
+    .getElementById("bGeneration")
+    .addEventListener("click", () => {
+      let container = document.getElementById("autoimg"); 
+      cleanup(container);
+      let automata = JSON.parse(document
+        .getElementById("autospec")
+        .getElementsByTagName("textarea")[0]
+        .value);
+      layout().automata(automata).lay();
+      draw(automata, container);
+    });
 }

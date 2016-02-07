@@ -53,7 +53,7 @@ pas été trouvés dans la liste des transitions
 
 Se pose sur le long terme le problème du style.
 
-==== Proposition avortée : cutomisation maximal
+==== Proposition avortée : customisation maximal
 
 On pourrait proposer un style hautement configurable, avec un système de
 classes et un langage à partir duquel on peut intégrer du CSS et un template
@@ -136,23 +136,26 @@ On veut représenter l'automate suivant.
 .Le même automate exprimé en JSON à l'aide d'un format exhaustif
 ----
 {
-  type: "finite-state",
-  alphabets: [
-    { name:"a" },
-    { name:"b" }
+  "type": "finite-state",
+  "alphabets": [
+    { "name":"a" },
+    { "name":"b" }
   ],
-  states: [
-    { name:"Napoleon", init:true, final:false },
-    { name:"2", init:false, final:true },
-    { name:"Salut", init:true, final:true }
-    { name:"1", init:false, final:false },
-    { name:"Bonjour, init:false, final:false },
+  "states": [
+    { "name":"Napoleon", "init":true, "final":false },
+    { "name":"2", "init":false, "final":true },
+    { "name":"Salut", "init":true, "final":true },
+    { "name":"1", "init":false, "final":false },
+    { "name":"Bonjour", "init":false, "final":false }
   ],
-  transitions: [
-    { source:0, target:3, symbol: 1 },
-    { source:1, target:3, symbol: 2 },
-    { source:3, target:1, symbol: 2 },
-    { source:1, target:4, symbol: 1 }
-  ],
+  "transitions": [
+    { "source":0, "target":3, "symbol":0 },
+    { "source":1, "target":3, "symbol":1 },
+    { "source":3, "target":1, "symbol":1 },
+    { "source":1, "target":4, "symbol":0 }
+  ]
 }
 ----
+
+- Les infos de style sont passées au moteur qui va les ignorer
+Donc protocole supplémentaire

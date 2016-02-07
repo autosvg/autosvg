@@ -1,12 +1,25 @@
 "use strict";
 
 module.exports = (new App());
-var create_controller = require("./controller"); 
+const controller = require("./controller");
 
 function App() {
-  this.main = function() {
-    log.info("Main!");
-    create_controller();
-    log.info(require("../lib").automata());
+  this.main = () => {
+    defaultJSON("example.json");
+    controller();
   };
+}
+
+function defaultJSON(file) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = () => {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document
+        .getElementById("autospec")
+        .getElementsByTagName("textarea")[0]
+        .value = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", file, true);
+  xhttp.send();
 }
