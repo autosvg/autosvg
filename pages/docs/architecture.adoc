@@ -1,6 +1,20 @@
 = Architecture
 
-Contenu des dossier :
+== UML
+
+[plantuml%inline, format="svg"]
+----
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+----
+
+Contenu des dossiers :
 
 - `app` : le code de l'application web
 - `lib` : le moteur de rendu ; y placer le code indépendant

@@ -28,7 +28,7 @@
         "browser": true,
         "commonjs": true
     },
-    "globals" {
+    "globals": {
       "log":false
     },
     "extends": "eslint:recommended"

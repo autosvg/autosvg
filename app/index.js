@@ -5,7 +5,7 @@ var create_controller = require("./controller");
 
 function App() {
   this.main = function() {
-    log.info("Main");
+    log.info("Main!");
     create_controller();
     log.info(require("../lib").automata());
   };

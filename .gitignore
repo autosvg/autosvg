@@ -5,12 +5,10 @@ logs
 npm-debug.log*
 
 # Dependency directory
-node_modules
+/node_modules/
 
 # Production
-/public/
-/build/
-/pages/
+/build/**
 
-# Asciidoctor output
-docs/*.html
+# Asciidoctor
+/.gem/

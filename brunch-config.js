@@ -1,15 +1,22 @@
 exports.config = {
   paths: {
-    public: "public",
+    public: "build/app",
     watched: [ "app", "lib" ]
   },
   files: {
     javascripts: {
-      joinTo: "app.js"
+      joinTo: {
+        "script.js": [ "app/**", "lib/**", "node_modules/**" ]
+      }
     },
     stylesheets: {
-      joinTo: "app.css"
+      joinTo: {
+        "style.css": [ "app/styles/**", "node_modules/**" ]
+      }
     }
+  },
+  conventions: {
+    assets: [ "app/assets/**" ]
   },
   sourceMaps: "absoluteUrl",
   server: {
@@ -18,24 +25,11 @@ exports.config = {
   npm: {
     enabled: true,
     globals: { log: "loglevel" },
-    styles: { "skeleton.css": [ "skeleton.css" ] }
+    styles: { "skeleton.css": [ "skeleton.css" ] },
+    whitelist: [ "asciidoctor.js" ]
   },
   modules: {
-    nameCleaner: (path) => path,
-  },
-  overrides: {
-    deploy: {
-      optimize: false,
-      sourceMaps: true,
-      paths: {
-        public: "pages"
-      },
-      plugins: {
-        autoReload: {
-          enable: false
-        }
-      }
-    }
+    nameCleaner: (path) => path
   },
   plugins: {
     babel: {
@@ -45,6 +39,40 @@ exports.config = {
     stylus: {
       linenos: true,
       firebug: true
+    }
+  },
+  overrides: {
+    pages: {
+      sourceMaps: false,
+      optimize: true,
+      files: {
+        javascripts: {
+          joinTo: {
+            "app/script.js": [ "app/**", "lib/**", "node_modules/**" ],
+            "script.js" : [ "pages/**", "node_modules/**" ]
+          }
+        },
+        stylesheets: {
+          joinTo: {
+            "app/style.css": [ "app/styles/**", "node_modules/**" ],
+            "style.css": [ "pages/styles/**" ]
+          }
+        }
+      },
+      paths: {
+        public: "build/pages",
+        watched: [ "app", "lib", "pages" ]
+      },
+      conventions: {
+        assets: [ "pages/assets/**" ]
+      },
+      plugins: {
+        static: {
+          processors: [
+            require("./bakery")
+          ]
+        }
+      }
     }
   }
 };

@@ -2,8 +2,11 @@
 /app/
 brunch-config.js
 
-# Docs
-/docs/
+# Pages
+/pages/
+
+# ESLint
+.eslintrc
 
 # Nix environment
 *.nix
@@ -22,8 +25,4 @@ npm-debug.log*
 node_modules
 
 # Production
-/public/
 /build/
-
-# Asciidoctor output
-docs/*.html

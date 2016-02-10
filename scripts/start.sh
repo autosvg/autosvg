@@ -13,4 +13,10 @@ if [ -z "$BROWSER" ]; then
   fi
 fi
 
-(sleep 1 && $BROWSER http://localhost:3333/ &> /dev/null) & brunch watch --server
+if [ "$1" = "-p" ]; then
+  ENV="-e pages"
+else
+  ENV=""
+fi
+
+(sleep 1 && $BROWSER http://localhost:3333/ &> /dev/null) & brunch watch --server $ENV

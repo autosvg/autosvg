@@ -1,9 +1,4 @@
 = Premières refléxions
-:doctype: article
-:description: TODO
-:keywords: TODO
-:toc: left
-:title-separator: :: 
 
 == Etude du produit
 
