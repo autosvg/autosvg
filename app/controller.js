@@ -23,6 +23,6 @@ function controller() {
         .getElementsByTagName("textarea")[0]
         .value);
       layout().automata(automata).lay();
-      draw(automata, container);
+      draw(automata, "autoimg");
     });
 }
