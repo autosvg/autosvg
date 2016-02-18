@@ -26,8 +26,8 @@ function layout() {
 
   accessor.lay = function() {
     automata.states.forEach((s, i) => {
-      s.x = 40 + (i % 3)*70;
-      s.y = 40 + ((i / 3) | 0)*70;
+      s.x = 50 + (i % 3)*100;
+      s.y = 50 + ((i / 3) | 0)*100;
     });
     return accessor;
   };
