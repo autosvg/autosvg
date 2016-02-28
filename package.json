@@ -25,7 +25,8 @@
     "html-brunch-static": "^1.2.1",
     "javascript-brunch": "^2.0.0",
     "stylus-brunch": "^2.0.0",
-    "uglify-js-brunch": "^2.0.1"
+    "uglify-js-brunch": "^2.0.1",
+    "pegjs": "^0.9.0"
   },
   "dependencies": {
     "svg.js": "^2.2.5",
