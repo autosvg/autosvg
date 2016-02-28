@@ -4,6 +4,7 @@ module.exports = controller;
 
 const draw = require("./draw");
 const layout = require("./layout");
+const parser = require("./parser");
 
 function cleanup(container) {
   let child;
@@ -18,11 +19,13 @@ function controller() {
     .addEventListener("click", () => {
       let container = document.getElementById("autoimg"); 
       cleanup(container);
-      let automata = JSON.parse(document
+      /*let automata = JSON.parse(document
         .getElementById("autospec")
         .getElementsByTagName("textarea")[0]
         .value);
       layout().automata(automata).lay();
-      draw(automata, "autoimg");
+      draw(automata, "autoimg");*/
+      log.debug(parser.parse("aabb"));
+
     });
 }
