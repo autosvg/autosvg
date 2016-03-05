@@ -25,13 +25,13 @@
     "html-brunch-static": "^1.2.1",
     "javascript-brunch": "^2.0.0",
     "stylus-brunch": "^2.0.0",
-    "uglify-js-brunch": "^2.0.1",
-    "pegjs": "^0.9.0"
+    "uglify-js-brunch": "^2.0.1"
   },
   "dependencies": {
     "svg.js": "^2.2.5",
     "loglevel": "^1.4.0",
-    "skeleton.css": "^2.0.4"
+    "skeleton.css": "^2.0.4",
+    "pegjs": "^0.9.0"
   },
   "repository": {
     "type": "git",
