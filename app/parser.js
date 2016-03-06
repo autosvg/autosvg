@@ -1,19 +1,34 @@
 "use strict";
 
-module.exports = parser;
+module.exports = Parser;
 
 const PEG = require("pegjs");
-const start = "START=\n AXIOM\n";
-const AXIOM = "AXIOM=\n (A/B)* \n";
-const A = "A=\n 'a'+\n";
-const B = "B=\n 'b'+\n";
-const eps = "";
 
 
-
-function parser() {
-
-    log.debug(PEG);
-    log.debug(start + AXIOM + A + B);
-    return PEG.buildParser(start + AXIOM + A + B);
+function Parser() {
+    this.gram;
 }
+
+Parser.prototype = {
+
+    loadGrammar: function(file) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", file, true);
+
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                this.gram = xhttp.responseText;
+                log.debug(this.gram);
+                //this.callback(gram);
+
+            }
+        };
+        xhttp.send(null);
+    },
+
+    buildParser: function() {
+        return PEG.buildParser(this.gram);
+
+    }
+
+};

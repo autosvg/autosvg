@@ -4,7 +4,8 @@ module.exports = controller;
 
 const draw = require("./draw");
 const layout = require("./layout");
-const parser = require("./parser");
+const Parser = require("./parser");
+
 
 function cleanup(container) {
     let child;
@@ -14,6 +15,15 @@ function cleanup(container) {
 }
 
 function controller() {
+
+    var parser = new Parser();
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        parser.loadGrammar("grammar.pegjs");
+
+    });
+
     document
         .getElementById("bGeneration")
         .addEventListener("click", () => {
@@ -27,7 +37,9 @@ function controller() {
             /*
       layout().automata(automata).lay();
       draw(automata, "autoimg");*/
-            log.debug(parser().parse(l));
+
+            //log.debug(parser().parse(l));
+            log.debug(parser.buildParser().parse(l));
 
         });
 }
