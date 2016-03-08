@@ -22,8 +22,13 @@ automaton_type =
     "finite automaton" / "fa"
 
 automaton_body =
-    block_start blocks:(states:(state_block?) ws alphabet:(alphabet_block?)) block_end 
-    { return blocks; }
+    block_start states:(state_block?) ws alphabet:(alphabet_block?) ws transitions:(transition_block?) block_end 
+    {   let body = new Block("body");
+        body.appendInformations("states", states);
+        body.appendInformations("alphabet", alphabet);
+        body.appendInformations("transitions", transitions);
+        return body;
+    }
 
 state_block =
     name:("state" / "s") ws attrs:(attrs?) block_start states:states block_end
@@ -33,7 +38,7 @@ states =
     state* 
 
 state =
-    name:$([a-zA-Z_]+) attrs*
+    name:$([a-zA-Z_]+) attrs* ws
     { return name; }
 
 alphabet_block =
@@ -44,8 +49,24 @@ symbols =
     symbol*
 
 symbol =
-    name:$([a-zA-Z_]+) attrs*
+    name:$([a-zA-Z_]+) attrs* ws
     { return name; }
+
+transition_block =
+    name:("transitions" / "t") ws attrs:(attrs?) block_start transitions:transitions block_end
+    { return transitions; }
+
+transitions =
+    transition*
+
+transition =
+    start:state symbol:symbol "->"  ws end:state ws
+    {   let transition = new Block("t");
+        transition.appendInformations("start", start);
+        transition.appendInformations("symbol", start);
+        transition.appendInformations("end", start);
+        return transition;
+    }
 
 attrs =
     "[" attrs:(attr*) "]" ws { return attrs;  }
