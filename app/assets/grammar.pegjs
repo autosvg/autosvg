@@ -32,7 +32,11 @@ automaton_body =
 
 state_block =
     name:("state" / "s") ws attrs:(attrs?) block_start states:states block_end
-    { return states; }
+    {   let states_block = new Block(name);
+        states_block.appendInformations("attrs", attrs);
+        states_block.appendInformations("states", states);
+        return states_block; 
+    }
 
 states =
     state* 
@@ -43,7 +47,11 @@ state =
 
 alphabet_block =
     name:("alphabet" / "a") ws attrs? block_start alphabet:symbols block_end
-    { return alphabet; }
+    {   let alphabet_block = new Block(name);
+        alphabet_block.appendInformations("attrs", attrs);
+        alphabet_block.appendInformations("alphabet", alphabet);
+        return alphabet_block; 
+    }
 
 symbols =
     symbol*
@@ -54,7 +62,12 @@ symbol =
 
 transition_block =
     name:("transitions" / "t") ws attrs:(attrs?) block_start transitions:transitions block_end
-    { return transitions; }
+    {   let transition_block = new Block(name);
+        transition_block.appendInformations("attrs", attrs);
+        transition_block.appendInformations("transitions", transitions);
+        return transition_block; 
+    }
+    
 
 transitions =
     transition*
@@ -63,8 +76,8 @@ transition =
     start:state symbol:symbol "->"  ws end:state ws
     {   let transition = new Block("t");
         transition.appendInformations("start", start);
-        transition.appendInformations("symbol", start);
-        transition.appendInformations("end", start);
+        transition.appendInformations("symbol", symbol);
+        transition.appendInformations("end", end);
         return transition;
     }
 
