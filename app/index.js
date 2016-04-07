@@ -5,12 +5,12 @@ const controller = require("./controller");
 
 function App() {
   this.main = () => {
-    //defaultJSON("example.json");
+    defaultText("example.grammar");
     controller();
   };
 }
 
-function defaultJSON(file) {
+function defaultText(file) {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = () => {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
