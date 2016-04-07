@@ -1,8 +1,4 @@
-"use strict";
-
-module.exports = layout;
-
-function layout() {
+export default function layout() {
 
   let automata = {
     type: "finite",

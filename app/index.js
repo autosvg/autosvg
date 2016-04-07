@@ -1,13 +1,8 @@
-"use strict";
+import controller from "./controller";
 
-module.exports = (new App());
-const controller = require("./controller");
-
-function App() {
-  this.main = () => {
-    defaultJSON("example.json");
-    controller();
-  };
+export default function main() {
+  defaultJSON("example.json");
+  controller();
 }
 
 function defaultJSON(file) {

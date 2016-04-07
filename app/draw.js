@@ -1,8 +1,6 @@
-"use strict";
+import SVG from "svg.js";
 
-module.exports = draw;
-
-const SVG = require("svg.js");
+export default draw;
 
 SVG.extend(SVG.Text, {
   place: function(x, y) {

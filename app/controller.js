@@ -1,18 +1,7 @@
-"use strict";
+import draw from "./draw";
+import layout from "./layout";
 
-module.exports = controller;
-
-const draw = require("./draw");
-const layout = require("./layout");
-
-function cleanup(container) {
-  let child;
-  while((child = container.firstChild)) {
-    container.removeChild(child); 
-  }
-}
-
-function controller() {
+export default function controller() {
   document
     .getElementById("bGeneration")
     .addEventListener("click", () => {
@@ -26,3 +15,11 @@ function controller() {
       draw(automata, "autoimg");
     });
 }
+
+function cleanup(container) {
+  let child;
+  while((child = container.firstChild)) {
+    container.removeChild(child); 
+  }
+}
+
