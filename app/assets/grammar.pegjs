@@ -87,8 +87,10 @@ attrs =
     "[" attrs:(attr*) "]" ws { return attrs; }
 
 attr =
-    name:$([a-zA-Z_]+) ws  
+    name:$([a-zA-Z_]+)
     { return name;}
+
+
 
 block_start =
    "{" ws 
