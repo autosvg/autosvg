@@ -1,5 +1,8 @@
 #!/bin/sh
 
+CMD="node_modules/brunch/bin/brunch"
+DIR="$(pwd)/build"
+
 if [ -z "$BROWSER" ]; then
   if [ "$OSTYPE" = "darwin"* ]; then
     echo "Set the BROWSER environment variable to use a specific browser"
@@ -9,14 +12,30 @@ if [ -z "$BROWSER" ]; then
     BROWSER=xdg-open
   else
     echo "You must set the BROWSER environment variable to the appropriate command"
-    return 1
+    exit 1
   fi
 fi
 
-if [ "$1" = "-p" ]; then
-  ENV="-e pages"
+CMD="(sleep 1 && $BROWSER"' $LINK '"&> /dev/null) & $CMD"
+
+if [ "$1" = "watch" ]; then
+  CMD=$CMD" watch --server"
+elif [ "$1" = "build" ]; then
+  CMD=""$CMD" build"
 else
-  ENV=""
+  echo "Unkown command"
+  exit 1
 fi
 
-(sleep 1 && $BROWSER http://localhost:3333/ &> /dev/null) & brunch watch --server $ENV
+if [ "$2" = "-p" ]; then 
+  DIR=$DIR"/pages"
+  LINK="file://$DIR"
+  CMD=$CMD" -e pages"
+else
+  LINK="http://localhost:3333/"
+  DIR=$DIR"/app"
+fi
+
+CMD="$CMD"
+echo $CMD
+eval $CMD

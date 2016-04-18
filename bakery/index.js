@@ -7,10 +7,11 @@ const ls = fs.readdirSync;
 const asciidoctor = require("./asciidoctor").asciidoctor;
 const opal = require("./asciidoctor").opal;
 const anymatch = require("anymatch");
+const plantuml = require("node-plantuml");
 
 function Baker() {
   const adocs = new Map();
-  const matchers = [ "pages/docs/**", "pages/index.hs" ];
+  const matchers = [ "pages/docs/**" ];
   const options = opal.hash({
     header_footer: true,
     attributes: opal.hash({
@@ -34,7 +35,7 @@ function Baker() {
   function link(filename) {
     return {
       title: convert("pages/docs/" + filename).attributes.smap.doctitle,
-      link: "docs/" + htmlExt(filename)
+      link: "docs/" + changeExt(filename, "html")
     };
   }
 
@@ -43,28 +44,25 @@ function Baker() {
   this.compile = function(data, filename, callback) {
     const ext = filename.substr(filename.lastIndexOf(".") + 1, filename.length);
 
-    if(ext  == "adoc") {
+    if(ext == "adoc") {
       callback(
         null, [ {
-          filename: htmlExt(filename),
+          filename: changeExt(filename, "html"),
           content: convert(filename).$render()
         } ],
+        null);
+    } else {
+      callback(null, [ {
+        filename: filename,
+        content: data
+      } ],
       null);
-    } else if(ext == "hs") {
-      const context = {
-        documents: ls("pages/docs").map(link)
-      };
-      callback(
-        null, [ {
-          filename: htmlExt(filename),
-          content: handlebars.compile(data)(context)
-        } ], null);
     }
   };
 }
 
-function htmlExt(filename) {
-  return filename.substr(0, filename.lastIndexOf(".")) + ".html";
+function changeExt(filename, e) {
+  return filename.substr(0, filename.lastIndexOf(".")) + "." + e;
 }
 
 module.exports = new Baker();

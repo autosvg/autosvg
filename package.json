@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Draw automatas in your browser",
   "scripts": {
-    "start": "./scripts/start.sh",
-    "pages": "./scripts/start.sh -p",
+    "start": "./scripts/start.sh watch",
+    "pages": "./scripts/start.sh build -p",
     "deploy": "./scripts/deploy.sh",
     "init-deploy": "git clone git@github.com:autosvg/autosvg.github.io.git build/pages",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,16 +22,22 @@
     "clean-css-brunch": "^2.0.0",
     "css-brunch": "^2.6.1",
     "eslint": "^2.7.0",
-    "handlebars": "^4.0.5",
     "html-brunch-static": "^1.2.1",
     "javascript-brunch": "^2.0.0",
+    "jsdoc": "^3.4.0",
+    "jsdoc-brunch": "gpyh/jsdoc-brunch",
+    "minami": "gpyh/minami",
     "stylus-brunch": "^2.0.0",
+    "taffydb": "^2.7.2",
     "uglify-js-brunch": "^2.0.1"
   },
   "dependencies": {
-    "svg.js": "^2.2.5",
+    "d3": "^3.5.16",
+    "dagre-d3": "^0.4.17",
+    "dagre": "^0.7.4",
     "loglevel": "^1.4.0",
-    "skeleton.css": "^2.0.4"
+    "skeleton.css": "^2.0.4",
+    "svg.js": "^2.2.5"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,61 @@
+@startuml
+
+Automaton "1" *-- "*" State
+Automaton "1" *-- "*" Transition
+Automaton "1" *-- "*" Sym
+Transition "*" o-- "1" State : "from"
+Transition "*" o-- "1" State : "to"
+Transition "*" o-- "1" Sym : "symbol"
+
+class globals {
+    + state() : State
+    + transition() : Transition
+    + symbol() : Sym
+}
+hide globals circle
+hide globals fields
+
+class Automaton {
+  __
+  + add(s : State) = this
+  + remove(s : State)= this
+  + states() : Array<State>
+  ..
+  + add(t : Transition) = this
+  + remove(t : Transition)= this
+  + transitions() : Array<Transition>
+  ..
+  + add(a : Sym) = this
+  + remove(a : Sym) = this
+  + alphabet() : Array<Sym>
+}
+
+class State {
+  - final : bool = false
+  - initial : bool = false
+  __
+  + isFinal() : bool
+  + final() = this
+  + notFinal() = this
+  ..
+  + isInitial() : bool
+  + initial() = this
+  + notInitial() = this
+}
+
+class Transition{ 
+ __
+ + from() : State
+ + from(start : State) = this
+ ..
+ + to() : State 
+ + to(end : State) = this
+ ..
+ + symbol() : Sym
+ + symbol(symbol : Sym) = this
+}
+
+class Sym{
+}
+
+@enduml

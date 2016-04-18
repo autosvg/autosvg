@@ -23,7 +23,7 @@ exports.config = {
   sourceMaps: "absoluteUrl",
   npm: {
     enabled: true,
-    globals: { log: "loglevel" },
+    globals: { log: "loglevel", d3: "d3" },
     styles: { "skeleton.css": [ "skeleton.css" ] }
   },
   modules: {
@@ -32,6 +32,10 @@ exports.config = {
   plugins: {
     babel: {
       presets: [ "es2015" ]
+    },
+    jsdoc: {
+      enabled: false,
+      configfile: "jsdoc-config.json"
     }
   },
   overrides: {
@@ -63,10 +67,13 @@ exports.config = {
         assets: [ "pages/assets/**" ]
       },
       plugins: {
-        static: {
-          processors: [
-            require("./bakery")
-          ]
+        // static: {
+        //   processors: [
+        //     require("./bakery")
+        //   ]
+        // },
+        jsdoc: {
+          enabled: true
         }
       }
     }
