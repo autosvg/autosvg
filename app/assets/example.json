@@ -1,21 +1,22 @@
 {
-  "type": "finite",
-  "alphabet": [
-    { "name":"a" },
-    { "name":"b" }
+  "type": "finite-state-machine",
+  "symbols": [
+    { "label": "a" },
+    { "label": "b" }
   ],
   "states": [
-    { "name":"Napoleon", "init":true },
-    { "name":"2", "final":true },
-    { "name":"Salut", "init":true, "final":true },
-    { "name":"1" },
-    { "name":"Bonjour" }
+    { "label": "Napoleon", "initial": true },
+    { "label": "2", "terminal": true },
+    { "label": "Salut", "initial": true, "terminal": true },
+    { "label": "1" },
+    { "label": "Bonjour" }
   ],
   "transitions": [
-    { "source":0, "target":3, "symbol":0 },
-    { "source":1, "target":3, "symbol":1 },
-    { "source":3, "target":1, "symbol":1 },
-    { "source":1, "target":4, "symbol":0 },
-    { "source":2, "target":0, "symbol":0 }
+    { "from": 0, "to": 3, "by": 0 },
+    { "from": 1, "to": 3, "by": 1 },
+    { "from": 3, "to": 1, "by": 1 },
+    { "from": 1, "to": 4, "by": 0 },
+    { "from": 2, "to": 0, "by": 0 }
   ]
 }
+
