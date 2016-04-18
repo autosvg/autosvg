@@ -37,7 +37,7 @@
     "dagre": "^0.7.4",
     "loglevel": "^1.4.0",
     "skeleton.css": "^2.0.4",
-    "svg.js": "^2.2.5"
+    "pegjs": "^0.9.0"
   },
   "repository": {
     "type": "git",

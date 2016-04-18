@@ -2,25 +2,33 @@
  * @module app/controller
  */
 
-import draw from "./draw";
-import { deserialize } from "../lib/json";
+import sketchFsm from "../lib/sketchFsm";
 import dagreD3 from "dagre-d3";
 import d3 from "d3";
+import Parser from "./parser";
 
 /**
  * Controller
  * @return {Object} Not really, just testing
  */
 export default function controller() {
-  document
-    .getElementById("bGeneration")
+
+  var parser = new Parser();
+
+  document.addEventListener("DOMContentLoaded", function() {
+    parser.loadGrammar("grammar.pegjs");
+
+  });
+
+  document.getElementById("bGeneration")
     .addEventListener("click", () => {
-      let container = document.getElementById("autoimg"); 
+      let container = document.getElementById("autoimg");
       cleanup(container);
-      let fsm = deserialize(document
+      var language = document
         .getElementById("autospec")
         .getElementsByTagName("textarea")[0]
-        .value);
+        .value;
+      let fsm = sketchFsm(parser.buildParser().parse(language));
       let svg = d3.select("#autoimg").append("svg");
       let render = new dagreD3.render();
       log.warn(fsm.graph);
