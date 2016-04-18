@@ -21,8 +21,10 @@
         1
       ],
       "no-unused-vars": [
-        1
-      ]
+        1, {
+          "args": "none"
+        }
+      ],
   },
   "parserOptions": {
     "ecmaVersion": 6,
