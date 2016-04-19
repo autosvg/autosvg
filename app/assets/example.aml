@@ -2,7 +2,7 @@ finite automaton {
     states {
         0 1 2
     }
-    alphabet {
+    symbols {
         a b
     }
     transitions {

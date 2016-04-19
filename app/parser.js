@@ -14,7 +14,6 @@ Parser.prototype = {
     xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
         this.grammar = xhttp.responseText;
-        log.debug(this.grammar);
 
       }
     };
