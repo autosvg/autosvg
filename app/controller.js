@@ -24,11 +24,22 @@ export default function controller() {
     .addEventListener("click", () => {
       let container = document.getElementById("autoimg");
       cleanup(container);
+      document.getElementById("autospec")
+        .getElementsByTagName("textarea")[1]
+        .value = "";
       var language = document
         .getElementById("autospec")
         .getElementsByTagName("textarea")[0]
         .value;
-      let fsm = sketchFsm(parser.buildParser().parse(language));
+      try {
+        log.debug(parser.buildParser().parse(language));
+      } catch (err) {
+        /*document
+          .getElementById("autospec")
+          .getElementsByTagName("textarea")[1]
+          .value = */console.log(err);
+      }
+      //let fsm = sketchFsm(parser.buildParser().parse(language));
       let svg = d3.select("#autoimg").append("svg");
       let render = new dagreD3.render();
       log.warn(fsm.graph);
