@@ -27,7 +27,9 @@
     "jsdoc": "^3.4.0",
     "jsdoc-brunch": "gpyh/jsdoc-brunch",
     "minami": "gpyh/minami",
+    "pegjs-brunch": "gpyh/pegjs-brunch",
     "stylus-brunch": "^2.0.0",
+    "svg.js": "^2.3.0",
     "taffydb": "^2.7.2",
     "uglify-js-brunch": "^2.0.1"
   },

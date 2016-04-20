@@ -5,20 +5,13 @@
 import sketchFsm from "../lib/sketchFsm";
 import dagreD3 from "dagre-d3";
 import d3 from "d3";
-import Parser from "./parser";
+import parser from "./parser";
 
 /**
  * Controller
  * @return {Object} Not really, just testing
  */
 export default function controller() {
-
-  var parser = new Parser();
-
-  document.addEventListener("DOMContentLoaded", function() {
-    parser.loadGrammar("grammar.pegjs");
-
-  });
 
   document.getElementById("bGeneration")
     .addEventListener("click", () => {
@@ -32,7 +25,7 @@ export default function controller() {
         .getElementsByTagName("textarea")[0]
         .value;
       try {
-        log.debug(parser.buildParser().parse(language));
+        log.debug(parser.parse(language));
       } catch (err) {
         /*document
           .getElementById("autospec")
