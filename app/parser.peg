@@ -46,7 +46,7 @@ block =
 
 states_block =
   t:"states" ws attrs:(attrs?) block_start s:states block_end
-  {
+  { 
     if(data.states == null) {
       data.states = s;
       setAttrs(defaults.states, attrs);
