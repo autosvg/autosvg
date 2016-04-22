@@ -1,0 +1,10 @@
+finite automaton {
+  states {
+    1[initial]
+  }
+  transitions {
+    1 cancel -> 2
+    1 redeem -> 3
+    3 transfer -> 4
+  }
+}

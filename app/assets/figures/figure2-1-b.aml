@@ -1,0 +1,9 @@
+finite automaton {
+  states {
+    0[label=""]
+  }
+  transitions {
+    0 cancel -> 0
+    0 pay -> 0
+  }
+}
