@@ -1,58 +1,87 @@
-import SVG from "svg.js";
+import d3 from "d3";
 
 export default draw;
 
-SVG.extend(SVG.Text, {
-  place: function(x, y) {
-    return this.attr({
-      x: x - this.length()/2,
-      y: y
-    });
+let previousContainer;
+
+function draw(fsm, container) {
+
+  // Gather width and height from labels
+  // Layout
+  // Draw
+  cleanup(previousContainer);
+  
+  let states = Array.from(fsm.states.all());
+  let edges = Array.from(fsm.edges.all());
+  for(let s of states) {
+    const bb = boundingBox(s.label(), container);
+    s.width(bb.width).height(bb.height);
+    log.debug(s);
   }
-});
+  for(let e of edges) {
+    const bb = boundingBox(e.label, container);
+    e.width(bb.width).height(bb.height);
+  }
 
-function draw(automata, container) {
+  fsm.layout();
 
-  let radius = 18;
-  let offset = Math.sqrt(radius);
+  let svg = d3.select(container).append("svg");
+  log.debug(fsm);
+  log.debug(svg);
+  svg.selectAll(".state")
+  .data(states).enter()
+  .append("ellipse")
+  .attr("class", "state")
+  .attr("rx", (d) => log.debug(d))
+  .attr("rx", (d) => d.width())
+  .attr("ry", (d) => d.height())
+  .attr("cx", (d) => d.x())
+  .attr("cy", (d) => d.y())
+  .style("fill", "#44AAFF");
 
-  let svg = SVG(container);
-  svg.node.setAttribute("preserveAspectRatio", "xMidYMid meet");
-  // svg.width("100%").height("auto");
+  svg.selectAll(".stateLabel")
+  .data(states).enter()
+  .append("text")
+  .attr("class", "stateLabel")
+  .attr("x", cornerX)
+  .attr("y", cornerY)
+  .text((d) => d.label());
 
-  automata.transitions.forEach((t) => {
-    t.line = svg.line(t.source.x, t.source.y, t.target.x, t.target.y)
-      .stroke({ color: "#000", width: 2 })
-      .on("mouseover", function () {
-        t.source.circle.stroke("#fa0");
-        t.target.circle.stroke("#14a");
-        t.line.stroke("#f22");
-        t.text.font({
-          fill: "#0a0"
-        });
-      }).on("mouseout", function () {
-        t.source.circle.stroke("#000");
-        t.target.circle.stroke("#000");
-        t.line.stroke("#000");
-        t.text.font({
-          fill: "#000"
-        });
-      });
+  svg.selectAll(".edgeLabel")
+  .data(edges).enter()
+  .append("text")
+  .attr("class", "edgeLabel")
+  .attr("x", cornerX)
+  .attr("y", cornerY)
+  .text((d) => d.label);
 
-    t.text = svg.plain(t.symbol.name)
-      .place((t.source.x + t.target.x)/2,
-             (t.source.y + t.target.y)/2);
-  });
+  log.debug(edges);
+  let points = Array.prototype.concat.apply([],edges.map((e) => e.points));
+  log.debug(points);
+  svg.selectAll(".edge")
+  .data(points).enter()
+  .append("circle")
+  .attr("class", "edge")
+  .attr("r", 3)
+  .attr("cx", (d) => d.x)
+  .attr("cy", (d) => d.y)
+  .style("fill", "#FFAAAA");
 
-  automata.states.forEach((s) => {
-    s.circle = svg.circle()
-      .radius(radius)
-      .attr({ cx: s.x, cy: s.y})
-      .fill("#fff")
-      .stroke({ color: "#000", width: 2})
-      .click(() => log.info(s));
-    s.text = svg.plain(s.name)
-      .place(s.x, s.y + offset);
-  });
-
+  previousContainer = container;
 }
+
+function boundingBox(str, container) {
+  return { width: 50, height: 50};
+}
+
+const cornerX = (obj) => obj.x() - obj.width()/2;
+const cornerY = (obj) => obj.y() - obj.height()/2;
+
+const cleanup = (container) => {
+  if(container === undefined) { return; }
+  container = d3.select(container);
+  let child;
+  while((child = container.firstChild)) {
+    container.removeChild(child);
+  }
+};
