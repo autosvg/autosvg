@@ -1,17 +1,30 @@
 {
     function setAttrs(obj, attrs) {
         if(attrs != null) {
-            for (var i = 0; i < attrs.length; i++) {
-              Object.assign(obj, attrs[i]);
-            }
+          for (var i = 0; i < attrs.length; i++) {
+            Object.assign(obj, attrs[i].data);
+          }
         }
         return obj;
     }
 
-    let defaults = {
-    };
+    function setLocations(obj, attrs) {
+      if(attrs != null) {
+        for (var i = 0; i < attrs.length; i++) {
+          Object.assign(obj, attrs[i].location);
+        }
+      }
+      return obj;
+    }
 
-    let data = {
+    let desc = {
+      defaults: {},
+      data: {}
+    }
+
+    let location = {
+      defaults: {},
+      data: {}
     };
 }
 
@@ -47,9 +60,10 @@ block =
 states_block =
   t:"states" ws attrs:(attrs?) block_start s:states block_end
   { 
-    if(data.states == null) {
-      data.states = s;
-      setAttrs(defaults.states, attrs);
+    if(desc.data.states == null) {
+      desc.data.states = s;
+      setAttrs(desc.defaults.states, attrs);
+      setLocations(location.defaults.states, attrs);
     } else {
       expected("Multiple declarations of states block");
     }
@@ -61,6 +75,7 @@ symbols_block =
     if(data.symbols == null) {
       data.symbols = s;
       setAttrs(defaults.symbols, attrs);
+      setLocations(defaults.symbols.location, attrs)
     } else {
       expected("Multiple declarations of symbols block");
     }
@@ -81,7 +96,14 @@ states =
   state*
 
 symbols =
-  symbol*
+  symbols:(symbol*) {
+    let loc = symbols.map((s) => s.location);
+    loc[locationToken] = location();
+    return {
+      data: symbols.map((s) => s.data),
+      location: loc
+    }
+  }
 
 transitions =
   transitions:(transition*)
@@ -102,12 +124,22 @@ transitions =
 state =
   id:identifier ws attrs:(attrs?)
   {
-    return setAttrs({id}, attrs);
+    return {
+      data: setAttrs({id}, attrs),
+      location: setAttrs({id}, attrs)
+    };
   }
 
 symbol =
   id:identifier ws attrs:(attrs?)
   {
+    return {
+      data: setAttrs({id}, attrs),
+      location: setLocations{
+        id: location(),
+        [locationToken]: location() 
+      }, attrs),
+    }
     return setAttrs({id}, attrs);
   }
 
@@ -124,10 +156,21 @@ list_identifier =
 
 
 attrs =
-    "[" attrs:(attr*) "]" ws { return attrs; }
+    "[" attrs:(attr*) "]" ws { return {
+      data: attrs.map((a) => a.data),
+      location: attrs.map((a) => a.location)
+    }; }
 
 attr =
-    name:identifier ws "=" ws value:boolean ws { let obj = {}; obj[name] = (value == "true"); return obj; }
+    name:identifier ws "=" ws value:boolean ws { 
+      let obj = {}, loc = {};
+      obj[name] = (value === "true");
+      loc[name] = location();
+      return {
+        data: obj,
+        location: loc
+      };
+    }
     / name:identifier ws "=" ws color:color ws { let obj = {}; obj[name] = color; return obj; }
     / name:identifier ws "=" ws value:quoted_string ws  { let obj = {}; obj[name] = value; return obj; } 
     / name:identifier ws { let obj = {}; obj[name] = true; return obj;}
