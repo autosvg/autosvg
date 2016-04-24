@@ -28,7 +28,7 @@ export default function controller() {
         .value;
         let l = parser.parse(language);
         log.debug(l);
-        let p = pipeline(l);
+        let p = pipeline(l.desc);
         if(exception(p)) { log.debug(p.message); }
         else { log.debug(p) };
     });

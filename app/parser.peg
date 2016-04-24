@@ -1,37 +1,47 @@
 {
     function setAttrs(obj, attrs) {
         if(attrs != null) {
-            for (var i = 0; i < attrs.length; i++) {
-              Object.assign(obj, attrs[i]);
-            }
+          for (var i = 0; i < attrs.data.length; i++) {
+            Object.assign(obj, attrs.data[i]);
+          }
         }
         return obj;
     }
 
-    let defaults = {
-    };
+    function setLocations(obj, attrs) {
+      if(attrs != null) {
+        for (var i = 0; i < attrs.location.length; i++) {
+          Object.assign(obj, attrs.location[i]);
+        }
+      }
+      return obj;
+    }
 
-    let data = {
+    let desc = {
+      defaults: {},
+      data: {}
+    }
+
+    let loc = {
+      defaults: {},
+      data: {}
     };
 }
 
 start =
   t:type ws attrs:(attrs?) a:automaton_block
   { 
-    let automaton = new Object();
-    automaton.type = t;
-    automaton.defaults = defaults
-    if(data.transitions == null) {
-      expected("transitions block");
-    }
-    automaton.data = data;
-    setAttrs(automaton, attrs);
-    return automaton;
+    setAttrs(desc, attrs);
+    setLocations(loc, attrs);
+    return {desc, loc};
   }
 
 
 type =
-    "finite automaton"
+    t:$"finite automaton" {
+        desc.type = t;
+        loc.type = location();
+    }
 
 automaton_block =
   block_start blocks:blocks block_end 
@@ -47,9 +57,13 @@ block =
 states_block =
   t:"states" ws attrs:(attrs?) block_start s:states block_end
   { 
-    if(data.states == null) {
-      data.states = s;
-      setAttrs(defaults.states, attrs);
+    if(desc.data.states == null) {
+      desc.data.states = s.data ;
+      loc.data.states = s.location;
+      desc.defaults.states = {};
+      loc.defaults.states = {};
+      setAttrs(desc.defaults.states, attrs);
+      setLocations(loc.defaults.states, attrs);
     } else {
       expected("Multiple declarations of states block");
     }
@@ -58,92 +72,195 @@ states_block =
 symbols_block =
   t:"symbols" ws attrs:(attrs?) block_start s:symbols block_end
   {
-    if(data.symbols == null) {
-      data.symbols = s;
-      setAttrs(defaults.symbols, attrs);
+    if(desc.data.symbols == null) {
+      desc.data.symbols = s.data;
+      loc.data.symbols = s.location;
+      desc.defaults.symbols = {};
+      loc.defaults.symbols = {};
+      setAttrs(desc.defaults.symbols, attrs);
+      setLocations(loc.defaults.symbols, attrs);
     } else {
       expected("Multiple declarations of symbols block");
     }
   }
 
 transitions_block =
-  t:"transitions" ws attrs:(attrs?) block_start t:transitions block_end
+  "transitions" ws attrs:(attrs?) block_start t:transitions block_end
   {
-    if(data.transitions == null) {
-      data.transitions = t;
-      setAttrs(defaults.transitions, attrs);
+    if(desc.data.transitions == null) {
+      desc.data.transitions = t.data;
+      loc.data.transitions = t.location;
+      desc.defaults.transitions = {};
+      loc.defaults.transitions = {};
+      setAttrs(desc.defaults.transitions, attrs);
+      setLocations(loc.defaults.transitions, attrs);
     } else {
       expected("Multiple declarations of transitions block");
     }
   }
 
 states =
-  state*
+  states:(state*) {
+      return {
+        data: states.map((s) => s.data),
+        location: states.map((s) => s.location)
+      }
+  }
 
 symbols =
-  symbol*
+  symbols:(symbol*) {
+    return {
+        data: symbols.map((s) => s.data),
+        location: symbols.map((s) => s.location)
+    }
+  }
 
 transitions =
   transitions:(transition*)
   {
-    let ts = new Array();
+    let data = new Array();
+    let location = new Array();
     for(var i = 0; i < transitions.length; i++) {
-      for(var j = 0; j < transitions[i].to.length; j++) {
-        let new_t = new Object();
-        new_t.from = transitions[i].from;
-        new_t.by = transitions[i].by;
-        new_t.to = transitions[i].to[j];
-        ts.push(setAttrs(new_t, transitions[i].attrs));
-      }
+        for(var j = 0; j < transitions[i].data.to.length; j++) {
+            log.debug(transitions[i].data.attrs);
+            data.push(setAttrs({
+                from: transitions[i].data.from,
+                by: transitions[i].data.by,
+                to: transitions[i].data.to[j].data
+            }, transitions[i].data.attrs));
+            location.push(setLocations({
+                from: transitions[i].location.from,
+                by: transitions[i].location.by,
+                to: transitions[i].data.to[j].location
+            }, transitions[i].data.attrs));
+        }
     }
-    return ts;
+    return {data, location}
   }
 
 state =
   id:identifier ws attrs:(attrs?)
   {
-    return setAttrs({id}, attrs);
+    return {
+        data: setAttrs({id: id.data}, attrs),
+        location: setLocations({
+            id: location(),
+        }, attrs)
+    };
   }
 
 symbol =
   id:identifier ws attrs:(attrs?)
   {
-    return setAttrs({id}, attrs);
+    return {
+        data: setAttrs({id: id.data}, attrs),
+        location: setLocations({
+            id: location(),
+        }, attrs),
+    }
   }
 
 transition =
   from:identifier ws by:identifier ws "->"  ws to:list_identifier ws  attrs:(attrs?) ws
   {
-    return {from, by, to, attrs};
+    return {
+        data: {from: from.data, by: by.data, to: to.data, attrs},
+        location: {from: from.location, by:  by.location, to:  to.location, attrs}
+    };
   }
 
 
 list_identifier =
-    i:identifier "," l:list_identifier { return new Array(i).concat(l);}
-    / i:identifier { return new Array(i) };
+    i:identifier "," l:list_identifier {
+        return {
+            data: new Array(i).concat(l.data),
+            location : new Array(location()).concat(l.location)
+        }
+    }
+    / i:identifier { 
+        return {
+            data: new Array(i),
+            location: location()
+        };
+    }
 
 
 attrs =
-    "[" attrs:(attr*) "]" ws { return attrs; }
+    "[" attrs:(attr*) "]" ws { return {
+      data: attrs.map((a) => a.data),
+      location: attrs.map((a) => a.location)
+    }; }
 
 attr =
-    name:identifier ws "=" ws value:boolean ws { let obj = {}; obj[name] = (value == "true"); return obj; }
-    / name:identifier ws "=" ws color:color ws { let obj = {}; obj[name] = color; return obj; }
-    / name:identifier ws "=" ws value:quoted_string ws  { let obj = {}; obj[name] = value; return obj; } 
-    / name:identifier ws { let obj = {}; obj[name] = true; return obj;}
+    name:identifier ws "=" ws value:boolean ws { 
+      let obj = {}, loc = {};
+      obj[name.data] = (value === "true");
+      loc[name.data] = name.location;
+      return {
+        data: obj,
+        location: loc
+      };
+    }
+    / name:identifier ws "=" ws color:color ws { 
+        let obj = {}, loc = {}; 
+        obj[name.data] = color; 
+        loc[name.data] = name.location;
+        return {
+            data: obj,
+            location: loc
+        };
+    }
+    / name:identifier ws "=" ws value:quoted_string ws  { 
+        let obj = {}, loc = {}; 
+        obj[name.data] = value;
+        loc[name.data] = name.location;
+        return {
+            data: obj,
+            location: loc
+        };
+    } 
+    / name:identifier ws "=" ws value:number ws { 
+        let obj = {}, loc = {}; 
+        obj[name.data] = parseFloat(value); 
+        loc[name.data] = name.location;
+        return {
+            data: obj,
+            location: loc
+        };
+    }
+    / name:identifier ws { 
+        let obj = {}, loc = {}; 
+        obj[name.data] = true; 
+        loc[name.data] = name.location;
+        return {
+            data: obj,
+            location: loc
+        };
+    }
      
 
 identifier =
-    $([a-zA-Z_0-9]+)
+    id:$([a-zA-Z_0-9]+) {
+        return {
+            data: id,
+            location: location()
+        }
+    }
 
 string =
-    identifier
+    [^\"]*
 
 quoted_string =
    "\"" str:$string "\"" { return str; }
 
 color =
     color:$("#" $(hexdigit hexdigit hexdigit hexdigit hexdigit hexdigit / hexdigit hexdigit hexdigit)) { return color }
+
+number =
+    $((digit*)("."(digit+))?)
+
+digit =
+    ([0-9])
     
 hexdigit =
     ([a-fA-F0-9])
