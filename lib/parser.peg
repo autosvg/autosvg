@@ -122,7 +122,6 @@ transitions =
     let location = new Array();
     for(var i = 0; i < transitions.length; i++) {
         for(var j = 0; j < transitions[i].data.to.length; j++) {
-            log.debug(transitions[i].data.attrs);
             data.push(setAttrs({
                 from: transitions[i].data.from,
                 by: transitions[i].data.by,

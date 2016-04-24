@@ -1,0 +1,9 @@
+finite automaton {
+  states {
+    off[initial]
+  } 
+  transitions {
+    off Push -> on
+    on Push -> off
+  }
+}
