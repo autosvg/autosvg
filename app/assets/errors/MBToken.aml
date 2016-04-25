@@ -1,0 +1,8 @@
+finite automaton {
+    states {
+        0[label="Napoleon"] 1 2
+    }
+    symbols {
+        a b
+    }
+}
