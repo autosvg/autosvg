@@ -6,6 +6,7 @@
 import pipeline from "../lib/pipeline";
 import exception from "../lib/utils/exception";
 import draw from "./draw";
+import stringifyError from "../lib/error";
 
 /**
  * Controller
@@ -17,16 +18,15 @@ export default function controller() {
   .addEventListener("click", () => {
     let container = document.getElementById("autoimg");
     cleanup(container);
-    document.getElementById("autospec")
-    .getElementsByTagName("textarea")[1]
-    .value = "";
+    let error_container = document.getElementById("autospec")
+    .getElementsByTagName("textarea")[1];
+    error_container.value = "";
     var aml = document
     .getElementById("autospec")
     .getElementsByTagName("textarea")[0]
     .value;
     let fsm = pipeline(aml);
-    log.warn("Finite state machine");
-    if(exception(fsm)) { log.debug(fsm.message); }
+    if(exception(fsm)) { error_container.value = stringifyError(fsm); }
     else {
       log.warn("dagre graph");
       fsm.layout();

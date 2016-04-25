@@ -1,21 +1,9 @@
 {
-    function setAttrs(obj, attrs) {
-        if(attrs != null) {
-          for (var i = 0; i < attrs.data.length; i++) {
-            Object.assign(obj, attrs.data[i]);
-          }
-        }
-        return obj;
-    }
-
-    function setLocations(obj, attrs) {
-      if(attrs != null) {
-        for (var i = 0; i < attrs.location.length; i++) {
-          Object.assign(obj, attrs.location[i]);
-        }
-      }
-      return obj;
-    }
+    const init = require("./init.js");
+    const setAttrs = init.setAttrs;
+    const setLocations = init.setLocations;
+    const locationToken = init.locationToken;
+    const exception = init.exception;
 
     let desc = {
       defaults: {},
@@ -26,6 +14,7 @@
       defaults: {},
       data: {}
     };
+
 }
 
 start =
@@ -33,6 +22,9 @@ start =
   { 
     setAttrs(desc, attrs);
     setLocations(loc, attrs);
+    if(desc.data.transitions == null) {
+        throw exception.create(exception.MBToken, "transitions");
+    }
     return {desc, loc};
   }
 
@@ -64,8 +56,9 @@ states_block =
       loc.defaults.states = {};
       setAttrs(desc.defaults.states, attrs);
       setLocations(loc.defaults.states, attrs);
+      loc.defaults.states[locationToken] = location();
     } else {
-      expected("Multiple declarations of states block");
+        throw new exception.create(exception.ALDToken, "states", loc.defaults.states[locationToken], location());
     }
   }
 
@@ -79,8 +72,9 @@ symbols_block =
       loc.defaults.symbols = {};
       setAttrs(desc.defaults.symbols, attrs);
       setLocations(loc.defaults.symbols, attrs);
+      loc.defaults.symbols[locationToken] = location();
     } else {
-      expected("Multiple declarations of symbols block");
+        throw new exception.create(exception.ALDToken, "symbols", loc.defaults.symbols[locationToken], location());
     }
   }
 
@@ -94,8 +88,9 @@ transitions_block =
       loc.defaults.transitions = {};
       setAttrs(desc.defaults.transitions, attrs);
       setLocations(loc.defaults.transitions, attrs);
+      loc.defaults.transitions[locationToken] = location();
     } else {
-      expected("Multiple declarations of transitions block");
+        throw new exception.create(exception.ALDToken, "transitions", loc.defaults.transitions[locationToken], location());
     }
   }
 
