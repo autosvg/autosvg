@@ -1,8 +1,8 @@
 finite automaton {
   states {
-    q0[label="q<sub>0</sub>" initial]
-    q1[label="q<sub>1</sub>"]
-    q2[label="q<sub>2</sub>" terminal]
+    q0[label="q<tspan baseline-shift=sub>0</tspan>" initial]
+    q1[label="q<tspan baseline-shift=sub>1</tspan>"]
+    q2[label="q<tspan baseline-shift=sub>2</tspan>" terminal]
   }
   transitions {
     q0 1 -> q0
