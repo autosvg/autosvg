@@ -41,21 +41,20 @@ exports.config = {
   overrides: {
     pages: {
       sourceMaps: false,
-      optimize: true,
+      optimize: false,
       files: {
         javascripts: {
           joinTo: {
-            "app/app.js": /^app/,
-            "app/lib.js": /^lib/,
-            "app/vendor.js": /^node_modules/,
+            "app.js": /^(app|lib)/,
+            "vendor.js": /^node_modules/,
             "pages.js": /^pages/
           }
         },
         stylesheets: {
           joinTo: {
-            "app/vendor.css": /^node_modules/,
-            "app/style.css": /^app\/styles/,
-            "style.css": /^pages\/styles/
+            "vendor.css": /^node_modules/,
+            "style.css": /^app\/styles/,
+            "style-pages.css": /^pages\/styles/
           }
         }
       },
@@ -64,7 +63,7 @@ exports.config = {
         watched: [ "app", "lib", "pages" ]
       },
       conventions: {
-        assets: [ "pages/assets/**" ]
+        assets: [ "pages/assets/**", "app/assets/**" ]
       },
       plugins: {
         // static: {
