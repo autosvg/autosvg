@@ -4,7 +4,7 @@ export default draw;
 const stateDimensions = (statesG, minRadius=0) => {
   const text = statesG
   .append("text")
-  .html((d) => d.label());
+  .html((d) => d.label);
 
   const data = text.data();
   const nodes = text[0];
@@ -65,12 +65,11 @@ const edgeDimensions = (edgesG, maxWidth, minRadius=0, padRadius=0) => {
 const lineGenerator = d3.svg.line()
   .x((d) => d.x)
   .y((d) => d.y)
-  .interpolate("bundle")
-  .tension(0.7);
+  .interpolate("basis");
 
 const sq = (x) => x*x;
 
-const sign = (b) => (b|0)*2 -1;
+const sign = (bool) => (bool|0)*2 - 1;
 
 const intersection = (h, w, xA, yA, x0, y0) => {
   return {
@@ -79,15 +78,16 @@ const intersection = (h, w, xA, yA, x0, y0) => {
   };
 };
 
-const applyOffset = (offset, x, y, x0, y0) => {
-  const r = offset/Math.sqrt(sq(x - x0) + sq(y - y0));
+const translate = (x, y, tx, ty, d) => {
+  const r = d === undefined ? 1 : d/Math.sqrt(sq(tx) + sq(ty));
   return {
-    x: x + (x - x0)*r,
-    y: y + (y - y0)*r
+    x: x + tx*r,
+    y: y + ty*r
   };
 };
 
-const fixIntersections = (edges, offset=0) => {
+const fixIntersections = (edgesG, offset=0) => {
+  const edges = edgesG.data();
   let from, to, points, start, end, newStart, newEnd;
   for(let e of edges) {
     from = e.from;
@@ -106,88 +106,80 @@ const fixIntersections = (edges, offset=0) => {
       to.x(), to.y()
     );
     points.splice(1, 0, newStart);
-    points.splice(points.length-1, 0,
-                  applyOffset(offset, newEnd.x, newEnd.y, to.x(), to.y()));
+    points.splice(points.length-1, 0, translate(
+      newEnd.x, newEnd.y,
+      newEnd.x - to.x(), newEnd.y - to.y(),
+      offset));
     e.points(points);
   }
 };
 
-function draw(fsm, container, cfg) {
-
-  // Gather width and height from labels
-  // Layout
-  // Draw
-  cleanup(container);
-
-  const svg = d3
-  .select(container)
-  .append("svg");
-
-  const defs = svg.append("defs");
-
-  const arrowWidth = 8;
-  const arrowHeight = 6;
-
+const defineArrowHead = (defs, height, width) => {
   defs.append("marker")
   .attr({
     "id":"arrow",
     "refX":0,
-    "refY":arrowHeight/2,
-    "markerWidth": arrowWidth,
-    "markerHeight":arrowHeight,
+    "refY":height/2,
+    "markerWidth": width,
+    "markerHeight":height,
     "markerUnits": "userSpaceOnUse",
     "orient":"auto"
   }).append("path")
-  .attr("d", `M0,0 L0,${arrowHeight} L${arrowWidth},${arrowHeight/2} z`)
+  .attr("d", `M0,0 L0,${height} L${width},${height/2} z`)
   .attr("class","arrowHead");
+};
 
+function draw(fsm, container) {
+
+  // Init
+  cleanup(container);
+  const svg = d3
+  .select(container)
+  .append("svg");
+
+  // Defs
+  const defs = svg.append("defs");
+  const arrowWidth = 8;
+  defineArrowHead(defs, 6, arrowWidth);
+
+  // Container
   const g = svg.append("g");
   svg.call(d3.behavior.zoom().on("zoom", zoom(g)));
-
-  const states = Array.from(fsm.states.all());
-  const edges = Array.from(fsm.edges.all());
-
-
-  const edgesG = g.selectAll(".edge")
-  .data(edges).enter()
-  .append("g")
-  .attr("class", "edge");
-
+  
+  // Groups
   const statesG = g.selectAll(".state")
-  .data(states).enter()
+  .data(Array.from(fsm.states.all())).enter()
   .append("g")
-  .attr("class", "state");
-
+  .attr("class", "state")
+  .attr("id", (d) => `state_${d.id}`);
+  const edgesG = g.selectAll(".edge")
+  .data(Array.from(fsm.edges.all())).enter()
+  .append("g")
+  .attr("class", "edge")
+  .attr("id", (d) => `edge_${d.from.id}_${d.to.id}`);
+  
+  // Measure
   stateDimensions(statesG, 12);
   edgeDimensions(edgesG, 20, 4, 2);
-
+  
+  // Compute layout
   fsm.layout();
-
-  fixIntersections(edges, arrowWidth);
-
+  
+  // Account for ellipses and arrowheads
+  fixIntersections(edgesG, arrowWidth);
+  
+  // If needed
+  drawDebug(statesG, edgesG, g);
+  
+  // Render
   drawEllipses(statesG);
+  drawStateLabels(statesG);
+  drawEdgePaths(edgesG);
+  drawEdgeLabels(edgesG);
 
+}
 
-  // statesG.filter((d) => d.initial);
-
-  showControlPoints(edges, g);
-
-  edgesG.append("text")
-  .attr("x", (d) => d.x())
-  .attr("y", (d) => d.y())
-  .attr("text-anchor", "middle")
-  .attr(
-    "dominant-baseline",
-    (d) => d.lines.length > 1 ? "text-before-edge" : "central")
-  .html((d) => gatherLines(d.lines, d.x(), -d.height()/2));
-
-  statesG.append("text")
-  .attr("x", (d) => d.x())
-  .attr("y", (d) => d.y())
-  .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "central")
-  .html((d) => d.label());
-
+const drawEdgePaths = (edgesG) => {
   edgesG.append("path")
   .attr("d", (d) => {
     const points = d.points();
@@ -196,9 +188,7 @@ function draw(fsm, container, cfg) {
     return lineGenerator(points);
   })
   .attr("marker-end", "url(#arrow)");
-
-
-}
+};
 
 const drawEllipses = (statesG) => {
   statesG.append("ellipse")
@@ -208,23 +198,33 @@ const drawEllipses = (statesG) => {
   .attr("cy", (d) => d.y());
 };
 
+const drawStateLabels = (statesG) => {
+  statesG.append("text")
+  .attr("x", (d) => d.x())
+  .attr("y", (d) => d.y())
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "central")
+  .html((d) => d.label);
+};
+
+const drawEdgeLabels = (edgesG) => {
+  edgesG.append("text")
+  .attr("x", (d) => d.x())
+  .attr("y", (d) => d.y())
+  .attr("text-anchor", "middle")
+  .attr(
+    "dominant-baseline",
+    (d) => d.lines.length > 1 ? "text-before-edge" : "central")
+  .html((d) => gatherLines(d.lines, d.x(), -d.height()/2));
+
+};
+
 const zoom = (g) => () => {
   g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 };
 
-const showControlPoints = (edges, svg) => {
-
-  const points = Array.prototype.concat.apply([],edges.map((e) => e.points()));
-  svg.selectAll(".point")
-  .data(points).enter()
-  .append("circle")
-  .attr("class", "point")
-  .attr("r", 1.5)
-  .attr("cx", (d) => d.x)
-  .attr("cy", (d) => d.y)
-  .style("fill", "#FF7777");
-
-  svg.selectAll(".state")
+const drawDebug = (statesG, edgesG, svg) => {
+  statesG
   .append("rect")
   .attr("x", (d) => d.x() - d.width()/2)
   .attr("y", (d) => d.y() - d.height()/2)
@@ -232,7 +232,7 @@ const showControlPoints = (edges, svg) => {
   .attr("height", (d) => d.height())
   .style("fill", "#55CCFF");
 
-  svg.selectAll(".edge")
+  edgesG
   .append("rect")
   .attr("x", (d) => d.x() - d.width()/2)
   .attr("y", (d) => d.y() - d.height()/2)
@@ -240,6 +240,16 @@ const showControlPoints = (edges, svg) => {
   .attr("height", (d) => d.height())
   .style("fill", "#AAFFAA");
 
+  edgesG
+  .selectAll(".point")
+  .data((d) => d.points())
+  .enter()
+  .append("circle")
+  .attr("class", "point")
+  .attr("r", 1.5)
+  .attr("cx", (d) => d.x)
+  .attr("cy", (d) => d.y)
+  .style("fill", "#FF7777");
 };
 
 const cleanup = (container) => {
