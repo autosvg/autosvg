@@ -1,6 +1,6 @@
 finite automaton {
     states {
-        0[label="Napoleon"] 1 2
+        0[initial] 1[terminal] 2[initial terminal]
     }
     symbols {
         a b
