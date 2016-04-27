@@ -65,7 +65,8 @@ const edgeDimensions = (edgesG, maxWidth, minRadius=0, padRadius=0) => {
 const edgePathGenerator = d3.svg.line()
 .x((d) => d.x)
 .y((d) => d.y)
-.interpolate("basis");
+.interpolate("bundle")
+.tension(0.8);
 
 const sq = (x) => x*x;
 
@@ -133,6 +134,9 @@ const norm = (x, y) => Math.sqrt(sq(x) + sq(y));
 const drawEdgePaths = (edgesG) => {
   edgesG
   .append("path")
+  .each(function(d) {
+    d.path = this;
+  })
   .attr("marker-end", "url(#arrow)");
 };
 
@@ -148,10 +152,12 @@ const updateEdgePaths = (paths, arrowWidth, terminalSpacing) => {
     if(norm(controlPoint.x - tip.x, controlPoint.y - tip.y) < arrowWidth) {
       // FIXME: That's an ugly hack for when the base of arrowhead is farther
       // that the control point
+      // A solution is to keep the full path and use stroke dash-array to only
+      // draw the part we need
       controlPoint = translate(
         controlPoint.x, controlPoint.y,
-        (points[points.length - 3].x - controlPoint.x)/3,
-        (points[points.length - 3].y - controlPoint.y)/3
+        (points[points.length - 3].x - controlPoint.x)/1.7,
+        (points[points.length - 3].y - controlPoint.y)/1.7
       );
       tip = fixIntersection(points[points.length - 1], controlPoint, a, b);
       points[points.length - 2] = controlPoint;
@@ -231,16 +237,15 @@ function draw(fsm, container) {
   // fixIntersections(edgesG, arrowWidth);
 
   // If needed
-  drawDebug(statesG, edgesG, g);
+  // drawDebug(statesG, edgesG, g);
 
   // Render
   drawEllipses(statesG, terminalSpacing);
   drawInitArrow(statesG, initArrowLength, arrowWidth, terminalSpacing);
   drawStateLabels(statesG);
   drawEdgePaths(edgesG);
-  drawEdgeLabels(edgesG);
-
   updateEdgePaths(edgesG.selectAll("path"), arrowWidth, terminalSpacing);
+  drawEdgeLabels(edgesG, arrowWidth);
   
   // Drag'n'Drop
   const drag = d3.behavior.drag()
@@ -301,8 +306,31 @@ const drawStateLabels = (statesG) => {
   .html((d) => d.label);
 };
 
-const drawEdgeLabels = (edgesG) => {
+const drawEdgeLabels = (edgesG, arrowWidth) => {
   edgesG.append("text")
+  .each((d) => {
+    const l = d.path.getTotalLength() + arrowWidth;
+    let middle = d.path.getPointAtLength(l/2);
+    const points = d.points;
+    const midIndex = (points.length - 1)/2;
+    const epsilon = 3;
+    let outwardx = 0;
+    let outwardy = 0;
+    let i = 1;
+    while(Math.abs(outwardx) < epsilon && Math.abs(outwardy) < epsilon && i <= midIndex) {
+      outwardx = 2*points[midIndex].x - points[midIndex - i].x - points[midIndex + i].x; 
+      outwardy = 2*points[midIndex].y - points[midIndex - i].y - points[midIndex + i].y; 
+      i++;
+    }
+    if(Math.abs(outwardx) < epsilon && Math.abs(outwardy) < epsilon) {
+      outwardx = points[midIndex - 1].y - points[midIndex + 1].y;
+      outwardy = points[midIndex + 1].x - points[midIndex - 1].x;
+    }
+    const n = norm(outwardx, outwardy);
+    outwardx = outwardx/n;
+    outwardy = outwardy/n;
+    d.x(middle.x + outwardx*d.width()/2.2).y(middle.y + outwardy*d.height()/2.2);
+  })
   .attr("x", (d) => d.x())
   .attr("y", (d) => d.y())
   .attr("text-anchor", "middle")
@@ -310,7 +338,6 @@ const drawEdgeLabels = (edgesG) => {
     "dominant-baseline",
     (d) => d.lines.length > 1 ? "text-before-edge" : "central"
   ).html((d) => gatherLines(d.lines, d.x(), -d.height()/2));
-
 };
 
 const zoom = (g) => () => {
