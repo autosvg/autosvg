@@ -1,6 +1,6 @@
 finite automaton {
   states {
-    0[label=""]
+    0[initial label=""]
   }
   transitions {
     0 cancel -> 0
