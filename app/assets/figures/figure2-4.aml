@@ -1,4 +1,4 @@
-finite automaton {
+finite-automaton {
   states {
     q0[label="q<tspan baseline-shift=sub>0</tspan>" initial]
     q1[label="q<tspan baseline-shift=sub>1</tspan>" terminal]
