@@ -1,4 +1,4 @@
-finite automaton {
+finite-automaton {
   states {
     a[initial]
   }

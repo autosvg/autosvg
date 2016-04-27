@@ -30,7 +30,7 @@ start =
 
 
 type =
-    t:$"finite automaton" {
+    t:identifier {
         desc.type = t;
         loc.type = location();
     }
@@ -180,7 +180,7 @@ list_identifier =
 
 
 attrs =
-    "[" attrs:(attr*) "]" ws { return {
+    "[" ws attrs:(attr*) "]" ws { return {
       data: attrs.map((a) => a.data),
       location: attrs.map((a) => a.location)
     }; }
@@ -234,7 +234,7 @@ attr =
      
 
 identifier =
-    id:$([a-zA-Z_0-9]+) {
+    id:$([a-zA-Z_0-9\-]+) {
         return {
             data: id,
             location: location()

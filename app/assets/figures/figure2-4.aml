@@ -1,4 +1,4 @@
-finite automaton {
+finite-automaton {
   states {
     q0[label="q<sub>0</sub>" initial]
     q1[label="q<sub>1</sub>"]
