@@ -249,6 +249,7 @@ function draw(fsm, container) {
   
   // Drag'n'Drop
   const drag = d3.behavior.drag()
+  .on("dragstart", function() { d3.event.sourceEvent.stopPropagation(); })
   .on("drag", function(d) {
     d.x(d3.event.x).y(d3.event.y);
     updateState(d3.select(this), arrowWidth, terminalSpacing);

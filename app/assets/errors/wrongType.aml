@@ -3,7 +3,7 @@ finite-automaton {
         0[label="Napoleon"] 1 2
     }
     symbols {
-        a[color=red] b
+        a[color=42] b
     }
     transitions {
         0 a -> 0

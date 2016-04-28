@@ -251,7 +251,7 @@ color =
     color:$("#" $(hexdigit hexdigit hexdigit hexdigit hexdigit hexdigit / hexdigit hexdigit hexdigit)) { return color }
 
 number =
-    $((digit*)("."(digit+))?)
+    $((digit+)("."(digit+))?)
 
 digit =
     ([0-9])
