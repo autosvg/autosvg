@@ -70,11 +70,11 @@ Notre projet, réponse à cette requête de M. Nicart
 
 == Plan
 
-1. Un cahier des charge bien rempli
-2. Une application modulaire
-3. Organisation
-4. Bilan
-5. Démo
+. Un cahier des charge bien rempli
+. Une application modulaire
+. Organisation
+. Bilan
+. Démo
 
 [.cue]
 ****
@@ -86,10 +86,83 @@ Motiver le projet par les demandes du client:
 
 == Cahier des charges
 
-- Elaboré avec le "client", force de proposition
-- Voir document dans git.
-- Commencer par une synthèse des fonctionnalités "obligatoires"
-- Ne mentionner que les améliorations qui ont été sérieusement envisagées
+Elaboré avec le "client"
+
+[.cue]
+****
+- Réunion avec le client => Cahier des charges
+- Nous étions force de proposition
+- Il y a des fonctionnalités qui sont issues de la demande de M. Nicart
+tandis que d'autres sont de notre initiative
+****
+
+== Fonctionnalités attendues
+
+- Une représentation textuelle
+  * Donc un langage à définir : CAL
+- Une représentation graphique
+  * Vectoriel dans le navigateur = SVG
+
+[.cue]
+****
+* Une vue = zone de saisie pour une description textuelle de l'automate
+  - dans un langage simple défini durant la première phase du projet
+  - CAL, concise automaton language
+* Une autre vue = représentation graphique
+  - en SVG
+* Deux vues d'un même modèle dans le cadre d'un patron de conception MVC
+****
+
+== Représentations
+
+[source, cal]
+----
+fa {
+  states {
+    0[initial terminal]
+  }
+  transitions {
+    0 a -> 1
+    1 b -> 0
+  }
+}
+----
+
+[.cue]
+****
+- A gauche, CAL, à droite SVG
+- CAL = "bon" langage, c.a.d. intuitif et concis
+- Le dessin ressemble à ce qu'on attend
+****
+
+== Fonctionnalités supplémentaires
+
+- Positionnement automatique des entités
+- Mécanisme d'inférence
+- Signalisation des erreurs
+- Customisation de styles
+
+[.cue]
+****
+- Expliquer en quoi chacune des fonctionnalités aide à remplir la tâche
+qui nous a été confiée
+  . Concision
+  . Concision
+  . Intuition
+  . Pédagogie
+****
+
+== Fonctionnalités non implémentées
+
+- Quelques opérations sur les automates
+- Fonction d'export du SVG
+- Altérer l'automate depuis la vue graphique
+- Mettre à jour la vue texte
+
+[.cue]
+****
+- On les as proposé mais on ne les a pas faites
+****
 
 == Architecture
 
