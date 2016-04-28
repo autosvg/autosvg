@@ -1,0 +1,70 @@
+= AutoSVG
+:!sectids:
+
+== Intro
+
+Ici on met un automate décrit par son quintuplet
+
+== Un cahier des charges bien rempli
+
+- Définition textuelle simple
+- Dessin configurable et manipulable
+
+== Définition textuelle simple
+
+Le langage: AML, Automaton markup language
+
+Simple = intuitif et compact
+
+== Exemple de langage
+
+....
+finite-automaton {
+    states {
+        0[initial] 1 2[terminal]
+    }
+    symbols {
+        a b
+    }
+    transitions {
+        0 b -> 2
+        1 a -> 2
+        1 b -> 0
+    }
+}
+....
+
+== Fonctionnalités
+
+* gestion des erreurs syntaxiques et sémantiques
+* inférence depuis les transitions
+* positionnement automatique
+
+== Dessin configurable et manipulable
+
+Manipuler le dessin via AML *et* GUI
+
+[.cue]
+****
+Modèle MVC
+****
+
+== Exemple de dessin
+
+Exemple avec un petit de peu de drag'n'drop
+
+== Fonctionnalités
+
+* positionnement manuel depuis AML ou le dessin
+* styliser via AML(limité) ou CSS(classes exposées)
+* zoom, paning, responsive
+
+== Orga
+
+== Archi
+
+- Modèle manipulable via une API javascript
+  * permet l'implémentation d'opérations sur les automates
+  * permet de changer l'algorithme de placement automatique
+  * permet de changer la procédure de dessin
+
