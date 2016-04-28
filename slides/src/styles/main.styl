@@ -10,6 +10,27 @@ html { box-sizing: border-box }
 aside[role="note"]
   display none
 
+.state > ellipse
+  fill none
+  stroke black
+
+.state > text
+  font-size 10pt
+
+.arrowHead
+  fill black
+
+.edge > path
+  fill none
+  stroke black
+  stroke-width 1.5px
+
+.edge > text
+  font-size 8pt
+
+svg
+  float right
+
 .deck
   counter-reset slide
   font-family "PT Sans", sans-serif
@@ -133,6 +154,7 @@ aside[role="note"]
     background-color #fafaa2
   pre
     margin 0 0 2em 0
+    float left
     counter-reset code
     white-space normal
     line-height 2em

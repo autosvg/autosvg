@@ -5,16 +5,6 @@ export default function main() {
   controller();
 }
 
-function render(cal, container) {
-  .addEventListener("click", () => {
-    let fsm = pipeline(cal);
-    if(exception(fsm)) { container.innerHTML = stringifyError(fsm); }
-    else {
-      fsm.layout();
-      draw(fsm, container);
-    }
-}
-
 function defaultText(file) {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = () => {
