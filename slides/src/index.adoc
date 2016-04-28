@@ -1,70 +1,188 @@
 = AutoSVG
-:!sectids:
 
-== Intro
+TODO présentation équipe
 
-Ici on met un automate décrit par son quintuplet
+Tom Etienne
 
-== Un cahier des charges bien rempli
+Achraf Hassani
 
-- Définition textuelle simple
-- Dessin configurable et manipulable
+Yacine Hmito
 
-== Définition textuelle simple
+Thibaut Quentin
 
-Le langage: AML, Automaton markup language
+== Dessiner un automate
 
-Simple = intuitif et compact
-
-== Exemple de langage
-
-....
-finite-automaton {
-    states {
-        0[initial] 1 2[terminal]
-    }
-    symbols {
-        a b
-    }
-    transitions {
-        0 b -> 2
-        1 a -> 2
-        1 b -> 0
-    }
-}
-....
-
-== Fonctionnalités
-
-* gestion des erreurs syntaxiques et sémantiques
-* inférence depuis les transitions
-* positionnement automatique
-
-== Dessin configurable et manipulable
-
-Manipuler le dessin via AML *et* GUI
+Image d'automate en bitmap
+Image d'automate en vectoriel
 
 [.cue]
 ****
-Modèle MVC
+- Dessin != Automate, ce n'est rien qu'une représentation
+  * De l'encre sur du papier
+  * Une matrice de pixels
+  * Des primitives de dessin vectoriel
+- Motiver le choix du vectoriel
+  * C'est le meilleur format d'image pour un dessin (pas de perte de qualité mais léger)
 ****
 
-== Exemple de dessin
+== Des représentations exactes d'automate
 
-Exemple avec un petit de peu de drag'n'drop
+TODO d'un côté un automate en "Mathématique", de l'autre avec notre langage
 
-== Fonctionnalités
+[.cue]
+****
+- Automate == Représentation mathématique, mais
+- Motiver le fait de vouloir dessiner facilement
+  * Les maths c'est nul
+- Motiver la création d'un langage simple et concis
+  * Les maths, pas une façon réaliste de le saisir dans une application
+****
 
-* positionnement manuel depuis AML ou le dessin
-* styliser via AML(limité) ou CSS(classes exposées)
-* zoom, paning, responsive
+== Le Web
 
-== Orga
+- Facile d'accès
+- Environnement graphique
+- Expérimenter
 
-== Archi
+[.cue]
+****
+- Le Web, déploiement facile, portable, pas d'installation
+- La possibilité de faire des choses stylées graphiquement
+- Preuve de concept pour relancer projet de recherche
+****
 
-- Modèle manipulable via une API javascript
-  * permet l'implémentation d'opérations sur les automates
-  * permet de changer l'algorithme de placement automatique
-  * permet de changer la procédure de dessin
+== Notre objectif
 
+Mettre en oeuvre une application de représentation d'automate à l'aide
+des technologies Web.
+
+[.cue]
+****
+- Motiver le choix d'un langage
+  * Dessin != automate
+- Motiver l'utilisation du Web
+  * On veut mettre à l'épreuve les technologies Web
+  * Preuve de concept pour relancer un projet de recherche
+  * Pour les étudiants c'est plus facile à utiliser (question de déploiement)
+
+Notre projet, réponse à cette requête de M. Nicart
+****
+
+== Plan
+
+1. Un cahier des charge bien rempli
+2. Une application modulaire
+3. Organisation
+4. Bilan
+5. Démo
+
+[.cue]
+****
+Motiver le projet par les demandes du client:
+- Dessiner des automates en SVG
+- Depuis un langage à définir
+- Dans un navigateur côté client
+****
+
+== Cahier des charges
+
+- Elaboré avec le "client", force de proposition
+- Voir document dans git.
+- Commencer par une synthèse des fonctionnalités "obligatoires"
+- Ne mentionner que les améliorations qui ont été sérieusement envisagées
+
+== Architecture
+
+3 composants: Langage, Modèle, Dessin (évident) +
+Modèle: 2 couches (pour les algos) +
+Protocoles, API +
+Bibliothèques:
+
+PEJGS:: Parsing
+Dagre:: Layout
+D3:: DOM SVG
+
+ES2015
+
+Motiver les choix par le cahier des charges (entre autres)
+
+== Organisation
+
+== Outils
+
+- Brunch (modules et transpilation)
+- NPM (dépendences)
+- Git (version, partage)
+- Google Hangouts (communication)
+
+
+== Equipes
+
+- L'architecture qui oriente le choix en travail en 2 équipes
+- Le modèle est la frontière: on définit une API et un protocole, puis
+
+Parseur, gestion des erreurs :
+
+- Thibaut
+- Achraf
+
+Implémentation du modèle, dessin :
+
+- Yacine
+- Tom
+
+== Rencontres
+
+Rencontres hedbomadaires physiques entre nous (Bilan)
+
+Recontres hebdomadaires avec le tuteur
+
+Intention de faire du déploiement continu
+
+== Bilan
+
+Version fonctionnelle en ligne, cas d'utilisation principaux implémentés
+
+== Technique
+
+Fonctionnalités non développées:
+
+- GUI: titanesque parce que architecture pas aboutie
+- Retour sur le langage (lié à GUI)
+- Export: pas considéré comme prioritaire
+- Algos: ?
+
+Le reste nous a pris bcp de tmps
+
+Ecosystème du Web satisfaisant
+Technologie SVG satisfaisante
+Problème d'expressivité et de robustesse en JS
+
+== Organisation
+
+Plus incrémental, plus de tests
+Déploiement continu suppose intégration continue, et ça a pêché
+
+== Humain
+
+Motivation en col, notamment dû au manque incrémental
+Télétravail excellent
+(TBC)
+
+== Démo
+
+1. Un automate normal sans inférence
+- montre la simplicité du langage
+- le positionnement automatique
+- tout est attendu
+
+2. Inférence
+- le langage est concis
+
+3. Placement manuel
+
+4. Style
+
+5. Signalisation des erreurs
+
+6? Un exemple avec un professeur
