@@ -183,47 +183,45 @@ Motiver les choix par le cahier des charges (entre autres)
 
 == Outils
 
-- Brunch (modules et transpilation)
-- NPM (dépendences)
-- Git (version, partage)
-- Google Hangouts (communication)
+- Permettre une gestion aisée des dépendances
+- Privilégier la collaboration
 
+[.cue]
+****
+- Brunch permet une modularisation du code en Javascript
+- NPM est un gestionnaire de paquets Javascript qui permet la gestion des dépendances d'un projet
+- Git permet le contrôle des sources et le travail à distance
+- Google Hangouts permet la collaboration à distance
+****
 
 == Equipes
 
-- L'architecture qui oriente le choix en travail en 2 équipes
-- Le modèle est la frontière: on définit une API et un protocole, puis
+- Équipe 1 : Parser et gestion des erreurs
+- API
+- Équipe 2 : Modèle et dessin
 
-Parseur, gestion des erreurs :
-
-- Thibaut
-- Achraf
-
-Implémentation du modèle, dessin :
-
-- Yacine
-- Tom
-
+[.cue]
+****
+- L'architecture du projet a permis, voire imposer une séparation en deux équipes indépendantes et la définition d'une API.
+- Une équipe s'occupant de la visualisation textuelle ainsi que la gestion des erreurs dans le langage
+- Une équipe s'occupant d'implémenter le modèle ainsi que l'aspect graphique de l'application
+****
 == Rencontres
 
-Rencontres hedbomadaires physiques entre nous (Bilan)
+- Suivi hebdomadaire
+- Site en ligne : autosvg.github.io
 
-Recontres hebdomadaires avec le tuteur
-
-Intention de faire du déploiement continu
+[.cue]
+****
+- Les rencontres hebdomadaires permetttaient de faire un bilan de l'avancée de chacun et de préparer le rendez vous avec le tuteur
+- Les rencontres avec M. Nicart permettant de recentrer le projet sur ses objectifs et d'évaluer nos idées avec un oeil extérieur
+- Déploiement continu avec le site : autosvg.github.io, permet un meilleur suivi.
+****
 
 == Bilan
 
-Version fonctionnelle en ligne, cas d'utilisation principaux implémentés
-
 == Technique
 
-Fonctionnalités non développées:
-
-- GUI: titanesque parce que architecture pas aboutie
-- Retour sur le langage (lié à GUI)
-- Export: pas considéré comme prioritaire
-- Algos: ?
 
 Le reste nous a pris bcp de tmps
 
@@ -231,16 +229,33 @@ Ecosystème du Web satisfaisant
 Technologie SVG satisfaisante
 Problème d'expressivité et de robustesse en JS
 
+[.cue]
+****
+- L'édition graphique a été considéré comme trop complexe à implémenter pour obtenir un résultat correct 
+- Le retour n'a aucune utilité si l'édition graphique n'est pas implémentée
+- L'export n'a pas été fait car considéré comme non prioritaire
+- Ce n'était pas une priorité, mais l'architecture permet une implémentation rapide
+- 
+****
+
 == Organisation
 
 Plus incrémental, plus de tests
 Déploiement continu suppose intégration continue, et ça a pêché
 
+[.cue]
+****
+- Il aurait fallu coder plus tôt, plus régulièrement et fragmenter l'objectif
+- Cela aurait permis de tester plus tôt certaines fonctionnalitées
+- 
+****
 == Humain
 
 Motivation en col, notamment dû au manque incrémental
 Télétravail excellent
 (TBC)
+
+- 
 
 == Démo
 
