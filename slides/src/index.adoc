@@ -223,12 +223,14 @@ Motiver les choix par le cahier des charges (entre autres)
 ****
 == Rencontres
 
-- Suivi hebdomadaire
+- RDV hebdomadaire
+  * Avec le tuteur
+  * Entre nous
 - Site en ligne : autosvg.github.io
 
 [.cue]
 ****
-- Les rencontres hebdomadaires permetttaient de faire un bilan de l'avancée de chacun et de préparer le rendez vous avec le tuteur
+- Les rencontres hebdomadaires permettaient de faire un bilan de l'avancée de chacun et de préparer le rendez vous avec le tuteur
 - Les rencontres avec M. Nicart permettant de recentrer le projet sur ses objectifs et d'évaluer nos idées avec un oeil extérieur
 - Déploiement continu avec le site : autosvg.github.io, permet un meilleur suivi.
 ****
