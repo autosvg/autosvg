@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoSVG</title>
+<meta name="generator" content="Asciidoctor 1.5.4 (Bespoke.js converter)">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="build/build.css">
+</head>
+<body>
+<article class="deck">
+<section class="title" data-title="">
+<h1>AutoSVG</h1>
+<p>TODO présentation équipe</p>
+<p>Tom Etienne</p>
+<p>Achraf Hassani</p>
+<p>Yacine Hmito</p>
+<p>Thibaut Quentin</p>
+</section>
+<section id="_dessiner_un_automate">
+<h2>Dessiner un automate</h2>
+<p>Image d&#8217;automate en bitmap Image d&#8217;automate en vectoriel</p>
+<aside role="note">
+<ul>
+<li><span class="primary">Dessin != Automate, ce n&#8217;est rien qu&#8217;une représentation</span>
+<ul>
+<li><span class="primary">De l&#8217;encre sur du papier</span></li>
+<li><span class="primary">Une matrice de pixels</span></li>
+<li><span class="primary">Des primitives de dessin vectoriel</span></li>
+</ul>
+</li>
+<li><span class="primary">Motiver le choix du vectoriel</span>
+<ul>
+<li><span class="primary">C&#8217;est le meilleur format d&#8217;image pour un dessin (pas de perte de qualité mais léger)</span></li>
+</ul>
+</li>
+</ul>
+</aside>
+</section>
+<section id="_des_représentations_exactes_d_automate">
+<h2>Des représentations exactes d&#8217;automate</h2>
+<p>TODO d&#8217;un côté un automate en "Mathématique", de l&#8217;autre avec notre langage</p>
+<aside role="note">
+<ul>
+<li><span class="primary">Automate == Représentation mathématique, mais</span></li>
+<li><span class="primary">Motiver le fait de vouloir dessiner facilement</span>
+<ul>
+<li><span class="primary">Les maths c&#8217;est nul</span></li>
+</ul>
+</li>
+<li><span class="primary">Motiver la création d&#8217;un langage simple et concis</span>
+<ul>
+<li><span class="primary">Les maths, pas une façon réaliste de le saisir dans une application</span></li>
+</ul>
+</li>
+</ul>
+</aside>
+</section>
+<section id="_le_web">
+<h2>Le Web</h2>
+<ul>
+<li><span class="primary">Facile d&#8217;accès</span></li>
+<li><span class="primary">Environnement graphique</span></li>
+<li><span class="primary">Expérimenter</span></li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">Le Web, déploiement facile, portable, pas d&#8217;installation</span></li>
+<li><span class="primary">La possibilité de faire des choses stylées graphiquement</span></li>
+<li><span class="primary">Preuve de concept pour relancer projet de recherche</span></li>
+</ul>
+</aside>
+</section>
+<section id="_notre_objectif">
+<h2>Notre objectif</h2>
+<p>Mettre en oeuvre une application de représentation d&#8217;automate à l&#8217;aide des technologies Web.</p>
+<aside role="note">
+<ul>
+<li><span class="primary">Motiver le choix d&#8217;un langage</span>
+<ul>
+<li><span class="primary">Dessin != automate</span></li>
+</ul>
+</li>
+<li><span class="primary">Motiver l&#8217;utilisation du Web</span>
+<ul>
+<li><span class="primary">On veut mettre à l&#8217;épreuve les technologies Web</span></li>
+<li><span class="primary">Preuve de concept pour relancer un projet de recherche</span></li>
+<li><span class="primary">Pour les étudiants c&#8217;est plus facile à utiliser (question de déploiement)</span></li>
+</ul>
+</li>
+</ul>
+<p>Notre projet, réponse à cette requête de M. Nicart</p>
+</aside>
+</section>
+<section id="_plan">
+<h2>Plan</h2>
+<ol>
+<li><span class="primary">Un cahier des charge bien rempli</span></li>
+<li><span class="primary">Une application modulaire</span></li>
+<li><span class="primary">Organisation</span></li>
+<li><span class="primary">Bilan</span></li>
+<li><span class="primary">Démo</span></li>
+</ol>
+<aside role="note">
+<p>Motiver le projet par les demandes du client: - Dessiner des automates en SVG - Depuis un langage à définir - Dans un navigateur côté client</p>
+</aside>
+</section>
+<section id="_cahier_des_charges">
+<h2>Cahier des charges</h2>
+<p>Elaboré avec le "client"</p>
+<aside role="note">
+<ul>
+<li><span class="primary">Réunion avec le client &#8658; Cahier des charges</span></li>
+<li><span class="primary">Nous étions force de proposition</span></li>
+<li><span class="primary">Il y a des fonctionnalités qui sont issues de la demande de M. Nicart tandis que d&#8217;autres sont de notre initiative</span></li>
+</ul>
+</aside>
+</section>
+<section id="_fonctionnalités_attendues">
+<h2>Fonctionnalités attendues</h2>
+<ul>
+<li><span class="primary">Une représentation textuelle</span>
+<ul>
+<li><span class="primary">Donc un langage à définir : CAL</span></li>
+</ul>
+</li>
+<li><span class="primary">Une représentation graphique</span>
+<ul>
+<li><span class="primary">Vectoriel dans le navigateur = SVG</span></li>
+</ul>
+</li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">Une vue = zone de saisie pour une description textuelle de l&#8217;automate</span>
+<ul>
+<li><span class="primary">dans un langage simple défini durant la première phase du projet</span></li>
+<li><span class="primary">CAL, concise automaton language</span></li>
+</ul>
+</li>
+<li><span class="primary">Une autre vue = représentation graphique</span>
+<ul>
+<li><span class="primary">en SVG</span></li>
+</ul>
+</li>
+<li><span class="primary">Deux vues d&#8217;un même modèle dans le cadre d&#8217;un patron de conception MVC</span></li>
+</ul>
+</aside>
+</section>
+<section id="_représentations">
+<h2>Représentations</h2>
+<pre class="source"><code data-lang="cal" class="language-cal prettyprint">fa {
+  states {
+    0[initial terminal]
+  }
+  transitions {
+    0 a -&gt; 1
+    1 b -&gt; 0
+  }
+}</code></pre>
+
+<script src="vendor.js"></script> <script src="app.js"></script>
+<div id="reprecal"></div>
+<script>
+require("app/render").default(
+ "fa { states { 0[initial terminal] } transitions { 0 a -> 1 1 b -> 0 } }",
+  "#reprecal"
+);
+var d3 = require("d3");
+d3.select(document.getElementById("reprecal").childNodes[0])
+.select("g").attr("transform", "scale(2)");
+</script>
+<aside role="note">
+<ul>
+<li><span class="primary">A gauche, CAL, à droite SVG</span></li>
+<li><span class="primary">CAL = "bon" langage, c.a.d. intuitif et concis</span></li>
+<li><span class="primary">Le dessin ressemble à ce qu&#8217;on attend</span></li>
+</ul>
+</aside>
+</section>
+<section id="_fonctionnalités_supplémentaires">
+<h2>Fonctionnalités supplémentaires</h2>
+<ul>
+<li><span class="primary">Positionnement automatique des entités</span></li>
+<li><span class="primary">Mécanisme d&#8217;inférence</span></li>
+<li><span class="primary">Signalisation des erreurs</span></li>
+<li><span class="primary">Customisation de styles</span></li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">Expliquer en quoi chacune des fonctionnalités aide à remplir la tâche qui nous a été confiée</span>
+<ol>
+<li><span class="primary">Concision</span></li>
+<li><span class="primary">Concision</span></li>
+<li><span class="primary">Intuition</span></li>
+<li><span class="primary">Pédagogie</span></li>
+</ol>
+</li>
+</ul>
+</aside>
+</section>
+<section id="_fonctionnalités_non_implémentées">
+<h2>Fonctionnalités non implémentées</h2>
+<ul>
+<li><span class="primary">Quelques opérations sur les automates</span></li>
+<li><span class="primary">Fonction d&#8217;export du SVG</span></li>
+<li><span class="primary">Altérer l&#8217;automate depuis la vue graphique</span></li>
+<li><span class="primary">Mettre à jour la vue texte</span></li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">On les as proposé mais on ne les a pas faites</span></li>
+</ul>
+</aside>
+</section>
+<section id="_architecture">
+<h2>Architecture</h2>
+<p>3 composants: Langage, Modèle, Dessin (évident)<br>
+Modèle: 2 couches (pour les algos)<br>
+Protocoles, API<br>
+Bibliothèques:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">PEJGS</dt>
+<dd>
+<p>Parsing</p>
+</dd>
+<dt class="hdlist1">Dagre</dt>
+<dd>
+<p>Layout</p>
+</dd>
+<dt class="hdlist1">D3</dt>
+<dd>
+<p>DOM SVG</p>
+</dd>
+</dl>
+</div>
+<p>ES2015</p>
+<p>Motiver les choix par le cahier des charges (entre autres)</p>
+</section>
+<section id="_organisation">
+<h2>Organisation</h2>
+</section>
+<section id="_outils">
+<h2>Outils</h2>
+<ul>
+<li><span class="primary">Permettre une gestion aisée des dépendances</span></li>
+<li><span class="primary">Privilégier la collaboration</span></li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">Brunch permet une modularisation du code en Javascript</span></li>
+<li><span class="primary">NPM est un gestionnaire de paquets Javascript qui permet la gestion des dépendances d&#8217;un projet</span></li>
+<li><span class="primary">Git permet le contrôle des sources et le travail à distance</span></li>
+<li><span class="primary">Google Hangouts permet la collaboration à distance</span></li>
+</ul>
+</aside>
+</section>
+<section id="_equipes">
+<h2>Equipes</h2>
+<ul>
+<li><span class="primary">Équipe 1 : Parser et gestion des erreurs</span></li>
+<li><span class="primary">API</span></li>
+<li><span class="primary">Équipe 2 : Modèle et dessin</span></li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">L&#8217;architecture du projet a permis, voire imposer une séparation en deux équipes indépendantes et la définition d&#8217;une API.</span></li>
+<li><span class="primary">Une équipe s&#8217;occupant de la visualisation textuelle ainsi que la gestion des erreurs dans le langage</span></li>
+<li><span class="primary">Une équipe s&#8217;occupant d&#8217;implémenter le modèle ainsi que l&#8217;aspect graphique de l&#8217;application</span></li>
+</ul>
+</aside>
+</section>
+<section id="_rencontres">
+<h2>Rencontres</h2>
+<ul>
+<li><span class="primary">RDV hebdomadaire</span>
+<ul>
+<li><span class="primary">Avec le tuteur</span></li>
+<li><span class="primary">Entre nous</span></li>
+</ul>
+</li>
+<li><span class="primary">Site en ligne : autosvg.github.io</span></li>
+</ul>
+<aside role="note">
+<ul>
+<li><span class="primary">Les rencontres hebdomadaires permettaient de faire un bilan de l&#8217;avancée de chacun et de préparer le rendez vous avec le tuteur</span></li>
+<li><span class="primary">Les rencontres avec M. Nicart permettant de recentrer le projet sur ses objectifs et d&#8217;évaluer nos idées avec un oeil extérieur</span></li>
+<li><span class="primary">Déploiement continu avec le site : autosvg.github.io, permet un meilleur suivi.</span></li>
+</ul>
+</aside>
+</section>
+<section id="_bilan">
+<h2>Bilan</h2>
+</section>
+<section id="_technique">
+<h2>Technique</h2>
+<p>Le reste nous a pris bcp de tmps</p>
+<p>Ecosystème du Web satisfaisant Technologie SVG satisfaisante Problème d&#8217;expressivité et de robustesse en JS</p>
+<aside role="note">
+<ul>
+<li><span class="primary">L&#8217;édition graphique a été considéré comme trop complexe à implémenter pour obtenir un résultat correct</span></li>
+<li><span class="primary">Le retour n&#8217;a aucune utilité si l&#8217;édition graphique n&#8217;est pas implémentée</span></li>
+<li><span class="primary">L&#8217;export n&#8217;a pas été fait car considéré comme non prioritaire</span></li>
+<li><span class="primary">Ce n&#8217;était pas une priorité, mais l&#8217;architecture permet une implémentation rapide -</span></li>
+</ul>
+</aside>
+</section>
+<section id="_organisation_2">
+<h2>Organisation</h2>
+<p>Plus incrémental, plus de tests Déploiement continu suppose intégration continue, et ça a pêché</p>
+<aside role="note">
+<ul>
+<li><span class="primary">Il aurait fallu coder plus tôt, plus régulièrement et fragmenter l&#8217;objectif</span></li>
+<li><span class="primary">Cela aurait permis de tester plus tôt certaines fonctionnalitées -</span></li>
+</ul>
+</aside>
+</section>
+<section id="_humain">
+<h2>Humain</h2>
+<p>Motivation en col, notamment dû au manque incrémental Télétravail excellent (TBC)</p>
+<p>-</p>
+</section>
+<section id="_démo">
+<h2>Démo</h2>
+<ol>
+<li><span class="primary">Un automate normal sans inférence</span>
+<ul>
+<li><span class="primary">montre la simplicité du langage</span></li>
+<li><span class="primary">le positionnement automatique</span></li>
+<li><span class="primary">tout est attendu</span></li>
+</ul>
+</li>
+<li><span class="primary">Inférence</span>
+<ul>
+<li><span class="primary">le langage est concis</span></li>
+</ul>
+</li>
+<li><span class="primary">Placement manuel</span></li>
+<li><span class="primary">Style</span></li>
+<li><span class="primary">Signalisation des erreurs</span></li>
+</ol>
+<p>6? Un exemple avec un professeur</p>
+</section>
+</article>
+<script src="build/build.js"></script>
+</body>
+</html>

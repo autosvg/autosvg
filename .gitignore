@@ -9,7 +9,7 @@ node_modules
 
 # Production
 /build/**
-/slides/dist
+# /slides/dist
 
 # Asciidoctor
 /.gem/

@@ -1,0 +1,15 @@
+finite-automaton {
+  states {
+    q0[label="{q<tspan baseline-shift=sub>0</tspan>}" initial]
+    q01[label="{q<tspan baseline-shift=sub>0</tspan>, q<tspan baseline-shift=sub>1</tspan>}"]
+    q02[label="{q<tspan baseline-shift=sub>0</tspan>, q<tspan baseline-shift=sub>2</tspan>}" terminal]
+  }
+  transitions {
+    q0 1 -> q0
+    q0 0 -> q01
+    q01 0 -> q01
+    q01 1 -> q02
+    q02 0 -> q01
+    q02 1 -> q0
+  }
+}

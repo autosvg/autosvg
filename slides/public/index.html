@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AutoSVG</title><meta name="generator" content="Asciidoctor 1.5.4 (Bespoke.js converter)"><meta name="mobile-web-app-capable" content="yes"><link rel="stylesheet" href="build/build.css"></head><body><article class="deck"><section class="title" data-title=""><h1>AutoSVG</h1></section><section><h2>Intro</h2><p>Ici on met un automate décrit par son quintuplet</p></section>
+<section><h2>Un cahier des charges bien rempli</h2><ul><li><span class="primary">Définition textuelle simple</span></li><li><span class="primary">Dessin configurable et manipulable</span></li></ul></section>
+<section><h2>Définition textuelle simple</h2><p>Le langage: AML, Automaton markup language</p>
+<p>Simple = intuitif et compact</p></section>
+<section><h2>Exemple de langage</h2><pre class="screen"><samp>finite-automaton {
+    states {
+        0[initial] 1 2[terminal]
+    }
+    symbols {
+        a b
+    }
+    transitions {
+        0 b -&gt; 2
+        1 a -&gt; 2
+        1 b -&gt; 0
+    }
+}</samp></pre></section>
+<section><h2>Fonctionnalités</h2><ul><li><span class="primary">gestion des erreurs syntaxiques et sémantiques</span></li><li><span class="primary">inférence depuis les transitions</span></li><li><span class="primary">positionnement automatique</span></li></ul></section>
+<section><h2>Dessin configurable et manipulable</h2><p>Manipuler le dessin via AML <strong>et</strong> GUI</p>
+<aside role="note"><p>Modèle MVC</p></aside></section>
+<section><h2>Exemple de dessin</h2><p>Exemple avec un petit de peu de drag&#8217;n&#8217;drop</p></section>
+<section><h2>Fonctionnalités</h2><ul><li><span class="primary">positionnement manuel depuis AML ou le dessin</span></li><li><span class="primary">styliser via AML(limité) ou CSS(classes exposées)</span></li><li><span class="primary">zoom, paning, responsive</span></li></ul></section>
+<section><h2>Orga</h2></section>
+<section><h2>Archi</h2><ul><li><span class="primary">Modèle manipulable via une API javascript</span><ul><li><span class="primary">permet l&#8217;implémentation d&#8217;opérations sur les automates</span></li><li><span class="primary">permet de changer l&#8217;algorithme de placement automatique</span></li><li><span class="primary">permet de changer la procédure de dessin</span></li></ul></li></ul></section></article><script src="build/build.js"></script></body></html>

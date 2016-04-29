@@ -1,0 +1,18 @@
+finite-automaton {
+  states {
+    q0[label="q<tspan baseline-shift=sub>0</tspan>" initial terminal x=50 y=50]
+    q1[label="q<tspan baseline-shift=sub>1</tspan>" x=150 y=50]
+    q2[label="q<tspan baseline-shift=sub>2</tspan>" x=50 y=150]
+    q3[label="q<tspan baseline-shift=sub>3</tspan>" x=150 y=150]
+  }
+  transitions {
+    q0 1 -> q1
+    q1 1 -> q0
+    q0 0 -> q2
+    q2 0 -> q0
+    q1 0 -> q3
+    q3 0 -> q1
+    q2 1 -> q3
+    q3 1 -> q2
+  }
+}

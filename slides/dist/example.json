@@ -1,0 +1,22 @@
+{
+  "type": "finite-state-machine",
+  "symbols": [
+    { "label": "a" },
+    { "label": "b" }
+  ],
+  "states": [
+    { "label": "Napoleon", "initial": true },
+    { "label": "2", "terminal": true },
+    { "label": "Salut", "initial": true, "terminal": true },
+    { "label": "1" },
+    { "label": "Bonjour" }
+  ],
+  "transitions": [
+    { "from": 0, "to": 3, "by": 0 },
+    { "from": 1, "to": 3, "by": 1 },
+    { "from": 3, "to": 1, "by": 1 },
+    { "from": 1, "to": 4, "by": 0 },
+    { "from": 2, "to": 0, "by": 0 }
+  ]
+}
+
