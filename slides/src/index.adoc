@@ -1,6 +1,16 @@
 = AutoSVG
 
-TODO présentation équipe
+++++
+<script src="vendor.js"></script>
+<script src="app.js"></script>
+<script>
+var d3 = require("d3");
+</script>
+++++
+
+++++
+<hr/>
+++++
 
 Tom Etienne
 
@@ -10,10 +20,25 @@ Yacine Hmito
 
 Thibaut Quentin
 
+++++
+<hr/>
+++++
+
+Encadré par M.Nicart
+
 == Dessiner un automate
 
-Image d'automate en bitmap
-Image d'automate en vectoriel
+++++
+<div id="execal"></div>
+<script>
+require("app/render").default(
+ "fa { states { 0[initial terminal] } transitions { 0 a -> 1 1 b -> 0 } }",
+  "#execal"
+);
+d3.select(document.getElementById("execal").childNodes[0])
+.select("g").attr("transform", "scale(3)");
+</script>
+++++
 
 [.cue]
 ****
@@ -27,7 +52,30 @@ Image d'automate en vectoriel
 
 == Des représentations exactes d'automate
 
-TODO d'un côté un automate en "Mathématique", de l'autre avec notre langage
+[source, cal]
+----
+fa {
+  states {
+    0[initial terminal]
+  }
+  transitions {
+    0 a -> 1
+    1 b -> 0
+  }
+}
+----
+
+++++
+<div style="float: right;">
+<p>M=(Σ, Q, I, F, δ)</p>
+<p>
+Σ = {a, b}<br/>
+Q = {0, 1}<br/>
+I = F = {0}<br/>
+δ = {(0, a, 1); (1, b, 0)}
+</p>
+</div>
+++++
 
 [.cue]
 ****
@@ -129,15 +177,12 @@ fa {
 ----
 
 ++++
-<script src="vendor.js"></script>
-<script src="app.js"></script>
 <div id="reprecal"></div>
 <script>
 require("app/render").default(
  "fa { states { 0[initial terminal] } transitions { 0 a -> 1 1 b -> 0 } }",
   "#reprecal"
 );
-var d3 = require("d3");
 d3.select(document.getElementById("reprecal").childNodes[0])
 .select("g").attr("transform", "scale(2)");
 </script>
@@ -179,22 +224,23 @@ qui nous a été confiée
 - On les as proposé mais on ne les a pas faites
 ****
 
-== Architecture
+== Une application modulaire
 
-3 composants: Langage, Modèle, Dessin (évident) +
-Modèle: 2 couches (pour les algos) +
-Protocoles, API +
-Bibliothèques:
+3 composants: Parseur, Modèle, Dessin
 
-PEJGS:: Parsing
-Dagre:: Layout
-D3:: DOM SVG
+image::archi.svg[Représentations, role="c"]
 
-ES2015
+== Un modèle en deux couches
 
-Motiver les choix par le cahier des charges (entre autres)
+image::fsm.svg[Héritage, role="c"]
 
-== Organisation
+== Etapes de la désérialisation
+
+image::pipeline.svg[Pipeline, role="c"]
+
+== Dessin
+
+image::dessin.svg[Dessin, role="c"]
 
 == Outils
 

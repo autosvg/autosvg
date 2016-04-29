@@ -450,8 +450,27 @@ aside[role="note"] {
 .edge > text {
   font-size: 8pt;
 }
-svg {
+#reprecal {
   float: right;
+}
+#execal > svg {
+  margin: auto;
+  width: 60%;
+  height: 70%;
+}
+#execal {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+figure {
+  text-align: center;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+figure img {
+  margin: auto;
 }
 .deck {
   counter-reset: slide;

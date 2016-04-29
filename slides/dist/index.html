@@ -12,15 +12,26 @@
 <article class="deck">
 <section class="title" data-title="">
 <h1>AutoSVG</h1>
-<p>TODO présentation équipe</p>
+<script src="vendor.js"></script> <script src="app.js"></script> <script>var d3 = require("d3");</script>
+<hr>
 <p>Tom Etienne</p>
 <p>Achraf Hassani</p>
 <p>Yacine Hmito</p>
 <p>Thibaut Quentin</p>
+<hr>
+<p>Encadré par M.Nicart</p>
 </section>
 <section id="_dessiner_un_automate">
 <h2>Dessiner un automate</h2>
-<p>Image d&#8217;automate en bitmap Image d&#8217;automate en vectoriel</p>
+<div id="execal"></div>
+<script>
+require("app/render").default(
+ "fa { states { 0[initial terminal] } transitions { 0 a -> 1 1 b -> 0 } }",
+  "#execal"
+);
+d3.select(document.getElementById("execal").childNodes[0])
+.select("g").attr("transform", "scale(3)");
+</script>
 <aside role="note">
 <ul>
 <li><span class="primary">Dessin != Automate, ce n&#8217;est rien qu&#8217;une représentation</span>
@@ -40,7 +51,23 @@
 </section>
 <section id="_des_représentations_exactes_d_automate">
 <h2>Des représentations exactes d&#8217;automate</h2>
-<p>TODO d&#8217;un côté un automate en "Mathématique", de l&#8217;autre avec notre langage</p>
+<pre class="source"><code data-lang="cal" class="language-cal prettyprint">fa {
+  states {
+    0[initial terminal]
+  }
+  transitions {
+    0 a -&gt; 1
+    1 b -&gt; 0
+  }
+}</code></pre>
+
+<div style="float: right;">
+<p>M=(Σ, Q, I, F, δ)</p>
+<p>Σ = {a, b}<br>
+Q = {0, 1}<br>
+I = F = {0}<br>
+δ = {(0, a, 1); (1, b, 0)}</p>
+</div>
 <aside role="note">
 <ul>
 <li><span class="primary">Automate == Représentation mathématique, mais</span></li>
@@ -160,14 +187,12 @@
   }
 }</code></pre>
 
-<script src="vendor.js"></script> <script src="app.js"></script>
 <div id="reprecal"></div>
 <script>
 require("app/render").default(
  "fa { states { 0[initial terminal] } transitions { 0 a -> 1 1 b -> 0 } }",
   "#reprecal"
 );
-var d3 = require("d3");
 d3.select(document.getElementById("reprecal").childNodes[0])
 .select("g").attr("transform", "scale(2)");
 </script>
@@ -214,33 +239,22 @@ d3.select(document.getElementById("reprecal").childNodes[0])
 </ul>
 </aside>
 </section>
-<section id="_architecture">
-<h2>Architecture</h2>
-<p>3 composants: Langage, Modèle, Dessin (évident)<br>
-Modèle: 2 couches (pour les algos)<br>
-Protocoles, API<br>
-Bibliothèques:</p>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">PEJGS</dt>
-<dd>
-<p>Parsing</p>
-</dd>
-<dt class="hdlist1">Dagre</dt>
-<dd>
-<p>Layout</p>
-</dd>
-<dt class="hdlist1">D3</dt>
-<dd>
-<p>DOM SVG</p>
-</dd>
-</dl>
-</div>
-<p>ES2015</p>
-<p>Motiver les choix par le cahier des charges (entre autres)</p>
+<section id="_une_application_modulaire">
+<h2>Une application modulaire</h2>
+<p>3 composants: Parseur, Modèle, Dessin</p>
+<figure class="image c"><img src="archi.svg" alt="Représentations"></figure>
 </section>
-<section id="_organisation">
-<h2>Organisation</h2>
+<section id="_un_modèle_en_deux_couches">
+<h2>Un modèle en deux couches</h2>
+<figure class="image c"><img src="fsm.svg" alt="Héritage"></figure>
+</section>
+<section id="_etapes_de_la_désérialisation">
+<h2>Etapes de la désérialisation</h2>
+<figure class="image c"><img src="pipeline.svg" alt="Pipeline"></figure>
+</section>
+<section id="_dessin">
+<h2>Dessin</h2>
+<figure class="image c"><img src="dessin.svg" alt="Dessin"></figure>
 </section>
 <section id="_outils">
 <h2>Outils</h2>
@@ -307,7 +321,7 @@ Bibliothèques:</p>
 </ul>
 </aside>
 </section>
-<section id="_organisation_2">
+<section id="_organisation">
 <h2>Organisation</h2>
 <p>Plus incrémental, plus de tests Déploiement continu suppose intégration continue, et ça a pêché</p>
 <aside role="note">
