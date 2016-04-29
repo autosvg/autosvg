@@ -31,18 +31,27 @@ require_clean_work_tree_git () {
     }
 
 # You can only deploy to github pages if your working tree is clean
-if require_clean_work_tree_git; then
+# if require_clean_work_tree_git; then
   REV=$(git rev-parse --short HEAD)
   BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
+  
   cd build/pages
   echo "In repository $(git rev-parse --show-toplevel)"
   git pull
   rm -rf ./*
   cd ../..
+  brunch build
+  cp -t slides/dist -r build/app/*
   brunch build -e pages
+  cd slides
+  gulp
+  cd ..
+  mkdir -p build/pages/slides
+  rm build/pages/slides/index.html
+  cp -t build/pages/slides -r slides/onstage slides/dist/*
   cd build/pages
+  echo $(pwd)
   git add -A
   git commit -m "Commit $REV in branch $BRANCH"
   git push
-fi
+# fi
