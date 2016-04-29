@@ -1,36 +1,31 @@
 import {exception} from "../lib/utils/check";
 import pipeline from "../lib/pipeline";
+import {default as stringifyError, firstError} from "../lib/error";
 import draw from "./draw";
 
-const figures = [
-  "1-1",
-  "1-2",
-  "2-1-a",
-  "2-1-b",
-  "2-1-c",
-  "2-2-a",
-  "2-2-b",
-  "2-2-c",
-  "2-4",
-  "2-6",
-  "2-6-alt",
-  "2-9",
-  "2-14"
+const demos = [
+  "basic",
+  "inference",
+  "labels",
+  "placement",
+  "ALDToken",
+  "existingId",
+  "wrongType",
+  "syntax",
+  "MBToken"
 ];
-
 
 export default function main() {
   const container = document.getElementsByClassName("container")[0];
-  for(let f of figures) {
+  for(let d of demos) {
     const row = document.createElement("div");
-    row.id = `figure${f}`;
+    row.id = `demo-${d}`;
     row.classList.add("row", "bottom");
     container.appendChild(row);
     const autospec = document.createElement("div");
     autospec.classList.add("autospec", "one-half", "column");
     const textarea = document.createElement("textarea");
-    const path = `figures/figure${f}.aml`;
-    textarea.readonly = true;
+    const path = `demo/${d}.aml`;
     autospec.appendChild(textarea);
     row.appendChild(autospec);
     const autoimg = document.createElement("div");
@@ -47,7 +42,10 @@ function populate(textarea, autoimg, path) {
       textarea.value = xhttp.responseText;
       const fsm = pipeline(textarea.value);
       if(exception(fsm)) {
-        log.debug(fsm.message);
+        const err = stringifyError(firstError(fsm))
+        const errorTA = document.createElement("textarea");
+        errorTA.value = stringifyError(firstError(fsm));
+        autoimg.appendChild(errorTA);
         return;
       }
       draw(fsm, autoimg);

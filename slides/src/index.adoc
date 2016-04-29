@@ -221,7 +221,10 @@ qui nous a été confiée
 
 [.cue]
 ****
-- On les as proposé mais on ne les a pas faites
+- L'édition graphique a été considéré comme trop complexe à implémenter pour obtenir un résultat correct 
+- Le retour n'a aucune utilité si l'édition graphique n'est pas implémentée
+- L'export n'a pas été fait car considéré comme non prioritaire
+- Ce n'était pas une priorité, mais l'architecture permet une implémentation rapide
 ****
 
 == Une application modulaire
@@ -281,59 +284,22 @@ image::dessin.svg[Dessin, role="c"]
 - Déploiement continu avec le site : autosvg.github.io, permet un meilleur suivi.
 ****
 
-== Bilan
+== Bilan technique
 
-== Technique
+- Bon écosystème
+- Javascript : problèmes d'expressivité et de robustesse
+- Edition graphique
 
+== Bilan organisationnel
 
-Le reste nous a pris bcp de tmps
+- Coder plus tôt
+- Déploiemment continu => Intégration continu
+- Plus de tests
+- Plus de communication
 
-Ecosystème du Web satisfaisant
-Technologie SVG satisfaisante
-Problème d'expressivité et de robustesse en JS
+== Bilan humain
 
-[.cue]
-****
-- L'édition graphique a été considéré comme trop complexe à implémenter pour obtenir un résultat correct 
-- Le retour n'a aucune utilité si l'édition graphique n'est pas implémentée
-- L'export n'a pas été fait car considéré comme non prioritaire
-- Ce n'était pas une priorité, mais l'architecture permet une implémentation rapide
-- 
-****
-
-== Organisation
-
-Plus incrémental, plus de tests
-Déploiement continu suppose intégration continue, et ça a pêché
-
-[.cue]
-****
-- Il aurait fallu coder plus tôt, plus régulièrement et fragmenter l'objectif
-- Cela aurait permis de tester plus tôt certaines fonctionnalitées
-- 
-****
-== Humain
-
-Motivation en col, notamment dû au manque incrémental
-Télétravail excellent
-(TBC)
-
-- 
+- Baisse de motivation
+- Travail à distance
 
 == Démo
-
-1. Un automate normal sans inférence
-- montre la simplicité du langage
-- le positionnement automatique
-- tout est attendu
-
-2. Inférence
-- le langage est concis
-
-3. Placement manuel
-
-4. Style
-
-5. Signalisation des erreurs
-
-6? Un exemple avec un professeur

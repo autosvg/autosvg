@@ -1,0 +1,11 @@
+finite-automaton {
+ states {
+   q0[initial terminal x=50 y=100]
+   q1[x=130 y=50]
+
+ }
+ transitions {
+   q0 1 -> q1
+   q1 1 -> q0
+ }
+}

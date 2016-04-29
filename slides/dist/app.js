@@ -211,6 +211,94 @@ function cleanup(container) {
 }
 });
 
+;require.register("app/demo.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = main;
+
+var _check = require("../lib/utils/check");
+
+var _pipeline = require("../lib/pipeline");
+
+var _pipeline2 = _interopRequireDefault(_pipeline);
+
+var _error = require("../lib/error");
+
+var _error2 = _interopRequireDefault(_error);
+
+var _draw = require("./draw");
+
+var _draw2 = _interopRequireDefault(_draw);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var demos = ["basic", "inference", "labels", "placement", "ALDToken", "existingId", "wrongType", "syntax", "MBToken"];
+
+function main() {
+  var container = document.getElementsByClassName("container")[0];
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = demos[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var d = _step.value;
+
+      var row = document.createElement("div");
+      row.id = "demo-" + d;
+      row.classList.add("row", "bottom");
+      container.appendChild(row);
+      var autospec = document.createElement("div");
+      autospec.classList.add("autospec", "one-half", "column");
+      var textarea = document.createElement("textarea");
+      var path = "demo/" + d + ".aml";
+      autospec.appendChild(textarea);
+      row.appendChild(autospec);
+      var autoimg = document.createElement("div");
+      autoimg.classList.add("autoimg", "one-half", "column");
+      row.appendChild(autoimg);
+      populate(textarea, autoimg, path);
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+}
+
+function populate(textarea, autoimg, path) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      textarea.value = xhttp.responseText;
+      var fsm = (0, _pipeline2.default)(textarea.value);
+      if ((0, _check.exception)(fsm)) {
+        var err = (0, _error2.default)((0, _error.firstError)(fsm));
+        var errorTA = document.createElement("textarea");
+        errorTA.value = (0, _error2.default)((0, _error.firstError)(fsm));
+        autoimg.appendChild(errorTA);
+        return;
+      }
+      (0, _draw2.default)(fsm, autoimg);
+    }
+  };
+  xhttp.open("GET", path, true);
+  xhttp.send();
+}
+});
+
 ;require.register("app/draw.js", function(exports, require, module) {
 "use strict";
 
