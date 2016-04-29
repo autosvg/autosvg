@@ -15,9 +15,22 @@ const demos = [
   "MBToken"
 ];
 
+const titles = [
+  "Exemple simple",
+  "Inférence",
+  "Modification du label",
+  "Positionement manuel",
+  "Erreur 1",
+  "Erreur 2",
+  "Erreur 3",
+  "Erreur 4",
+  "Erreur 5"
+];
+
 export default function main() {
   const container = document.getElementsByClassName("container")[0];
-  for(let d of demos) {
+  for(let i = 0; i < demos.length; i++) {
+    const d = demos[i];
     const row = document.createElement("div");
     row.id = `demo-${d}`;
     row.classList.add("row", "bottom");
@@ -27,6 +40,9 @@ export default function main() {
     const textarea = document.createElement("textarea");
     const path = `demo/${d}.aml`;
     autospec.appendChild(textarea);
+    const title = document.createElement("h3");
+    title.innerHTML = titles[i];
+    row.appendChild(title);
     row.appendChild(autospec);
     const autoimg = document.createElement("div");
     autoimg.classList.add("autoimg", "one-half", "column");
