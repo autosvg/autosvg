@@ -1,0 +1,58 @@
+== Cahier des charges
+
+Avant de débuter le développement, nous nous sommes rencontrés avec M. Nicart
+pour définir les fonctionnalités du logiciel.
+Le cahier des charges est donc un effort conjoint des développeurs et du client.
+Les premiers ont proposé de nombreuses fonctionnalités que le client a
+ensuite évalué pour leur assigner chacune une priorité.
+
+=== Deux cas d'utilisation majeurs
+
+// TODO
+- Discussion avec le client, changement majeur ; on passe d'un logiciel
+qui fait langage -> dessin à un qui fait langage <-> dessin
+
+=== Fonctionnalités détaillées
+
+Ci-dessous, la liste des fonctionnalités par ordre de priorité :
+
+. Définition d'un langage de description d'automate, qui doit :
+  * être saisissable dans un champ de texte sur la page Web
+  * être intuitif,
+  * être concis - l'utilisateur doit pouvoir produire
+  rapidement des automates,
+  * permettre de contrôler le rendu graphique, c'est-à-dire :
+    - le positionnement des états et transitions
+    - quelques options de style
+. Dessin d'automate à partir de la description, qui doit :
+  * être affiché dans la page Web via une balise SVG
+  * correspondre esthétiquement aux dessins d'automates habituels, c'est-à-dire
+    - les états sont représentés par leur étiquette entourée d'une ellipse ;
+    l'ellipse est un cercle si l'étiquette est courte
+    - les états initaux sont identifiés par une petite flêche arrêtée
+    au contour pointant vers le centre de l'ellipse
+    - le contour des états terminaux est doublé
+    - les transitions qui partent et arrivent à un même état sont représentées
+    par le même arc
+    - les étiquettes des arcs (lettres des transitions) sont lisibles - elles
+    ne sont pas rendues par dessus l'arc mais à côté, sans pour autant trop
+    s'en éloigner
+  * être satisfaisant sans nécessiter un positionnement manuel des différents
+  composants, ce qui signifie notamment :
+    - des états suffisamment espacés
+    - le moins de croisement d'arcs possibles
+    - une orientation "dans le sens" des transitions
+. Interface graphique associée au dessin, qui doit :
+  * permettre le glisser-déposer des éléments du dessin pour les placer
+  manuellement 
+  * permettre l'édition de la structure de l'automate
+  * produire à la demande une description textuelle de l'automate dans le
+  champ de saisi
+    - optionellement, cette description textuelle doit être la plus proche
+    possible de celle saisie par l'utilisateur
+. Fonction d'export, c'est-à-dire :
+  * enregistrer la définition de l'automate dans un fichier sur la machine
+  * enregistrer le code SVG généré dans un fichier sur la machine
+. Quelques opérations sur les automates
+. Architecture facilitant l'ajout de nouveaux types d'automates
+
