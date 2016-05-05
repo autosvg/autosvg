@@ -1,0 +1,36 @@
+== Compilateur
+
+Le compilateur est divisé en deux parties : le parseur et le superviseur.
+
+Ces deux parties collaborent étroitement pour permettre d'obtenir un automate à partir d'un langage d'entrée : CAL.
+
+=== Parseur
+
+Le parseur est la partie du compilateur qui va s'occuper de créer un descripteur à partir du langage d'entrée.
+Pour cela, nous avons donc spécifié la grammaire correspondant au langage. Il était alors nécéssaire de créer un parseur pour notre langage.
+Notre choix s'est porté sur PEGjs qui permet à partir d'une grammaire écrite dans une forme très proche de celle des grammaires de Théorie des Langages, de créer un parseur Javascript.
+Ce logiciel permet de faire correspondre à chaque règle de grammaire, un code Javascript à éxécuter quand cette règle est utilisée permettant ainsi de créer le descripteur automatiquement et de le envoyer en tant que résultat de l'opération d'analyse syntaxique.
+
+La création d'un descripteur s'accompagne d'un descripteur symétrique contenant les positions de tous les tokens, permettant ainsi de localiser les erreurs très précisement dans le langage d'entrée.
+La gestion des erreurs n'est faite que du cotè syntaxique dans le parseur qui renvoie alors, au lieu d'un descripteur, une erreur qui sera traité par le superviseur.
+
+=== Superviseur 
+
+Le superviseur est en charge de vérifier que toutes les étapes de la compilation se déroule sans erreur et de permettre le passage du descripteur rendu par le parseur au modèle.
+C'est lui qui va à chaque étape de la compilation traiter les différentes erreurs ayant pu survenir telles que les erreurs syntaxiques renvoyées par le parseur et les erreurs sémantiques renvoyées par le modéle.
+Il est aussi en charge de vérifier certaines erreurs sur le descripteur afin de le rendre propre avant d'alimenter le modèle.
+
+=== Bénéfice de la séparation
+
+- Choix du langage d'entrée +
+    
+En effet, le fait d'avoir spécifié un protocole permet de se passer du parseur fourni avec l'application et d'utiliser un autre langage pour peu que l'on obtienne un descripteur respectant la convention.
+
+- Lisibilité du code de la grammaire +
+
+Le modèle n'étant alimenté que par l'intermédiaire du superviseur, le parseur n'est en charge que de la création du descripteur, cela rend donc son code plus lisible.
+
+- Plusieurs formats de sérialisation
+
+Le superviseur étant indépendant du parseur, il est tout à fait possible de passer un descripteur non créé à partir du langage. Par exemple, un descripteur écrit en JSON.
+
