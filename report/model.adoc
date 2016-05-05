@@ -1,14 +1,14 @@
 == Modèle
 
 Le modèle permet d'instancier et de manipuler les automates de façon sûre.
-Nous définissions un protocole pour instancier les automates ainsi qu'une
+Nous définissons un protocole pour instancier les automates ainsi qu'une
 API séparée en deux niveaux : l'une manipule l'automate en temps qu'objet
 mathématique tandis que l'autre prend en compte les données liées à sa
 représentation graphique.
 
 === Fsm
 
-Le modèle expose une classe dénomée `Fsm` (pour _finite state machine_).
+Le modèle expose une classe dénommée `Fsm` (pour _finite state machine_).
 Une instance de `Fsm` représente un automate au sens mathématique.
 
 ==== Rappel sur les automates
