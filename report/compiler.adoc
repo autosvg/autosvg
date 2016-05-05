@@ -2,18 +2,18 @@
 
 Le compilateur permet d'obtenir un automate à partir d'un langage d'entrée : CAL.
 
-Le compilation se décompose en 3 étapes. Elles sont toutes mises en relation par un module appelé le superviseur.
+La compilation se décompose en 3 étapes. Elles sont toutes mises en relation par un module appelé le superviseur.
 
 === Parseur
 
-Le parseur est la partie du compilateur qui s'occupe de l'analyse lexicale et syntaxe de la représentation textuelle dans le langage CAL.
-Il retourne ce que nous appelons un description, c'est-à-dire une structure de données formée des informations contenues dans la représentation textuelle.
+Le parseur est la partie du compilateur qui s'occupe de l'analyse lexicale et syntaxique de la représentation textuelle dans le langage CAL.
+Il retourne ce que nous appelons un descripteur, c'est-à-dire une structure de données formée des informations contenues dans la représentation textuelle.
 
 Simultanément, le parseur produit et renvoit un second descripteur symétrique au premier.
 Au lieu de contenir les données associées aux tokens lus par le parseur,
 ce second descripteur fournit la position de ces tokens.
 
-La création du parseur s'est faire à partir de sa grammaire à l'aide de PEGjs, une bibliothèque Javascript semblable à Lex/Bison.
+La création du parseur s'est faite à partir de sa grammaire à l'aide de PEGjs, une bibliothèque Javascript semblable à Lex/Bison.
 La syntaxe employée par PEGjs pour définir une grammaire est très proche de celle abordée en théorie des langages.
 
 A chaque régle de la grammaire peut être associé un bloc de code Javascript permettant ainsi de créer le descripteur sous la forme voulue.
@@ -23,23 +23,24 @@ Cette erreur est capturée par le compilateur qui la renvoit à son tour.
 
 === Inférence 
 
+// Une phrase trop longue et trop abstraite.
 L'inférence est l'étape consistant à compléter les informations concernant les états et les symboles dans le descripteur en utilisant les informations présentes dans les transitions.
-Cette étape est réalisé le superviseur qui sera alors en charge de passer le descripteur ainsi complété au modèle.
+Cette étape est réalisé par le superviseur. Le descripteur ainsi complété est alor passé au modèle.
 
 === Appel au modèle 
 
-L'appel au modèle est l'étape qui consiste à passer d'un descripeur à un automate. Le modèle va alors se charger de stocker les différentes informations afin de créer un automate et le renvoyer.
-Toutefois des erreurs sémantiques peuvent survenir, dans ce cas le modèle renvoie directement l'erreur afin que le superviseur lui fasse correspondre la position du token ayant causé l'erreur.
+L'appel au modèle est l'étape qui consiste à passer du descripteur à un automate.
+Le constructeur d'automate exposé par le modèle prend comme paramétre un descripteur. Si celui-ci est bien spécifié, une instance est renvoyée.
+En cas d'erreur, le constructeur renvoit une exception. Le superviseur va associer cette exception à la position du token ayant causé l'erreur
+grâce au second descripteur produit par le parseur. Il est ainsi possible de localiser les erreurs sémantiques aussi bien que les erreurs syntaxiques.
 
 === Protocole
 
-Le choix d'avoir un protocole au lieu de faire directement interagir parseur et modèle provient de plusieurs raisons :
+Plusieurs raisons nous aménent à utiliser un descripteur plutôt que de directement appeler les fonctions du modèle dans le parseur.
 
-==== Syntaxe variable
+D'une part, cela assouplit la relation entre le langage et le modèle.
+On peut tout à fait changer la syntaxe de CAL ; en effet la présence d'un protocole assure que le modèle est capable de prendre en compte n'importe quel descripteur le respectant.
 
-On peut tout à fait changer la syntaxe de CAL, en effet la présence d'un protocole assure que le modèle est capable de prendre en compte n'importe quel descripteur le respectant.
-
-==== Simplicité de la grammaire
-
-Le code présent dans la grammaire n'est dédié qu'à une tâche : la création d'un descripteur qui sera renvoyé. Auncun code interagissant avec l'exterieur n'est présent facilitant ainsi la lecture et la compréhension.
+De plus, le code présent dans la grammaire reste aussi simple que possible. Il n'est dédié qu'à une tâche : la création du descripteur.
+Auncun code interagissant avec l'exterieur n'est présent, facilitant ainsi la lecture et la compréhension.
 
