@@ -4,26 +4,18 @@ Le compilateur est divisé en deux parties : le parseur et le superviseur.
 
 Ces deux parties collaborent étroitement pour permettre d'obtenir un automate à partir d'un langage d'entrée : CAL.
 
-////
-Langage = Spécification
-Pour le texte dans le langage, on dit "représentation textuelle", "code", "texte dans le langage"
-////
 
 === Parseur
 
-Le parseur est la partie du compilateur qui va s'occuper de créer un descripteur à partir du langage d'entrée.
-// C'est quoi un descripteur ?
-Pour cela, nous avons donc spécifié la grammaire correspondant au langage. Il était alors nécéssaire de créer un parseur pour notre langage.
-// Pas clair
+Le parseur est la partie du compilateur qui va s'occuper de créer un descripteur à partir du de la représentation textuelle.
+Le descripteur est une structure de données contenant toutes les informations permettant la création d'un automate lorqu'il est passé au modèle.
+Cette création s'accompagne d'un autre descripteur totalement symétrique contenant la position dans le texte des différentes données.
+Dans le but de pouvoir traiter le langage, nous avons écrit sa grammaire afin de créer un parseur.
 
-Notre choix s'est porté sur PEGjs qui permet à partir d'une grammaire écrite dans une forme très proche de celle des grammaires de Théorie des Langages, de créer un parseur Javascript.
-Ce logiciel permet de faire correspondre à chaque règle de grammaire, un code Javascript à éxécuter quand cette règle est utilisée permettant ainsi de créer le descripteur automatiquement et de le envoyer en tant que résultat de l'opération d'analyse syntaxique.
-// Pas clair et trop long
+La création du parseur s'est faite à l'aide de PEGjs, un outil permettant à partir d'une grammaire de créer un parseur. Il prend en entrée une grammaire dont la syntaxe était très proche de celle vue en théorie des langages et donnait un parseur utilisable dans du code Javascript.
+Nous pouvons aussi associer à chaque régle de la grammaire, un bloc de code Javascript permettant ainsi de créer le descripteur sous la forme voulue directement dans la grammaire.
 
-La création d'un descripteur s'accompagne d'un descripteur symétrique contenant les positions de tous les tokens, permettant ainsi de localiser les erreurs très précisement dans le langage d'entrée.
-// Token?
-La gestion des erreurs n'est faite que du cotè syntaxique dans le parseur qui renvoie alors, au lieu d'un descripteur, une erreur qui sera traité par le superviseur.
-// "côté syntaxique"?
+La gestion des erreurs syntaxiques est faite que dans le parseur qui renvoie alors, au lieu d'un descripteur, une erreur qui sera traité par le superviseur.
 
 === Superviseur 
 
@@ -35,16 +27,13 @@ Il est aussi en charge de vérifier certaines erreurs sur le descripteur afin de
 
 ==== Choix du langage d'entrée
     
-En effet, le fait d'avoir spécifié un protocole permet de se passer du parseur fourni avec l'application et d'utiliser un autre langage pour peu que l'on obtienne un descripteur respectant la convention.
-// Phrase toute seule = pas de connecteur logique (pas de "en effet")
-// Pas convention, protocole
+Le fait d'avoir spécifié un protocole permet de se passer du parseur fourni avec l'application et d'utiliser un autre langage pour peu que l'on obtienne un descripteur respectant la protocole.
 
 ==== Lisibilité du code de la grammaire
 
 Le modèle n'étant alimenté que par l'intermédiaire du superviseur, le parseur n'est en charge que de la création du descripteur, cela rend donc son code plus lisible.
-// Pourquoi ?
+En effet, le code concernant l'alimentation du modèle n'y intervient pas et une seule tâche est laissée au parseur.
 
 ==== Plusieurs formats de sérialisation
 
-Le superviseur étant indépendant du parseur, il est tout à fait possible de passer un descripteur non créé à partir du langage. Par exemple, un descripteur écrit en JSON.
-// Le superviseur n'est pas indépendant du parseur, c'est le protocole qui l'est
+Le protocole étant indépendant du parseur, il est tout à fait possible de passer un descripteur non créé à partir du langage. Par exemple, un descripteur écrit en JSON.
