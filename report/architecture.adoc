@@ -1,0 +1,21 @@
+== Architecture
+
+L'application se décompose naturellement en trois modules : le compilateur,
+le modèle et le dessinateur.
+
+Le compilateur est chargé de fournir une instance d'automate à partir d'une
+description textuelle dans un langage que nous définirons. Le compilateur
+doit également être à même de décompiler, c'est-à-dire produire une
+représentation textuelle à partir d'une instance d'automate ; cette
+fonctionnalité n'a toutefois pas été implémentée.
+
+Le modèle permet d'instancier un automate à partir d'un objet litéral
+Javascript (un enregistrement). Ce dernier doit répondre à un protocole que
+nous définirons.
+De plus, le modèle expose une API pour manipuler les instances d'automate.
+Il est alors possible de changer leur état de façon sûre.
+
+Le dessinateur instancie une vue et un contrôleur et les lie à une instance
+d'automate. La vue dessine l'automate à l'aide d'une balise SVG tandis
+que le contrôleur manipule l'automate via l'API en réponse à certains
+évenements du DOM.

@@ -1,0 +1,57 @@
+== Modèle
+
+Le modèle permet d'instancier et de manipuler les automates de façon sûre.
+Nous définissions un protocole pour instancier les automates ainsi qu'une
+API séparée en deux niveaux : l'une manipule l'automate en temps qu'objet
+mathématique tandis que l'autre prend en compte les données liées à sa
+représentation graphique.
+
+=== Fsm
+
+Le modèle expose une classe dénomée `Fsm` (pour _finite state machine_).
+Une instance de `Fsm` représente un automate au sens mathématique.
+
+==== Rappel sur les automates
+
+Un automate est définit par un triplet (Σ, Q, I, F, δ)
+//TODO
+
+==== Trois sous-classes
+
+La classe `Fsm` n'expose aucune méthode. Elle offre seulement trois
+attributs non mutables appelés `symbols`, `states` et `transitions` qui
+correspondent respectivement aux lettres, états et transitions de l'automate.
+
+Ces attributs sont en réalité des classes. Elles exposent des méthodes
+statiques pour créer, obtenir et supprimer les objets correspondant,
+mais aucune méthode d'instance.
+
+Ce patron de conception permet de simuler des espace de nommage
+pour les méthodes. Par exemple, pour ajouter un état sur un `Fsm` nommer
+`automaton`, on appelle la méthode `automaton.states.add()`. En revanche,
+si on veut ajouter une lettre, on appelle `automaton.symbols.add()`.
+
+==== Immutabilité des objets
+
+Techniquement, les objets de l'automate sont mutables. On peut modifier à
+loisir les propriétés des lettres, états et transitions.
+Toutefois, le modèle dissimule les données qui lui sont utiles, si bien qu'il
+est impossible de changer par exemple les états pointées par une transition
+ou le fait qu'un état soit final. La seule solution est de supprimer l'objet
+puis de le recréer comme souhaité.
+
+Pour obtenir des données spécifiques aux instances, les classes exposent
+des _getters_ Javascript. Ces _getters_ sont des attributs qui à l'accès
+éxecutent une méthode au lieu de renvoyer la valeur de l'attribut. Cela permet
+de créer des champs non mutables depuis l'API, mais mutables pour le modèle.
+Par exemple, pour savoir si un état `etat` est initial, on appelle `etat.initial`
+qui renvoit un booléen. Contrairement aux propriétés d'objet,
+`etat.initial = true` renverra une erreur.
+
+Tous les objets de l'automate disposent d'un _getter_ appelé `struct` qui
+renvoit l'automate en question.
+
+==== Des mixins pour étendre les sous-classes
+
+Il est possible de passer au constructeur des mixins pour chacune des
+sous-classes.
