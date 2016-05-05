@@ -1,0 +1,205 @@
+Introduction:
+- Pourquoi le projet?
+
+- Dessiner des automates, c'est bien
+- Mais on veut conserver la représentation automate
+- Logiciel de représentation d'automates
+- En Web, parce que le tuteur veut voir ce que ça donne:
+  * Un interêt pédagogique (facile à déployer)
+  * Preuve de concept
+
+- Quel projet?
+Cahier des charges
+  Intro: Elaboré le client, nous étions force de propositon
+  Fonctionnalités attendues: voir document adoc
+
+- Comment?
+- Architecture, 3 grandes parties:
+  - compilateur
+  - modèle
+  - dessin
+
+Compilateur:
+  - Parser
+    * PEGJS, qui permet d'écrire la grammaire
+    * Renvoit un descripteur à nettoyer (enregistrement) + enregistrement
+    symétrique contenant la position des tokens respectifs afin
+    de récupérer la cause d'éventuelles erreurs
+    * Gestion immédiate des erreurs syntaxiques
+  - Superviseur
+    Effectue l'association entre une erreur sémantique et sa position
+    - Canoniser
+      * Redondance => Erreur sémantique
+      * Inférence / Vérification => Erreur sémantique
+    - Alimenter
+      * SketchFsm ou Erreur sémantique
+  - Pourquoi séparer:
+    * Pouvoir changer la syntaxe de CAL facilement (tant qu'on se conforme au protocole)
+    * Le code qui spécifie la grammaire est beaucoup plus à lire et à comprendre
+    * On peut s'affranchir du langage (il est facile de représenter l'automate en JSON par ex.)
+    * Le langage peut vérifier des propriétés qui ne découlent pas de la grammaire
+
+Modèle:
+  Deux classes: SketchFsm "hérite" de Fsm
+  - Fsm : 3 classes créer pour chaque instance exposées via un enregistrement
+    - Symbol, State, Transition (entités)
+    - méthodes statiques pour opérer sur l'automate
+    - méthodes d'instances pour opérer sur les entités
+    - le contructeur prend en paramétre des mixins pour pouvoir étendre
+    ces classes à l'instanciation
+  - SketchFsm : instancie 3 mixins passées à Fsm et expose les classes
+  résultantes. API qui ne fait qu'enrichir celle de Fsm
+    - 4e entités: Edges (un groupement de transitions à afficher sur le même arc)
+    - Calcul automatique des positions des entités à l'aide de la méthode layout()
+    - Utilise dagre, implémentation Javascript d'un algorithme similaire à celui
+    de GraphViz ; contraintes: à expliquer
+    - Les positions spécifiées via l'API ont précédence sur celles calculées par l'algo
+  - Pourquoi ? Séparation des responsabilités
+    * Une API claire pour la partie mathématique permet d'implémenter des
+    algorithmes
+    * Une API claire pour les propriétés graphiques permet d'implémenter
+    différents "backend"
+    * On peut altérer le modèle exposant les propriété graphiques sans "menacer"
+    les modules qui dépendent uniquement de la représentation mathématique
+  - Spécifier l'API et le protocole
+
+Dessin:
+  Une fonction qui prend en paramètre un sketchFsm et un élément du DOM
+  à peupler avec l'élément svg ; utilise D3 ; 4 étapes
+  - Instancie l'élément SVG
+  - Mesure:
+    - peupler l'élément avec les entités de taille inconnue (à cause du texte et du style)
+    - mesurer les bounding box et modifier le modèle en conséquence
+    - vider l'élément svg
+  - Layout:
+    - appeler la méthode de calcul de position des entités
+  - Dessin:
+    - dessine chacune des entités en utilisant l'API
+  - Ecoute:
+    - Créer des events listeners pour modifier le modèle lorsque l'utilisateur manipule le dessin
+    - Exemple: drag'n'drop de la position des états
+
+- Organisation:
+  Outils:
+    - npm
+      * Accès à l'écosystème Javascript
+      * Gestion des dépendances:
+        - facile à déployer (respecte ce qu'on voulait)
+        - environnement de développement similaire sur tous nos postes
+    - brunch
+      * "Compilation": produit des sources à déployer à partir des sources éditées
+      * Modularise le code (à expliquer)
+      * Permet l'utilisateur de transpileurs
+        - Babel (utilisation de la nouvelle vers. de JS - ES2015 - même si la navigateur
+        ne support que ES5)
+        - Stylus (du CSS en plus facile)
+        - JSDoc - comme JavaDoc mais pour JS
+        - PegJS - transformation de la grammaire en parseur à la "compilation" plutôt que côté client
+        - Uglify - Minimise les sources pour la production
+      * Créer un serveur qui compile les sources automatique et recharge la page
+        - Le temps entre l'édition du code et son éxecution est très court, ce qui permet
+        de programmer de façon "fluide"
+    - git
+      * Système de gestion de versions
+      * Même base de code, facilite le partage et la collaboration
+        - Deployé sur GitHub (pas besoin d'envoyer des mails, les sources
+        sont tout le temps à jour et accessibles)
+        - Système de branches: on peut travailler indépendamment sur des
+        fonctionnalités orthogonales (notamment parseur/dessin)
+        - Revenir à des versions antérieures en cas de régression
+    - Hangouts
+      * VoIP avec partage d'écran
+      * Permet de travailler sur les postes chez nous, mais ensemble
+      * Augmente le temps de travail puisque étend la plage horaire disponible
+      pour travailler ensemble
+      * Pour le débogage, via git ou le partage d'écran, permet d'avoir un oeil
+      "neuf" sur le code
+      * On peut rentrer/sortir facilement de la conversation: travail isolé
+      entrecoupé de moments de collaboration, ce qui évite de se disperser
+  Equipes
+    - 2 équipes :
+      * Parseur/Gestion d'erreurs - Achraf & Thibaut
+      * Modèle/Dessin - Yacine & Tom
+    - Protocole définit en amont, ce qui a permis de travailler séparemment
+    (toutefois décisions communes sur l'ensemble du projet)
+  Recontres
+    - Hebdomadaire entre nous:
+      * Le bilan de ce qui a été effectué dans la semaine
+      * Les objectifs de la semaine à venir
+      * Prises de décisions (design de l'architecure, du protocole, de l'API, du langage)
+      * Préparation de la rencontre avec le tuteur
+    - Hebdomadaire avec le tuteur:
+      * Un retour sur ce qui a été fait et des conseils sur ce qu'il y a à faire
+      * Permet de réviser les objectifs et de se concentrer sur l'essentiel
+      * Déploiement continu de l'application afin d'avoir le meilleur suivi
+
+- Bilan
+  * Techniques
+    - Edition graphique non aboutie
+    - Pas de retour (lié à l'édition graphique)
+    - Algorithmes à implémenter
+    - Fonction d'export
+  * Retour d'expérience
+    - Bon ecosystème:
+      * Une bibliothèque pour faire tout et n'importe quoi
+      * PEGJS, D3, Dagre
+      * Double tranchant: plusieurs solutions pour un même problème, laquelle choisir?
+      * Outils de développement très matures
+    - Langage:
+      * Avantages:
+        - Facile de manipuler les fonctions ; permet de changer le comportement
+        des objets "à chaud" (mixins, abstract factory, metaprogrammation)
+        - Prototypes permettent des constructions élaborées
+      * Inconvénients
+        - Une API étrange
+        - Pas de types, donc un code moins robuste
+        - Peu expressif pour certaines catégories de problèmes
+          (ex: aucun moyen d'isoler des variables sans impacter la performance,
+               gestion des erreurs manuelle, ...)
+        - Dépendant de l'implémentation des navigateurs (problèmes éventuels de portabilité)
+        - Pas de compilation : problèmes potentiels de performance (comparé à un langage compilé)
+    - Environnement graphique riche, à mi-chemin entre le bas niveau et le haut niveau
+     * Bas niveau: on peut définir nous-même facilement des composants et des agencements
+     élaborés
+     * Haut niveau: accès à des primitives complexes, gestion des événements par le navigateur
+     Si on devait faire la même chose sous Swing ou à l'aide d'un Canvas, ce serait pénible
+  * Humain & Organisationnel
+    - Coder plus tôt : on a passé trop de temps à discuter certains choix pour finalement
+    les réviser lorsque confronté à la réalité de la programmation
+    - Déploiement continu => Intégration continu, or très peu d'intégration
+    - Plus de tests
+      * Permet de faciliter l'intégration
+      * Compense le manque de robustesse de Javascript
+      * Commencer par les tests aide à définir l'API
+    - Se fixer des objectifs simples et les remplir de façon régulière
+      vs. n'avoir que le projet fini en ligne de mire
+      * Aide à architecturer l'application
+      * Aide la motivation
+      * Aide la collaboration
+    - Hangouts + Git = super idée
+  * Aller plus loin
+    - A court terme
+      * Finir les fonctionnalités non implémentées ; suppose de revoir
+        à la marge le modèle et sa relation à l'algorithme de calcul automatique
+      * Redéfinir le langage à la marge pour permettre:
+        - Un positionnement de toutes les entités
+        - Grouper les transitions qui partagent les mêmes états source et cible
+    - A long terme
+      * Revoir l'architecture du dessin en implémentant une classe par entité ;
+        les entités sont alors responsables de la façon dont elles se dessinent
+        et enregistrent leur propres écouteurs
+      * Semble se prêter à un langage fonctionnel. Possibilités: Purescript, Elm, Haskell 
+
+Conclusion
+  - Fini ou presque: Un langage de description d'automate et une API Javascript
+  - A travailler: Prototype de dessin d'automates et d'édition graphique
+  - On a appris ENORMEMENT de choses
+    * Au niveau technique:
+      - Git au sein d'une équipe
+      - Les outils pour développer une application client
+      - Les subtilités de Javascript
+      - Emploi des acquis de Théorie des langages
+      - Familiarisation avec SVG
+    * Au niveau organisation:
+      - L'importance de la communication
+      - Se fixer des objectifs modestes

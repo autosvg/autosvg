@@ -1,0 +1,12 @@
+finite automaton {
+  states {
+    0[label="" initial]
+    then[terminal]
+  } 
+  transitions {
+    0 t -> t
+    t h -> th
+    th e -> the
+    the n -> then
+  }
+}

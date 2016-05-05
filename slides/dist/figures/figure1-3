@@ -1,0 +1,16 @@
+finite automaton {
+  states {
+    0[label="" initial]
+    then[terminal]
+  }
+  transitions {
+    a pay -> b
+    b ship -> c
+    b redeem -> d
+    d ship -> e
+    c redeem -> e
+    d transfer -> f
+    e transfer -> g
+    f ship -> g
+  }
+}
