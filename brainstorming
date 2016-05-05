@@ -20,20 +20,22 @@ Cahier des charges
   - dessin
 
 Compilateur:
-  - Parser
-    * PEGJS, qui permet d'écrire la grammaire
-    * Renvoit un descripteur à nettoyer (enregistrement) + enregistrement
-    symétrique contenant la position des tokens respectifs afin
-    de récupérer la cause d'éventuelles erreurs
-    * Gestion immédiate des erreurs syntaxiques
-  - Superviseur
-    Effectue l'association entre une erreur sémantique et sa position
-    - Canoniser
-      * Redondance => Erreur sémantique
-      * Inférence / Vérification => Erreur sémantique
-    - Alimenter
-      * SketchFsm ou Erreur sémantique
-  - Pourquoi séparer:
+  - 4 étapes :
+    - Parseur
+      * PEGJS, qui permet d'écrire la grammaire
+      * Renvoit un descripteur à nettoyer (enregistrement) + enregistrement
+      symétrique contenant la position des tokens respectifs afin
+      de récupérer la cause d'éventuelles erreurs
+      * Gestion immédiate des erreurs syntaxiques
+    - Inférence / Vérification
+      * Rajoute les états et lettres non déclarés mais mentionnés dans les transitions
+    - Appel du modèle
+      * Fournit le descripteur au modèle qui renvoit une instance d'automate
+    - Localisation des erreurs sémantiques
+      * Si le modèle renvoit une erreur au lieu de l'automate, utilise le
+      descripteur des positions fournit par le parseur afin de localiser les
+      erreurs
+  - Pourquoi un protocole au lieu d'avoir un parseur qui intéragit directement avec le modèle :
     * Pouvoir changer la syntaxe de CAL facilement (tant qu'on se conforme au protocole)
     * Le code qui spécifie la grammaire est beaucoup plus à lire et à comprendre
     * On peut s'affranchir du langage (il est facile de représenter l'automate en JSON par ex.)
