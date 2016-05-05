@@ -5,10 +5,11 @@ calcul et trouve de nombreuses applications, notamment en théorie
 des langages. Enseignants, chercheurs et étudiants du domaine doivent
 fréquemment manipuler ces objets dont l'écriture mathématique est pour le moins
 conséquente. Il est plus facile, à des fins de compréhension et de communication
+// fastidieuse à la place de conséquente ? 
  de représenter les automates sous forme de dessins.
 Si un tel dessin présente toutes les informations nécessaires à quiconque
 le regarde, il est divorcé de la formalisation qui définit précisemment l'objet.
-
+// divorcé ?
 Un logiciel pourrait réconcilier ces deux représentations - l'une mathématique,
 l'autre graphique - en proposant de dessiner un automate à partir d'une
 description, ou en produisant une description à partir d'un dessin.
@@ -17,12 +18,15 @@ Nous avons entrepris la réalisation d'un tel logiciel à la demande et sous
 la supervision de M. Nicart, enseignant-chercheur à l'université de Rouen.
 L'objectif est de définir un langage capable de décrire un automate, puis de
 produire un compilateur sur ce langage à même de produire le dessin correspondant.
-
+//répétion de produire : 
 Des solutions logicielles traitant des automates existent cependant déjà.
+// mettre le cependant en début de phrase
 L'interêt du présent projet est l'usage exclusif des technologies Web.
+// L'interêt de ce projet
 Proposer ces fonctionnalités directement dans le navigateur offre la garantie
 d'un logiciel portable, que le développeur peut aisément déployer et que
 l'utilisateur peut facilement acquérir. L'application tient d'ailleurs son
+// et dont l'utilisateur peut facilement avoir accés
 nom du format de dessin vectoriel SVG utilisable directement dans une page Web.
 
 Enfin, le département informatique de l'université de Rouen est interessé par
