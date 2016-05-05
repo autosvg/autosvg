@@ -8,9 +8,18 @@ ensuite évalué pour leur assigner chacune une priorité.
 
 === Deux cas d'utilisation majeurs
 
-// TODO
-- Discussion avec le client, changement majeur ; on passe d'un logiciel
-qui fait langage -> dessin à un qui fait langage <-> dessin
+Initialement, le projet consistait seulement à définir une représentation
+textuelle d'automate et à dessiner un automate en SVG à partir de cette
+dernière.
+
+Après échange avec le client, il s'avère préférable de pouvoir manipuler
+la représentation graphique et d'en obtenir une représentation textuelle
+équivalente.
+
+Essentiellement, l'application se décompose en deux cas d'utilisation majeurs :
+d'une part produire un dessin d'automate à partir d'une description
+textuelle, et d'autre part manipuler un dessin d'automate pour finalement
+le sauvegarder sous format textuel.
 
 === Fonctionnalités détaillées
 
