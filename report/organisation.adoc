@@ -1,0 +1,17 @@
+== Organisation 
+
+Ce projet se déroulant par équipe de 4 personnes, il a donc fallu opter pour une organisation orienté vers la collaboration.
+
+=== Outils 
+
+* NPM :
+    NPM ( node package manager ) est un outil qui permet d'installer différents paquetages Javascript.
+    La gestion des dépendances est automatique et permet donc un dépoiement facilité.
+    Par conséquent, tous les membres de l'équipe disposait du même environnement de développement.
+
+* Brunch :
+   Cet outil permet lui aussi de faciliter le déploiement, puisqu'il fusionne les sources dans un même fichier limitant ainsi les étapes de dépoiement.
+   La modularisation du code est aussi une fonctionnalitée très utile de Brunch, permettant la séparation et la réutisabilité du code.
+
+* Git : 
+    Il s'agit d'un système de gestion de version, qui donne donc la possiblité de pouvoir partager aisément notre code 

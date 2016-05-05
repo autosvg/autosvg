@@ -2,7 +2,7 @@
 
 Le compilateur permet d'obtenir un automate à partir d'un langage d'entrée : CAL.
 
-Le compilation se décompose en 4 étapes.
+Le compilation se décompose en 3 étapes. Elles sont toutes mises en relation par un module appelé le superviseur.
 
 === Parseur
 
@@ -21,23 +21,25 @@ A chaque régle de la grammaire peut être associé un bloc de code Javascript p
 Si une erreur syntaxique survient, le parseur la renvoit au lieu du descripteur.
 Cette erreur est capturée par le compilateur qui la renvoit à son tour.
 
-=== Superviseur 
+=== Inférence 
 
-Le superviseur est en charge de vérifier que toutes les étapes de la compilation se déroule sans erreur et de permettre le passage du descripteur rendu par le parseur au modèle.
-C'est lui qui va à chaque étape de la compilation traiter les différentes erreurs ayant pu survenir telles que les erreurs syntaxiques renvoyées par le parseur et les erreurs sémantiques renvoyées par le modéle.
-Il est aussi en charge de vérifier certaines erreurs sur le descripteur afin de le rendre propre avant d'alimenter le modèle.
+L'inférence est l'étape consistant à compléter les informations concernant les états et les symboles dans le descripteur en utilisant les informations présentes dans les transitions.
+Cette étape est réalisé le superviseur qui sera alors en charge de passer le descripteur ainsi complété au modèle.
 
-=== Bénéfice de la séparation
+=== Appel au modèle 
 
-==== Choix du langage d'entrée
-    
-Le fait d'avoir spécifié un protocole permet de se passer du parseur fourni avec l'application et d'utiliser un autre langage pour peu que l'on obtienne un descripteur respectant la protocole.
+L'appel au modèle est l'étape qui consiste à passer d'un descripeur à un automate. Le modèle va alors se charger de stocker les différentes informations afin de créer un automate et le renvoyer.
+Toutefois des erreurs sémantiques peuvent survenir, dans ce cas le modèle renvoie directement l'erreur afin que le superviseur lui fasse correspondre la position du token ayant causé l'erreur.
 
-==== Lisibilité du code de la grammaire
+=== Protocole
 
-Le modèle n'étant alimenté que par l'intermédiaire du superviseur, le parseur n'est en charge que de la création du descripteur, cela rend donc son code plus lisible.
-En effet, le code concernant l'alimentation du modèle n'y intervient pas et une seule tâche est laissée au parseur.
+Le choix d'avoir un protocole au lieu de faire directement interagir parseur et modèle provient de plusieurs raisons :
 
-==== Plusieurs formats de sérialisation
+==== Syntaxe variable
 
-Le protocole étant indépendant du parseur, il est tout à fait possible de passer un descripteur non créé à partir du langage. Par exemple, un descripteur écrit en JSON.
+On peut tout à fait changer la syntaxe de CAL, en effet la présence d'un protocole assure que le modèle est capable de prendre en compte n'importe quel descripteur le respectant.
+
+==== Simplicité de la grammaire
+
+Le code présent dans la grammaire n'est dédié qu'à une tâche : la création d'un descripteur qui sera renvoyé. Auncun code interagissant avec l'exterieur n'est présent facilitant ainsi la lecture et la compréhension.
+
