@@ -1,0 +1,35 @@
+== Organisation 
+
+Ce projet se déroulant par équipe de 4 personnes, il a donc fallu opter pour une organisation orienté vers la collaboration.
+
+=== Outils 
+
+* NPM :
+    NPM ( node package manager ) est un outil qui permet d'installer différents paquetages Javascript.
+    La gestion des dépendances est automatique et permet donc un dépoiement facilité.
+    Par conséquent, tous les membres de l'équipe disposait du même environnement de développement.
+
+* Brunch :
+   Cet outil permet lui aussi de faciliter le déploiement, puisqu'il fusionne les sources dans un même fichier limitant ainsi les étapes de dépoiement.
+   La modularisation du code est aussi une fonctionnalitée très utile de Brunch, permettant la séparation et la réutisabilité du code.
+
+* Git : 
+    Il s'agit d'un système de gestion de version, qui donne donc la possiblité de pouvoir partager aisément les sources et ainsi avoir la même base de code.
+    Git permet aussi de travailler avec un système de branches et donc de travailler simultanément sur le code sans casser le travail des autres.
+
+* Hangouts :
+    Google Hangouts est un logiciel de voix sur IP disposant d'une fonctionnalité de partage d'écran, cela permet d'étendre la plage horaire de travail. En effet, nous pouvons continuer de travailler
+    ensemble indépendament des horaires ou nous nos voyons. Le fait d pouvoir donner accés à son code via le partage d'écran est aussi un avantage lors du débogagez car il permet d'avoir très rapidement un oeil neuf sur notre code.
+
+
+=== Equipes
+
+L'architecture du projet a très vite amené à une séparation en sous-équipes de 2 personnes. La première composé d'Achraf et de Thibaut était en charge du parseur et de la gestion des erreurs.
+La seconde équipe composé de Yacine et de Tom s'occupait du modèle et du dession. Cette séparation a pu s'opérer très facilement du au fait que le protocole a été défini par l'èquipe entière.
+
+
+=== Rencontres
+
+Nous avons, dés le début du projet, mis en place des réunions hebdomadiares. Le but de ces rencontres étaient de faire le bilan de la semaine passée mais aussi de fixer les objectifs de la semaine suivante et de prendre des décisions concernant l'ensemble de l'application tel que le protocole. Enfin cela permettait de préparer la réunion avec notre tuteur, M. Nicart.
+Celle-ci nous donnait l'occasion de faire un retour sur notre avancement et d'obtenir l'avis du tuteur sur les points que nous allions aborder. C'était aussi un moyen de réviser les objectifs et de se concentrer sur l'essentiel.
+Nous avions aussi mis en place l'application sur un site accessible facilement afin d'obtenir un suivi optimal.
