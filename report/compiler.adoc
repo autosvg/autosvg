@@ -1,21 +1,25 @@
 == Compilateur
 
-Le compilateur est divisé en deux parties : le parseur et le superviseur.
+Le compilateur permet d'obtenir un automate à partir d'un langage d'entrée : CAL.
 
-Ces deux parties collaborent étroitement pour permettre d'obtenir un automate à partir d'un langage d'entrée : CAL.
-
+Le compilation se décompose en 4 étapes.
 
 === Parseur
 
-Le parseur est la partie du compilateur qui va s'occuper de créer un descripteur à partir du de la représentation textuelle.
-Le descripteur est une structure de données contenant toutes les informations permettant la création d'un automate lorqu'il est passé au modèle.
-Cette création s'accompagne d'un autre descripteur totalement symétrique contenant la position dans le texte des différentes données.
-Dans le but de pouvoir traiter le langage, nous avons écrit sa grammaire afin de créer un parseur.
+Le parseur est la partie du compilateur qui s'occupe de l'analyse lexicale et syntaxe de la représentation textuelle dans le langage CAL.
+Il retourne ce que nous appelons un description, c'est-à-dire une structure de données formée des informations contenues dans la représentation textuelle.
 
-La création du parseur s'est faite à l'aide de PEGjs, un outil permettant à partir d'une grammaire de créer un parseur. Il prend en entrée une grammaire dont la syntaxe était très proche de celle vue en théorie des langages et donnait un parseur utilisable dans du code Javascript.
-Nous pouvons aussi associer à chaque régle de la grammaire, un bloc de code Javascript permettant ainsi de créer le descripteur sous la forme voulue directement dans la grammaire.
+Simultanément, le parseur produit et renvoit un second descripteur symétrique au premier.
+Au lieu de contenir les données associées aux tokens lus par le parseur,
+ce second descripteur fournit la position de ces tokens.
 
-La gestion des erreurs syntaxiques est faite que dans le parseur qui renvoie alors, au lieu d'un descripteur, une erreur qui sera traité par le superviseur.
+La création du parseur s'est faire à partir de sa grammaire à l'aide de PEGjs, une bibliothèque Javascript semblable à Lex/Bison.
+La syntaxe employée par PEGjs pour définir une grammaire est très proche de celle abordée en théorie des langages.
+
+A chaque régle de la grammaire peut être associé un bloc de code Javascript permettant ainsi de créer le descripteur sous la forme voulue.
+
+Si une erreur syntaxique survient, le parseur la renvoit au lieu du descripteur.
+Cette erreur est capturée par le compilateur qui la renvoit à son tour.
 
 === Superviseur 
 
