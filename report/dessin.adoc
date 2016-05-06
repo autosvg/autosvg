@@ -1,0 +1,75 @@
+== Dessin
+
+Le troisième composant majeur de l'application est le dessinateur.
+Il est chargé de communiquer avec une instance de `SketchFsm` pour
+le représenter ou mettre à jour les attributs graphiques de ses entités.
+
+Nous faisons issu usage de la bibliothèque *D3* qui facilite
+la création et la manipulation d'éléments SVG.
+
+La fonction de dessin appelée lors de la génération de l'automate est
+décomposée en quatres étapes.
+
+=== Mesure
+
+La première étape consiste à mettre à jour les attributs graphiques
+du modèle qui ne peuvent être déterminés qu'au moment du rendu.
+Ces attributs sont notamment la longeur et la largeur des étiquettes des états
+et arcs. En effet, le placement des entités dépendra de leur dimension ;
+leur dimension dépend à leur tour de la place qu'occupera le texte de l'étiquette.
+Comme les polices peuvent changer d'un client à l'autre, cette étape s'avère nécessaire.
+
+La mesure s'effectue comme suit. D'abord, l'élément SVG est instancié puis
+injecté dans la page. Il sera conservé tout au long de la durée de vie du modèle.
+
+Ensuite, les étiquettes sont ajoutées à l'élément SVG puis rendues.
+Les dimensions des boîtes de contour sont alors calculées via la
+primitive `getBBox()`. Pour les étiquettes d'arcs trop larges, des sauts
+de ligne sont manuellement insérés jusqu'à ce que la boîte de contour atteigne
+une dimension satisfaisante.
+
+Les dimensions calculées sont ensuite remises au modèle via les méthodes
+d'instance `height()` et `width()` des entités concernées.
+
+=== Positionnement
+
+Cette étape consiste seulement à appeler la méthode `layout()` du modèle.
+Celle-ci appelle l'algorithme de positionnement automatique des entités.
+Il fait naturellement usage des dimensions mesurées précédemment.
+
+=== Rendu
+
+Avant d'insérer les éléments de rendu, un marqueur triangulaire est ajouté
+à l'élément SVG. Ce marqueur habite la balise `defs`. Il sera référencé par
+les chemins qui devront porter une flêche à leur extrémité.
+
+La fonction itère ensuite sur les entités de l'automate et
+insère dans l'élément SVG un groupe `g` pour chacune d'entre elles.
+Les éléments de rendu occupent le groupe approprié.
+
+Les états sont représentés par des éléments `text` pour les étiquettes et
+des éléments `ellipse` pour les contours. Les états terminaux disposent de
+deux contours tandis que de petits lignes droites fléchées identifient les
+états initiaux. L'identifiant de l'état dans la représentation textuelle
+est préfixée de `state_` pour obtenir l'attribut `id` de l'élément `g`.
+Cette élément est par ailleurs doté de la classe `state`.
+
+Les arcs sont représentés par des éléments `text` pour les étiquettes et
+des éléments `path` pour les branches. La position du marqueur triangulaire
+sur le chemin est préalablement calculée. L'attribut `id` de l'élément `g`
+d'un arc est la chaîne de caractère `edge_` suivi de l'identifiant de l'état
+de départ, un tiret bas puis l'identifiant de l'état d'arrivée. L'élément
+`g` possède également la classe `edge`.
+
+=== Écoute
+
+Enfin, on enregistre auprès des groupes des écouteurs. Ceux-ci peuvent modifier
+le modèle en réaction à des évenements levés par le DOM.
+Bien que l'application livrée n'en fasse pas grand usage, il est possible
+de repositionner les états par glisser-déposer. Le modèle est altéré en conséquence.
+
+Il n'est pas nécessaire pour l'heure d'enregistrer des écouteurs auprès du modèle.
+L'élément SVG est la seule vue susceptible de modifier l'instance de `SketchFsm`
+en temps réel. Une modification de la représentation textuelle améne une 
+nouvelle exécution de la fonction de dessin. A terme, `SketchFsm` devrait
+exposer des méthodes pour écouter le modèle.
