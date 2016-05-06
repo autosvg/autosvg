@@ -2,130 +2,139 @@
     function setAttrs(obj, attrs) {
         if(attrs != null) {
             for (var i = 0; i < attrs.length; i++) {
-                Object.defineProperty(obj, attrs[i].name, {value: attrs[i].value});
+              Object.assign(obj, attrs[i]);
             }
         }
+        return obj;
     }
+
+    let defaults = {
+    };
+
+    let data = {
+    };
 }
 
 start =
-    type:automaton_type ws attrs:(attrs?) body:automaton_body
-    {   
-        let automaton = new Object();
-        automaton.type = type;
-        automaton.defaults = body.defaults;
-        automaton.descriptor = body.descriptor;
-        setAttrs(automaton, attrs);
-        return automaton;
+  t:type ws attrs:(attrs?) a:automaton_block
+  { 
+    let automaton = new Object();
+    automaton.type = t;
+    automaton.defaults = defaults
+    if(data.transitions == null) {
+      expected("transitions block");
     }
+    automaton.data = data;
+    setAttrs(automaton, attrs);
+    return automaton;
+  }
 
-automaton_type =
-    "finite automaton" / "fa"
 
-automaton_body =
-    block_start states_block:(states_block?) ws alphabet_block:(alphabet_block?) ws transition_block:(transition_block?) block_end 
-    {  
-        
-        let body = new Object();
-        body.descriptor = {
-            states: states_block.states,
-            symbols: alphabet_block.symbols,
-            transitions: transition_block.transitions
-        };
-        body.defaults = {
-            states: states_block.attrs,
-            symbols: alphabet_block.attrs,
-            transitions: transition_block.attrs
-        };
-        return body;
-   }
+type =
+    "finite automaton"
+
+automaton_block =
+  block_start blocks:blocks block_end 
+
+blocks =
+  block*
+
+block =
+  states_block
+  / symbols_block
+  / transitions_block
 
 states_block =
-    name:("states" / "s") ws attrs:(attrs?) block_start states:states block_end
-    {   
-        let states_block = new Object();
-        states_block.states =  states;
-        states_block.attrs = {};
-        setAttrs(states_block.attrs, attrs);
-        return states_block; 
+  t:"states" ws attrs:(attrs?) block_start s:states block_end
+  {
+    if(data.states == null) {
+      data.states = s;
+      setAttrs(defaults.states, attrs);
+    } else {
+      expected("Multiple declarations of states block");
     }
+  }
+
+symbols_block =
+  t:"symbols" ws attrs:(attrs?) block_start s:symbols block_end
+  {
+    if(data.symbols == null) {
+      data.symbols = s;
+      setAttrs(defaults.symbols, attrs);
+    } else {
+      expected("Multiple declarations of symbols block");
+    }
+  }
+
+transitions_block =
+  t:"transitions" ws attrs:(attrs?) block_start t:transitions block_end
+  {
+    if(data.transitions == null) {
+      data.transitions = t;
+      setAttrs(defaults.transitions, attrs);
+    } else {
+      expected("Multiple declarations of transitions block");
+    }
+  }
 
 states =
-    state* 
-
-state =
-    name:$([a-zA-Z_0-9]+) attrs:(attrs?) ws
-    {     
-       let state = new Object();
-       state.name = name;
-       setAttrs(state, attrs);
-       return state;
-    }
-
-alphabet_block =
-    name:("alphabet" / "a") ws attrs:(attrs?) block_start alphabet:symbols block_end
-    {  
-        let alphabet_block = new Object();
-        alphabet_block.symbols =  alphabet;
-        alphabet_block.attrs = {};
-        setAttrs(alphabet_block.attrs, attrs);
-        return alphabet_block; 
-        
-    }
+  state*
 
 symbols =
-    symbol*
-
-symbol =
-    name:$([a-zA-Z_]+) attrs:(attrs?) ws
-    {  
-       let symbol = new Object();
-       symbol.name = name ;
-       setAttrs(symbol, attrs);
-       return symbol;
-    }
-
-transition_block =
-    name:("transitions" / "t") ws attrs:(attrs?) block_start transitions:transitions block_end
-    {  
-        let transition_block = new Object();
-        transition_block.transitions =  transitions;
-        transition_block.attrs = {};
-        setAttrs(transition_block.attrs, attrs);
-        return transition_block; 
-        
-    }
-    
+  symbol*
 
 transitions =
-    transition*
+  transitions:(transition*)
+  {
+    let ts = new Array();
+    for(var i = 0; i < transitions.length; i++) {
+      for(var j = 0; j < transitions[i].to.length; j++) {
+        let new_t = new Object();
+        new_t.from = transitions[i].from;
+        new_t.by = transitions[i].by;
+        new_t.to = transitions[i].to[j];
+        ts.push(setAttrs(new_t, transitions[i].attrs));
+      }
+    }
+    return ts;
+  }
+
+state =
+  id:identifier ws attrs:(attrs?)
+  {
+    return setAttrs({id}, attrs);
+  }
+
+symbol =
+  id:identifier ws attrs:(attrs?)
+  {
+    return setAttrs({id}, attrs);
+  }
 
 transition =
-    start:$([a-zA-Z_0-9]+)ws symbol:$([a-zA-Z_0-9]+)ws "->"  ws end:$([a-zA-Z_0-9]+)ws  attrs:(attrs?) ws
-    {  
-        let transition = new Object();
-        transition.from =  start;
-        transition.by =  symbol;
-        transition.to =  end;
-        setAttrs(transition, attrs);
-        return transition;
-        
-    }
+  from:identifier ws by:identifier ws "->"  ws to:list_identifier ws  attrs:(attrs?) ws
+  {
+    return {from, by, to, attrs};
+  }
 
+
+list_identifier =
+    i:identifier "," l:list_identifier { return new Array(i).concat(l);}
+    / i:identifier { return new Array(i) };
 
 
 attrs =
     "[" attrs:(attr*) "]" ws { return attrs; }
 
 attr =
-    name:identifier ws "=" ws value:boolean ws { return {name: name, value: (value == "true") }; }
-    / name:identifier ws "=" ws color:color ws { return {name: name, value: color }; }
-    / name:identifier ws "=" ws value:quoted_string ws  { return { name: name, value: value }; } 
-    / name:identifier ws { return {name: name, value: true};}
+    name:identifier ws "=" ws value:boolean ws { let obj = {}; obj[name] = (value == "true"); return obj; }
+    / name:identifier ws "=" ws color:color ws { let obj = {}; obj[name] = color; return obj; }
+    / name:identifier ws "=" ws value:quoted_string ws  { let obj = {}; obj[name] = value; return obj; } 
+    / name:identifier ws { let obj = {}; obj[name] = true; return obj;}
      
 
 identifier =
-    $([a-zA-Z]+)
+    $([a-zA-Z_0-9]+)
 
 string =
     identifier
@@ -135,7 +144,7 @@ quoted_string =
 
 color =
     color:$("#" $(hexdigit hexdigit hexdigit hexdigit hexdigit hexdigit / hexdigit hexdigit hexdigit)) { return color }
-
+    
 hexdigit =
     ([a-fA-F0-9])
 
@@ -144,10 +153,10 @@ boolean =
     / "false"
 
 block_start =
-   "{" ws 
+   ws "{" ws 
 
 block_end =
-    ws "}"
+    ws "}" ws 
 
 ws = 
-    [ \t\n\r]* { return "ws" }
+    [ \t\n\r]* 

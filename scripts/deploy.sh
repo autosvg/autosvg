@@ -50,6 +50,7 @@ require_clean_work_tree_git () {
   rm build/pages/slides/index.html
   cp -t build/pages/slides -r slides/onstage slides/dist/*
   cd build/pages
+  cp -v ../../report/root.html report.html
   echo $(pwd)
   git add -A
   git commit -m "Commit $REV in branch $BRANCH"
