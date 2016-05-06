@@ -186,41 +186,14 @@ attrs =
     }; }
 
 attr =
-    name:identifier ws "=" ws value:boolean ws { 
+    name:identifier ws "=" ws value:value ws { 
       let obj = {}, loc = {};
-      obj[name.data] = (value === "true");
+      obj[name.data] = value;
       loc[name.data] = name.location;
       return {
         data: obj,
         location: loc
       };
-    }
-    / name:identifier ws "=" ws color:color ws { 
-        let obj = {}, loc = {}; 
-        obj[name.data] = color; 
-        loc[name.data] = name.location;
-        return {
-            data: obj,
-            location: loc
-        };
-    }
-    / name:identifier ws "=" ws value:quoted_string ws  { 
-        let obj = {}, loc = {}; 
-        obj[name.data] = value;
-        loc[name.data] = name.location;
-        return {
-            data: obj,
-            location: loc
-        };
-    } 
-    / name:identifier ws "=" ws value:number ws { 
-        let obj = {}, loc = {}; 
-        obj[name.data] = parseFloat(value); 
-        loc[name.data] = name.location;
-        return {
-            data: obj,
-            location: loc
-        };
     }
     / name:identifier ws { 
         let obj = {}, loc = {}; 
@@ -240,6 +213,8 @@ identifier =
             location: location()
         }
     }
+
+value = b:boolean { return b === "true"; } / quoted_string / color / n:number { return parseFloat(n); }
 
 string =
     [^\"]*
