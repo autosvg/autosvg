@@ -1,0 +1,46 @@
+== Bilan
+
+=== Technique
+
+Certaines fonctionnalitées de ce projet n'ont pas pu être développés tels que l'édition graphique. En effet, le choix a été fait de ne pas proposer cette fonctionnalité 
+
+=== Retour d'expérience
+
+* Écosystème
+L'utilisation des technologies Web durant ce projet a donné accés à un écosystème très riche. Beaucoup de bibliothèques étaient disponibles et implémentaient des fonctionnalités nécéssaires.
+C'est de cet écosystème que sont issues les principales dépendances du projet : D3, PEGjs et Dagre. Toutefois cette richesse peut s'avérer problèmatique au moment de faire un choix car il faut alors savoir quelle solution est la meilleure pour notre problème. 
+
+* Langage
+
+Le langage Javascript présente certains avantages ans le cadre du développement d'une application. 
+La manipulation aisée des fonctions permet de changer le comportements des objets durant l'éxécution et facilite donc l'utilisation de techniques de programmation avancée tels que les mixins, le patron de conception de fabrique abstraite ou la métaprogrammation.
+
+Malgrè cela, le Javascript souffre de certains inconvénients.
+L'absence de typage empèche la construction d'une application robuste sans passer par des tests, ce qui ne facilite pas la lisibilité du code.
+
+Le fait que Javascript ne soit pas implémenté complétement sur tous les navigateurs peut nuire à la compatibilité, toutefois ce défaut peut être nuancé par l'utilisation de transpilateurs.
+Le langage étant interpreté, nous ne pouvons espérer les mêmes performances qu'un langage compilé.
+
+=== Humain
+
+Nous avons remis en question nos choix pour l'application pendant trop longtemps. Il aurait été plus sage de commencer à développer plus tôt pour s'apercevoir des éventuelles problèmes à l'utilisation.
+Cela nous a d'ailleurs empéché de faire un véritable déploiement continu, puisque nous ne codions pas toujours, nous n'avions aucune nouvelle fonctionnalité à intégrer.
+Il aurait été bien de faire plus de tests pour faciliter l'intégration mais aussi compenser les faiblesses de Javascript. Cela aurait été aussi bénéfique pour définir notre API. En effet, les besoins seraient apparus plus rapidement.
+
+=== Perspectives 
+
+La réalisation de ce projet laisse entrevoir différentes améliorations possibles. 
+
+* Court terme 
+Il serait possible de finaliser l'édition graphique moyennant un changement de relation entre le modèle et l'agorithme de calcul des positions.
+
+Suite à l'utilisation du langage, nous nous sommes rendus compte que des modifications étaient nécessaires pour le rendre plus complet.
+Par exemple, le fait de permettre le positionnement de toutes les entités mais aussi la possibilité de pouvoir grouper les transitions non plus seulement par état d'arrivée mais aussi par symbole.
+
+* Long terme
+
+On pourrait grandement améliorer le dessin en définissant une classe pour chaque type d'entité à dessiner.
+Chaque objet saurait alors comment se dessiner et serait en charger de l'enregistrement des écouteurs auprès du modèle.
+
+Ce type de projet semble tout à fait se préter à un langage de type fonctionnel comme PureScript, Elm ou Haskell.
+L'utilisation d'un transpilateur vers le Javascript étant possible, cette amélioration est tout à fait envisageable.

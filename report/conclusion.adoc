@@ -1,0 +1,5 @@
+== Conclusion
+
+Ce projet nous a été très profitable, tant au niveau technique qu'au niveau organisationnel.
+En effet l'utilisation de Git au sein d'une équipe nous a permis de collaborer plus efficacement.
+

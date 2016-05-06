@@ -23,9 +23,8 @@ Cette erreur est capturée par le compilateur qui la renvoit à son tour.
 
 === Inférence 
 
-// Une phrase trop longue et trop abstraite.
-L'inférence est l'étape consistant à compléter les informations concernant les états et les symboles dans le descripteur en utilisant les informations présentes dans les transitions.
-Cette étape est réalisé par le superviseur. Le descripteur ainsi complété est alor passé au modèle.
+L'inférence est l'étape consistant  compléter les informations du descripteur. Des états et des symboles sont alors créés à partir des informations présents dans les transitions.
+Cette étape est réalisé par le superviseur. Le descripteur ainsi complété est alors passé au modèle.
 
 === Appel au modèle 
 
