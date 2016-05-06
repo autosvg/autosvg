@@ -1,6 +1,0 @@
-== Grammaire du langage CAL
-
-Les diagrammes syntaxiques définissant la grammaire du langage CAL
-sont présentés dans cette annexe.
-
-include::diagrams.adoc[]

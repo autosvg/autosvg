@@ -1,6 +1,5 @@
-== Compilateur
-
-Le compilateur permet d'obtenir un automate à partir d'un langage d'entrée : CAL.
+Le compilateur permet d'obtenir un automate à partir d'un langage d'entrée : CAL,
+pour _Concise Automaton Language_
 
 La compilation se décompose en 3 étapes. Elles sont toutes mises en relation par un module appelé le superviseur.
 

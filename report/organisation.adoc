@@ -1,9 +1,7 @@
-== Organisation 
+== Outils 
 
-Ce projet se déroule par équipe de 4 personnes.
-Il a donc fallu opter pour une organisation orientée vers la collaboration.
-
-=== Outils 
+Quatre outils majeurs ont facilité la communication au sein de l'équipe
+et la modularité du code. Ils sont les suivants.
 
 npm ::
   Le _node package manager_ est un outil qui permet d'installer différents paquetages Javascript.
@@ -31,7 +29,7 @@ Google Hangouts ::
   Partager son code via cette fonctionnalité est aussi un avantage lors du débogage car il permet d'apporter très rapidement un oeil neuf sur notre code.
 
 
-=== Equipes
+== Equipes
 
 L'architecture du projet a très vite amené à une séparation en sous-équipes de 2 personnes.
 La première composée d'Achraf et de Thibaut était en charge du parseur et de la gestion des erreurs.
@@ -40,7 +38,7 @@ Cette séparation a pu s'opérer très facilement. D'une part grâce à nos outi
 d'autre part grâce au protocole qui fût défini en amont par l'èquipe entière.
 
 
-=== Rencontres
+== Rencontres
 
 Dès le début du projet, nous avons planifié des réunions hebdomadiares.
 Ces rencontes permettaient de faire le bilan de la semaine passée.

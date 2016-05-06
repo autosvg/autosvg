@@ -1,21 +1,58 @@
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Generate diagrams for parser grammars">
-    <meta name="author" content="Jakub Dundalek">
+++++
+<style>
+svg.railroad-diagram {
+  background-color: hsl(30,20%,95%);
+}
+svg.railroad-diagram path {
+  stroke-width: 3;
+  stroke: black;
+  fill: rgba(0,0,0,0);
+}
+svg.railroad-diagram text {
+  font: bold 14px monospace;
+  text-anchor: middle;
+  cursor: pointer;
+}
+svg.railroad-diagram text.label {
+  text-anchor: start;
+}
+svg.railroad-diagram text.comment {
+  font: italic 12px monospace;
+}
+svg.railroad-diagram rect {
+  stroke-width: 3;
+  stroke: black;
+  fill: hsl(120,100%,90%);
+}
 
-    <title>GrammKit</title>
+body {
+  background-color: hsl(30,20%,95%);
+}
 
-    <link rel="stylesheet" href="style.css">
+input[type=text].form-control, textarea.form-control {
+  background-color:  hsl(30,20%,98%);;
+}
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
+.load-examples {
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.load-examples a {
+  margin-left: 10px;
+}
+
+textarea.form-control.grammar-edit {
+  height: 400px;
+  margin-bottom: 20px;
+  font-family: monospace;
+}
+
+.alert {
+  word-wrap: break-word;
+}
+</style>
     <h3 id="start" data-reactid=".0.1.0.0">start</h3><div data-reactid=".0.1.0.1"><svg class="railroad-diagram" width="469" height="72" viewBox="0 0 469 72">
 <g transform="translate(.5 .5)">
 <path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
@@ -1344,20 +1381,5 @@
 </g>
 </svg>
 </div><div data-reactid=".0.1.s.2"><span data-reactid=".0.1.s.2.0">Used By: </span><a href="#start" data-reactid=".0.1.s.2.1:0"><span data-reactid=".0.1.s.2.1:0.0"> </span><span data-reactid=".0.1.s.2.1:0.1">start</span><span data-reactid=".0.1.s.2.1:0.2"> </span></a><a href="#states_block" data-reactid=".0.1.s.2.1:1"><span data-reactid=".0.1.s.2.1:1.0"> </span><span data-reactid=".0.1.s.2.1:1.1">states_block</span><span data-reactid=".0.1.s.2.1:1.2"> </span></a><a href="#symbols_block" data-reactid=".0.1.s.2.1:2"><span data-reactid=".0.1.s.2.1:2.0"> </span><span data-reactid=".0.1.s.2.1:2.1">symbols_block</span><span data-reactid=".0.1.s.2.1:2.2"> </span></a><a href="#transitions_block" data-reactid=".0.1.s.2.1:3"><span data-reactid=".0.1.s.2.1:3.0"> </span><span data-reactid=".0.1.s.2.1:3.1">transitions_block</span><span data-reactid=".0.1.s.2.1:3.2"> </span></a><a href="#state" data-reactid=".0.1.s.2.1:4"><span data-reactid=".0.1.s.2.1:4.0"> </span><span data-reactid=".0.1.s.2.1:4.1">state</span><span data-reactid=".0.1.s.2.1:4.2"> </span></a><a href="#symbol" data-reactid=".0.1.s.2.1:5"><span data-reactid=".0.1.s.2.1:5.0"> </span><span data-reactid=".0.1.s.2.1:5.1">symbol</span><span data-reactid=".0.1.s.2.1:5.2"> </span></a><a href="#transition" data-reactid=".0.1.s.2.1:6"><span data-reactid=".0.1.s.2.1:6.0"> </span><span data-reactid=".0.1.s.2.1:6.1">transition</span><span data-reactid=".0.1.s.2.1:6.2"> </span></a><a href="#attrs" data-reactid=".0.1.s.2.1:7"><span data-reactid=".0.1.s.2.1:7.0"> </span><span data-reactid=".0.1.s.2.1:7.1">attrs</span><span data-reactid=".0.1.s.2.1:7.2"> </span></a><a href="#attr" data-reactid=".0.1.s.2.1:8"><span data-reactid=".0.1.s.2.1:8.0"> </span><span data-reactid=".0.1.s.2.1:8.1">attr</span><span data-reactid=".0.1.s.2.1:8.2"> </span></a><a href="#block_start" data-reactid=".0.1.s.2.1:9"><span data-reactid=".0.1.s.2.1:9.0"> </span><span data-reactid=".0.1.s.2.1:9.1">block_start</span><span data-reactid=".0.1.s.2.1:9.2"> </span></a><a href="#block_end" data-reactid=".0.1.s.2.1:a"><span data-reactid=".0.1.s.2.1:a.0"> </span><span data-reactid=".0.1.s.2.1:a.1">block_end</span><span data-reactid=".0.1.s.2.1:a.2"> </span></a></div></div></div></div></div>
-    <script src="http://www.google-analytics.com/ga.js" async="" type="text/javascript"></script><script src="bundle.js"></script>
-  <script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-21397914-7']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-
-</div></body></html>
+</div>
+++++

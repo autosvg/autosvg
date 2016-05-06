@@ -1,9 +1,7 @@
-== Conclusion
-
 L'issue de ce projet est une application Web côté client capable de dessiner
 un automate en SVG à partir d'une représentation textuelle.
 Cette représentation textuelle est défini à l'aide d'un nouveau langage
-appelé CAL, pour *Concise Automaton Language*.
+appelé CAL, pour _Concise Automaton Language_.
 
 Ce projet peut servir de point de départ pour une application plus poussée intégrant par exemple l'édition graphique.
 Cette expérience nous a été très profitable, tant au niveau technique qu'au niveau organisationnel.
@@ -16,6 +14,6 @@ Nos connaissances dans le domaine ont donc été bien consolidées.
 Nous retiendrons de nos succès et de nos difficultés de nombreux enseignements.
 D'une part, nous avons noté l'importance d'une bonne communication,
 qu'elle soit entre les membres de l'équipe, avec le tuteur ou avec le jury.
-D'autre part, la planification sérieuse apparait comme une nécessiter. Le
+D'autre part, la planification sérieuse apparait comme une nécessité. Le
 fait de fixer des objetifs modeste dans des délais courts nous aurait permis
 de conserver une motivation constante tout au long du projet.

@@ -11,17 +11,18 @@ Une instance de `Fsm` représente un automate au sens mathématique.
 
 ==== Rappel sur les automates
 
-Un automate est définit par un quintuplet $(\Sigma, Q, I, F, \delta)$.
+Un automate est définit par un quintuplet ++\((\Sigma, Q, I, F, \delta)\)++.
 
-$\Sigma$ est l'alphabet de l'automate. On appelle ses éléments des lettres
+++\(\Sigma\)++ est l'alphabet de l'automate. On appelle ses éléments des lettres
 ou des symboles.
 
-$Q$ est l'ensemble des états de l'automate. $I$ et $F$, sous-parties de $Q$,
+++\(Q\)++ est l'ensemble des états de l'automate. ++\(I\)++ et ++\(F\)++,
+sous-parties de ++\(Q\)++,
 sont les ensemble des états respectivement initiaux et terminaux.
 
-$\delta$ est l'ensemble des transitions. Une transition est définie par un
-triplet $(p, a, q)$ où $p$ est dit état de départ ou état source de
-la transition, $a$ est dit lettre ou symbole de la transition, et $q$ est
+++\(\delta\)++ est l'ensemble des transitions. Une transition est définie par un
+triplet ++\((p, a, q)\)++ où ++\(p\)++ est dit état de départ ou état source de
+la transition, $a$ est dit lettre ou symbole de la transition, et ++\(q\)++ est
 dit état d'arrivée ou état cible de la transition.
 
 Dans le cadre de ce document, on parlera d'entité ou d'objet de l'automate
@@ -121,7 +122,7 @@ problème anologue pour les graphes orientés pondérés. Il s'agit toutefois
 d'un problème NP-complet ; seules des heuristiques parfois complexes
 permettent d'obtenir un resultant satisfaisant.
 
-L'algorithme utilisé est inspiré des travaux de Ganser et. al <<GKNV>>, eux-mêmes issus de ceux
+L'algorithme utilisé est inspiré des travaux de Gansner et. al <<GKNV>>, eux-mêmes issus de ceux
 de Sugiyama <<STT>>. Hors, l'algoritihme utlisé par GraphViz - logiciel de dessin
 de graphes - est également inspiré do celui de Sugiyama.
 Ces algorithmes permettent de placer dans le plan les noeuds d'un graphe

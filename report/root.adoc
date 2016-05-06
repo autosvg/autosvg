@@ -1,7 +1,5 @@
 = AutoSVG
-Tom Etienne, Achraf Hassani, Yacine Hmito, Thibaut Quentin
-Université de Rouen
-
+Tom Etienne; Achraf Hassani; Yacine Hmito; Thibaut Quentin
 :doctype: book
 :sectnums: y
 :toc: left
@@ -15,7 +13,11 @@ include::intro.adoc[]
 
 [partintro]
 --
-TODO
+Avant de débuter le développement, nous nous sommes rencontrés avec M. Nicart
+pour définir les fonctionnalités du logiciel.
+Le cahier des charges est donc un effort conjoint des développeurs et du client.
+Les premiers ont proposé de nombreuses fonctionnalités que le client a
+ensuite évalué pour leur assigner chacune une priorité.
 --
 
 include::charges.adoc[]
@@ -24,7 +26,25 @@ include::charges.adoc[]
 
 [partintro]
 --
-TODO
+L'application se décompose naturellement en trois modules : le compilateur,
+le modèle et le dessinateur.
+
+Le compilateur est chargé de fournir une instance d'automate à partir d'une
+description textuelle dans un langage que nous définirons. Le compilateur
+doit également être à même de décompiler, c'est-à-dire produire une
+représentation textuelle à partir d'une instance d'automate ; cette
+fonctionnalité n'a toutefois pas été implémentée.
+
+Le modèle permet d'instancier un automate à partir d'un objet litéral
+Javascript (un enregistrement). Ce dernier doit répondre à un protocole que
+nous définirons.
+De plus, le modèle expose une API pour manipuler les instances d'automate.
+Il est alors possible de changer leur état de façon sûre.
+
+Le dessinateur instancie une vue et un contrôleur et les lie à une instance
+d'automate. La vue dessine l'automate à l'aide d'une balise SVG tandis
+que le contrôleur manipule l'automate via l'API en réponse à certains
+évenements du DOM.
 --
 
 == Compilateur
@@ -43,14 +63,21 @@ include::dessin.adoc[]
 
 [partintro]
 --
-TODO
+Ce projet se déroule par équipe de 4 personnes.
+Il a donc fallu opter pour une organisation orientée vers la collaboration.
 --
+
+include::organisation.adoc[]
 
 = Bilan
 
 [partintro]
 --
-TODO
+Outre l'application commandée, il nous a été demandé de faire le point
+sur les technologies Web employées.
+
+De plus, après 4 mois de développement, il est utile de faire le bilan
+de notre progression, aussi bien du point de vue technique qu'organisationnel.
 --
 
 include::bilan.adoc[]
@@ -63,9 +90,33 @@ include::conclusion.adoc[]
 [appendix]
 = Grammaire de CAL
 
+Les diagrammes syntaxiques définissant la grammaire du langage CAL
+sont présentés dans cette annexe.
+
+include::rules.adoc[]
+
 [bibliography]
 = Bibliographie
 
-- [[GKSV]] Gansner, E., E. Koutsofios, S. North, K. Vo. A Technique for Drawing Directed Graphs. AT&T Bell Laboratories. 1993.
+- [[GKNV]] Gansner, E., E. Koutsofios, S. North, K. Vo. A Technique for Drawing Directed Graphs. AT&T Bell Laboratories. 1993.
 
 - [[STT]] Sugiyama, K., S. Tagawa and M. Toda. Methods for Visual Understanding of Hierarchical System Structures. IEEE Transaction on Systems, Man, and Cybernetics SMC-11(2). 1981.
+
+++++
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { extensions: ["mhchem.js"] }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+++++
