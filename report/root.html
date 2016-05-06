@@ -434,54 +434,55 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_cahier_des_charges">Cahier des charges</a>
 <ul class="sectlevel1">
 <li><a href="#_deux_cas_d_utilisation_majeurs">1. Deux cas d&#8217;utilisation majeurs</a></li>
-<li><a href="#_fonctionnalités_détaillées">2. Fonctionnalités détaillées</a></li>
+<li><a href="#_rappel_sur_les_automates">2. Rappel sur les automates</a></li>
+<li><a href="#_fonctionnalités_détaillées">3. Fonctionnalités détaillées</a></li>
 </ul>
 </li>
 <li><a href="#_architecture">Architecture</a>
 <ul class="sectlevel1">
-<li><a href="#_compilateur">3. Compilateur</a>
+<li><a href="#_compilateur">4. Compilateur</a>
 <ul class="sectlevel2">
-<li><a href="#_parseur">3.1. Parseur</a></li>
-<li><a href="#_inférence">3.2. Inférence</a></li>
-<li><a href="#_appel_au_modèle">3.3. Appel au modèle</a></li>
-<li><a href="#_protocole">3.4. Protocole</a></li>
+<li><a href="#_parseur">4.1. Parseur</a></li>
+<li><a href="#_inférence">4.2. Inférence</a></li>
+<li><a href="#_appel_au_modèle">4.3. Appel au modèle</a></li>
+<li><a href="#_protocole">4.4. Protocole</a></li>
 </ul>
 </li>
-<li><a href="#_modèle">4. Modèle</a>
+<li><a href="#_modèle">5. Modèle</a>
 <ul class="sectlevel2">
-<li><a href="#_fsm">4.1. Fsm</a></li>
-<li><a href="#_sketchfsm">4.2. SketchFsm</a></li>
+<li><a href="#_fsm">5.1. Fsm</a></li>
+<li><a href="#_sketchfsm">5.2. SketchFsm</a></li>
 </ul>
 </li>
-<li><a href="#_dessin">5. Dessin</a>
+<li><a href="#_dessin">6. Dessin</a>
 <ul class="sectlevel2">
-<li><a href="#_mesure">5.1. Mesure</a></li>
-<li><a href="#_positionnement">5.2. Positionnement</a></li>
-<li><a href="#_rendu">5.3. Rendu</a></li>
-<li><a href="#_Écoute">5.4. Écoute</a></li>
+<li><a href="#_mesure">6.1. Mesure</a></li>
+<li><a href="#_positionnement">6.2. Positionnement</a></li>
+<li><a href="#_rendu">6.3. Rendu</a></li>
+<li><a href="#_Écoute">6.4. Écoute</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#_organisation">Organisation</a>
 <ul class="sectlevel1">
-<li><a href="#_outils">6. Outils</a></li>
-<li><a href="#_equipes">7. Equipes</a></li>
-<li><a href="#_rencontres">8. Rencontres</a></li>
+<li><a href="#_outils">7. Outils</a></li>
+<li><a href="#_equipes">8. Equipes</a></li>
+<li><a href="#_rencontres">9. Rencontres</a></li>
 </ul>
 </li>
 <li><a href="#_bilan">Bilan</a>
 <ul class="sectlevel1">
-<li><a href="#_bilan_technique">9. Bilan technique</a></li>
-<li><a href="#_retour_d_expérience">10. Retour d&#8217;expérience</a>
+<li><a href="#_bilan_technique">10. Bilan technique</a></li>
+<li><a href="#_retour_d_expérience">11. Retour d&#8217;expérience</a>
 <ul class="sectlevel2">
-<li><a href="#_un_ecosystème_riche">10.1. Un ecosystème riche</a></li>
-<li><a href="#_un_langage_parfois_handicapant">10.2. Un langage parfois handicapant</a></li>
-<li><a href="#_une_interface_souple">10.3. Une interface souple</a></li>
+<li><a href="#_un_ecosystème_riche">11.1. Un ecosystème riche</a></li>
+<li><a href="#_un_langage_parfois_handicapant">11.2. Un langage parfois handicapant</a></li>
+<li><a href="#_une_interface_souple">11.3. Une interface souple</a></li>
 </ul>
 </li>
-<li><a href="#_bilan_humain">11. Bilan humain</a></li>
-<li><a href="#_perspectives">12. Perspectives</a></li>
+<li><a href="#_bilan_humain">12. Bilan humain</a></li>
+<li><a href="#_perspectives">13. Perspectives</a></li>
 </ul>
 </li>
 <li><a href="#_conclusion">Conclusion</a></li>
@@ -551,7 +552,7 @@ textuelle d&#8217;automate et à dessiner un automate en SVG à partir de cette
 dernière.</p>
 </div>
 <div class="paragraph">
-<p>Après échange avec le client, il s&#8217;avère préférable de pouvoir manipuler
+<p>Après échange avec le client, il s&#8217;avère aussi intéressant de pouvoir manipuler
 la représentation graphique et d&#8217;en obtenir une représentation textuelle
 équivalente.</p>
 </div>
@@ -564,7 +565,34 @@ le sauvegarder sous format textuel.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fonctionnalités_détaillées">2. Fonctionnalités détaillées</h2>
+<h2 id="_rappel_sur_les_automates">2. Rappel sur les automates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un automate est définit par un quintuplet \((\Sigma, Q, I, F, \delta)\).</p>
+</div>
+<div class="paragraph">
+<p>\(\Sigma\) est l&#8217;alphabet de l&#8217;automate. On appelle ses éléments des lettres
+ou des symboles.</p>
+</div>
+<div class="paragraph">
+<p>\(Q\) est l&#8217;ensemble des états de l&#8217;automate. \(I\) et \(F\),
+sous-parties de \(Q\),
+sont les ensemble des états respectivement initiaux et terminaux.</p>
+</div>
+<div class="paragraph">
+<p>\(\delta\) est l&#8217;ensemble des transitions. Une transition est définie par un
+triplet \((p, a, q)\) où \(p\) est dit état de départ ou état source de
+la transition, $a$ est dit lettre ou symbole de la transition, et \(q\) est
+dit état d&#8217;arrivée ou état cible de la transition.</p>
+</div>
+<div class="paragraph">
+<p>Dans ce document, on parlera d&#8217;entité ou d&#8217;objet de l&#8217;automate
+pour désigner invariablement les états, symboles ou transitions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fonctionnalités_détaillées">3. Fonctionnalités détaillées</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ci-dessous, la liste des fonctionnalités par ordre de priorité :</p>
@@ -579,11 +607,11 @@ le sauvegarder sous format textuel.</p>
 <p>être saisissable dans un champ de texte sur la page Web</p>
 </li>
 <li>
-<p>être intuitif,</p>
+<p>être intuitif</p>
 </li>
 <li>
 <p>être concis - l&#8217;utilisateur doit pouvoir produire
-rapidement des automates,</p>
+rapidement des automates</p>
 </li>
 <li>
 <p>permettre de contrôler le rendu graphique, c&#8217;est-à-dire :</p>
@@ -624,7 +652,8 @@ au contour pointant vers le centre de l&#8217;ellipse</p>
 <p>le contour des états terminaux est doublé</p>
 </li>
 <li>
-<p>les transitions qui partent et arrivent à un même état sont représentées
+<p>les transitions qui partagent le même état de départ et le même état
+d&#8217;arrivée
 par le même arc</p>
 </li>
 <li>
@@ -734,7 +763,7 @@ que le contrôleur manipule l&#8217;automate via l&#8217;API en réponse à cert
 </div>
 </div>
 <div class="sect1">
-<h2 id="_compilateur">3. Compilateur</h2>
+<h2 id="_compilateur">4. Compilateur</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Le compilateur permet d&#8217;obtenir un automate à partir d&#8217;un langage d&#8217;entrée : CAL,
@@ -744,7 +773,7 @@ pour <em>Concise Automaton Language</em></p>
 <p>La compilation se décompose en 3 étapes. Elles sont toutes mises en relation par un module appelé le superviseur.</p>
 </div>
 <div class="sect2">
-<h3 id="_parseur">3.1. Parseur</h3>
+<h3 id="_parseur">4.1. Parseur</h3>
 <div class="paragraph">
 <p>Le parseur est la partie du compilateur qui s&#8217;occupe de l&#8217;analyse lexicale et syntaxique de la représentation textuelle dans le langage CAL.
 Il retourne ce que nous appelons un descripteur, c&#8217;est-à-dire une structure de données formée des informations contenues dans la représentation textuelle.</p>
@@ -756,7 +785,7 @@ ce second descripteur fournit la position de ces tokens.</p>
 </div>
 <div class="paragraph">
 <p>La création du parseur s&#8217;est faite à partir de sa grammaire à l&#8217;aide de PEGjs, une bibliothèque Javascript semblable à Lex/Bison.
-La syntaxe employée par PEGjs pour définir une grammaire est très proche de celle abordée en théorie des langages, l&#8217;extended Backus-Naur form.</p>
+La syntaxe employée par PEGjs pour définir une grammaire est très proche de celle abordée en théorie des langages, l'<em>extended Backus-Naur form</em>.</p>
 </div>
 <div class="paragraph">
 <p>A chaque régle de la grammaire peut être associé un bloc de code Javascript permettant ainsi de créer le descripteur sous la forme voulue.</p>
@@ -767,14 +796,14 @@ Cette erreur est capturée par le compilateur qui la renvoit à son tour.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_inférence">3.2. Inférence</h3>
+<h3 id="_inférence">4.2. Inférence</h3>
 <div class="paragraph">
 <p>L&#8217;inférence est l&#8217;étape consistant  compléter les informations du descripteur. Des états et des symboles sont alors créés à partir des informations présents dans les transitions.
 Cette étape est réalisé par le superviseur. Le descripteur ainsi complété est alors passé au modèle.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_appel_au_modèle">3.3. Appel au modèle</h3>
+<h3 id="_appel_au_modèle">4.3. Appel au modèle</h3>
 <div class="paragraph">
 <p>L&#8217;appel au modèle est l&#8217;étape qui consiste à passer du descripteur à un automate.
 Le constructeur d&#8217;automate exposé par le modèle prend comme paramétre un descripteur. Si celui-ci est bien spécifié, une instance est renvoyée.
@@ -783,7 +812,7 @@ grâce au second descripteur produit par le parseur. Il est ainsi possible de lo
 </div>
 </div>
 <div class="sect2">
-<h3 id="_protocole">3.4. Protocole</h3>
+<h3 id="_protocole">4.4. Protocole</h3>
 <div class="paragraph">
 <p>Plusieurs raisons nous aménent à utiliser un descripteur plutôt que de directement appeler les fonctions du modèle dans le parseur.</p>
 </div>
@@ -799,7 +828,7 @@ Auncun code interagissant avec l&#8217;exterieur n&#8217;est présent, facilitan
 </div>
 </div>
 <div class="sect1">
-<h2 id="_modèle">4. Modèle</h2>
+<h2 id="_modèle">5. Modèle</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Le modèle permet d&#8217;instancier et de manipuler les automates de façon sûre.
@@ -809,38 +838,13 @@ mathématique tandis que l&#8217;autre prend en compte les données liées à sa
 représentation graphique.</p>
 </div>
 <div class="sect2">
-<h3 id="_fsm">4.1. Fsm</h3>
+<h3 id="_fsm">5.1. Fsm</h3>
 <div class="paragraph">
 <p>Le modèle expose une classe dénommée <code>Fsm</code> (pour <em>finite state machine</em>).
 Une instance de <code>Fsm</code> représente un automate au sens mathématique.</p>
 </div>
 <div class="sect3">
-<h4 id="_rappel_sur_les_automates">4.1.1. Rappel sur les automates</h4>
-<div class="paragraph">
-<p>Un automate est définit par un quintuplet \((\Sigma, Q, I, F, \delta)\).</p>
-</div>
-<div class="paragraph">
-<p>\(\Sigma\) est l&#8217;alphabet de l&#8217;automate. On appelle ses éléments des lettres
-ou des symboles.</p>
-</div>
-<div class="paragraph">
-<p>\(Q\) est l&#8217;ensemble des états de l&#8217;automate. \(I\) et \(F\),
-sous-parties de \(Q\),
-sont les ensemble des états respectivement initiaux et terminaux.</p>
-</div>
-<div class="paragraph">
-<p>\(\delta\) est l&#8217;ensemble des transitions. Une transition est définie par un
-triplet \((p, a, q)\) où \(p\) est dit état de départ ou état source de
-la transition, $a$ est dit lettre ou symbole de la transition, et \(q\) est
-dit état d&#8217;arrivée ou état cible de la transition.</p>
-</div>
-<div class="paragraph">
-<p>Dans le cadre de ce document, on parlera d&#8217;entité ou d&#8217;objet de l&#8217;automate
-pour désigner invariablement les états, symboles ou transitions.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_trois_classes_internes">4.1.2. Trois classes internes</h4>
+<h4 id="_trois_classes_internes">5.1.1. Trois classes internes</h4>
 <div class="paragraph">
 <p>La classe <code>Fsm</code> n&#8217;expose aucune méthode. Elle offre seulement trois
 attributs non mutables appelés <code>symbols</code>, <code>states</code> et <code>transitions</code> qui
@@ -859,7 +863,7 @@ si on veut ajouter une lettre, on appelle <code>automaton.symbols.add()</code>.<
 </div>
 </div>
 <div class="sect3">
-<h4 id="_immutabilité_des_objets">4.1.3. Immutabilité des objets</h4>
+<h4 id="_immutabilité_des_objets">5.1.2. Immutabilité des objets</h4>
 <div class="paragraph">
 <p>Techniquement, les objets de l&#8217;automate sont mutables. On peut modifier à
 loisir les propriétés des lettres, états et transitions.
@@ -883,7 +887,7 @@ renvoit l&#8217;automate en question.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_des_mixins_pour_étendre_les_classes_internes">4.1.4. Des mixins pour étendre les classes internes</h4>
+<h4 id="_des_mixins_pour_étendre_les_classes_internes">5.1.3. Des mixins pour étendre les classes internes</h4>
 <div class="paragraph">
 <p>Il est possible de passer au constructeur des mixins pour chacune des
 classes internes.</p>
@@ -896,7 +900,7 @@ des superclasses pour ne pas invalider la spécification de l&#8217;API.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sketchfsm">4.2. SketchFsm</h3>
+<h3 id="_sketchfsm">5.2. SketchFsm</h3>
 <div class="paragraph">
 <p>Le modèle expose un seconde classe <code>SketchFsm</code> qui hérite de <code>Fsm</code>.
 Son rôle et d&#8217;ajouter à <code>Fsm</code> les méthodes nécessaires pour spécifier
@@ -908,7 +912,7 @@ des entités.</p>
 la position des entités.</p>
 </div>
 <div class="sect3">
-<h4 id="__héritage_via_mixins">4.2.1. "Héritage" via mixins</h4>
+<h4 id="__héritage_via_mixins">5.2.1. "Héritage" via mixins</h4>
 <div class="paragraph">
 <p><code>SketchFsm</code> n&#8217;est techniquement pas une sous-classe de <code>Fsm</code>. Elle compose
 <code>Fsm</code> mais passe ses propres mixins à l&#8217;instanciation. Ce sont donc les
@@ -918,7 +922,7 @@ L&#8217;API proposée par <code>SketchFsm</code> est alors entièrement compatib
 </div>
 </div>
 <div class="sect3">
-<h4 id="_une_quatrième_entité_les_arcs">4.2.2. Une quatrième entité : les arcs</h4>
+<h4 id="_une_quatrième_entité_les_arcs">5.2.2. Une quatrième entité : les arcs</h4>
 <div class="paragraph">
 <p>Un dessin d&#8217;automate présente explicitement les états puisqu&#8217;ils sont chacun
 dessinés par une ellipse (ou un cercle).
@@ -939,7 +943,7 @@ aux trois autres déjà définis par <code>Fsm</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_algorithme_de_positionnement_des_entités">4.2.3. Algorithme de positionnement des entités</h4>
+<h4 id="_algorithme_de_positionnement_des_entités">5.2.3. Algorithme de positionnement des entités</h4>
 <div class="paragraph">
 <p><code>SketchFsm</code> expose également une méthode <code>layout()</code>. Cette méthode est chargée
 de calculer une position par défaut pour les états, les arcs et leurs étiquettes.
@@ -981,7 +985,7 @@ désiré (ici, une matrice de pixels de taille arbitraire)</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dessin">5. Dessin</h2>
+<h2 id="_dessin">6. Dessin</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Le troisième composant majeur de l&#8217;application est le dessinateur.
@@ -997,7 +1001,7 @@ la création et la manipulation d&#8217;éléments SVG.</p>
 décomposée en quatres étapes.</p>
 </div>
 <div class="sect2">
-<h3 id="_mesure">5.1. Mesure</h3>
+<h3 id="_mesure">6.1. Mesure</h3>
 <div class="paragraph">
 <p>La première étape consiste à mettre à jour les attributs graphiques
 du modèle qui ne peuvent être déterminés qu&#8217;au moment du rendu.
@@ -1023,7 +1027,7 @@ d&#8217;instance <code>height()</code> et <code>width()</code> des entités conc
 </div>
 </div>
 <div class="sect2">
-<h3 id="_positionnement">5.2. Positionnement</h3>
+<h3 id="_positionnement">6.2. Positionnement</h3>
 <div class="paragraph">
 <p>Cette étape consiste seulement à appeler la méthode <code>layout()</code> du modèle.
 Celle-ci appelle l&#8217;algorithme de positionnement automatique des entités.
@@ -1031,7 +1035,7 @@ Il fait naturellement usage des dimensions mesurées précédemment.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rendu">5.3. Rendu</h3>
+<h3 id="_rendu">6.3. Rendu</h3>
 <div class="paragraph">
 <p>Avant d&#8217;insérer les éléments de rendu, un marqueur triangulaire est ajouté
 à l&#8217;élément SVG. Ce marqueur habite la balise <code>defs</code>. Il sera référencé par
@@ -1060,7 +1064,7 @@ de départ, un tiret bas puis l&#8217;identifiant de l&#8217;état d&#8217;arriv
 </div>
 </div>
 <div class="sect2">
-<h3 id="_Écoute">5.4. Écoute</h3>
+<h3 id="_Écoute">6.4. Écoute</h3>
 <div class="paragraph">
 <p>Enfin, on enregistre auprès des groupes des écouteurs. Ceux-ci peuvent modifier
 le modèle en réaction à des évenements levés par le DOM.
@@ -1087,7 +1091,7 @@ Il a donc fallu opter pour une organisation orientée vers la collaboration.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_outils">6. Outils</h2>
+<h2 id="_outils">7. Outils</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Quatre outils majeurs ont facilité la communication au sein de l&#8217;équipe
@@ -1129,7 +1133,7 @@ Partager son code via cette fonctionnalité est aussi un avantage lors du débog
 </div>
 </div>
 <div class="sect1">
-<h2 id="_equipes">7. Equipes</h2>
+<h2 id="_equipes">8. Equipes</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>L&#8217;architecture du projet a très vite amené à une séparation en sous-équipes de 2 personnes.
@@ -1141,7 +1145,7 @@ d&#8217;autre part grâce au protocole qui fût défini en amont par l&#8217;èq
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rencontres">8. Rencontres</h2>
+<h2 id="_rencontres">9. Rencontres</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Dès le début du projet, nous avons planifié des réunions hebdomadiares.
@@ -1169,7 +1173,7 @@ de notre progression, aussi bien du point de vue technique qu&#8217;organisation
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bilan_technique">9. Bilan technique</h2>
+<h2 id="_bilan_technique">10. Bilan technique</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Certaines fonctionnalités n&#8217;ont pas été implémentées. Il a en en effet fallu prioriser les fonctionnalités et nous nous sommes focalisés sur le cas d&#8217;utilisation principal.
@@ -1190,14 +1194,14 @@ Elles devraient être faciles à implémenter.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_retour_d_expérience">10. Retour d&#8217;expérience</h2>
+<h2 id="_retour_d_expérience">11. Retour d&#8217;expérience</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Notre tuteur était particulièrement intéressé par notre expérience avec les
 technologies Web. Voici nos conclusions.</p>
 </div>
 <div class="sect2">
-<h3 id="_un_ecosystème_riche">10.1. Un ecosystème riche</h3>
+<h3 id="_un_ecosystème_riche">11.1. Un ecosystème riche</h3>
 <div class="paragraph">
 <p>L&#8217;utilisation des technologies Web durant ce projet a donné accés à un écosystème très riche.
 C&#8217;est de cet écosystème que sont issues les principales dépendances du projet : D3, PEGjs et Dagre. Toutefois cette richesse peut s&#8217;avérer problématique. Il est parfois difficile de faire un choix
@@ -1210,7 +1214,7 @@ L&#8217;environnement de développement que nous avons pu mettre en place en té
 </div>
 </div>
 <div class="sect2">
-<h3 id="_un_langage_parfois_handicapant">10.2. Un langage parfois handicapant</h3>
+<h3 id="_un_langage_parfois_handicapant">11.2. Un langage parfois handicapant</h3>
 <div class="paragraph">
 <p>Le langage Javascript présente certains avantages.
 La manipulation aisée des fonctions permet de changer le comportements des objets durant l&#8217;éxécution.
@@ -1240,7 +1244,7 @@ Naturellement, nous ne pouvons espérer des performances similaires à des langa
 </div>
 </div>
 <div class="sect2">
-<h3 id="_une_interface_souple">10.3. Une interface souple</h3>
+<h3 id="_une_interface_souple">11.3. Une interface souple</h3>
 <div class="paragraph">
 <p>Pour la programmation d&#8217;interfaces graphiques en dehors des applications Web,
 les développeurs doivent jongler entre des API très haut niveau et des API plutôt bas niveau.
@@ -1261,7 +1265,7 @@ technologies Web pour proposer les mêmes avantages.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bilan_humain">11. Bilan humain</h2>
+<h2 id="_bilan_humain">12. Bilan humain</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Nous avons remis en question nos choix pour l&#8217;application pendant trop longtemps. Il aurait été plus sage de commencer à développer plus tôt pour s&#8217;apercevoir des éventuelles problèmes à l&#8217;utilisation.
@@ -1271,7 +1275,7 @@ Il aurait été bien de faire plus de tests pour faciliter l&#8217;intégration 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_perspectives">12. Perspectives</h2>
+<h2 id="_perspectives">13. Perspectives</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>La réalisation de ce projet laisse entrevoir différentes améliorations possibles.</p>

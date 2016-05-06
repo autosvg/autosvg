@@ -9,25 +9,6 @@ représentation graphique.
 Le modèle expose une classe dénommée `Fsm` (pour _finite state machine_).
 Une instance de `Fsm` représente un automate au sens mathématique.
 
-==== Rappel sur les automates
-
-Un automate est définit par un quintuplet ++\((\Sigma, Q, I, F, \delta)\)++.
-
-++\(\Sigma\)++ est l'alphabet de l'automate. On appelle ses éléments des lettres
-ou des symboles.
-
-++\(Q\)++ est l'ensemble des états de l'automate. ++\(I\)++ et ++\(F\)++,
-sous-parties de ++\(Q\)++,
-sont les ensemble des états respectivement initiaux et terminaux.
-
-++\(\delta\)++ est l'ensemble des transitions. Une transition est définie par un
-triplet ++\((p, a, q)\)++ où ++\(p\)++ est dit état de départ ou état source de
-la transition, $a$ est dit lettre ou symbole de la transition, et ++\(q\)++ est
-dit état d'arrivée ou état cible de la transition.
-
-Dans le cadre de ce document, on parlera d'entité ou d'objet de l'automate
-pour désigner invariablement les états, symboles ou transitions.
-
 ==== Trois classes internes
 
 La classe `Fsm` n'expose aucune méthode. Elle offre seulement trois

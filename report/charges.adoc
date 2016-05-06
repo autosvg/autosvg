@@ -4,7 +4,7 @@ Initialement, le projet consistait seulement à définir une représentation
 textuelle d'automate et à dessiner un automate en SVG à partir de cette
 dernière.
 
-Après échange avec le client, il s'avère préférable de pouvoir manipuler
+Après échange avec le client, il s'avère aussi intéressant de pouvoir manipuler
 la représentation graphique et d'en obtenir une représentation textuelle
 équivalente.
 
@@ -13,15 +13,34 @@ d'une part produire un dessin d'automate à partir d'une description
 textuelle, et d'autre part manipuler un dessin d'automate pour finalement
 le sauvegarder sous format textuel.
 
+== Rappel sur les automates
+
+Un automate est définit par un quintuplet ++\((\Sigma, Q, I, F, \delta)\)++.
+
+++\(\Sigma\)++ est l'alphabet de l'automate. On appelle ses éléments des lettres
+ou des symboles.
+
+++\(Q\)++ est l'ensemble des états de l'automate. ++\(I\)++ et ++\(F\)++,
+sous-parties de ++\(Q\)++,
+sont les ensemble des états respectivement initiaux et terminaux.
+
+++\(\delta\)++ est l'ensemble des transitions. Une transition est définie par un
+triplet ++\((p, a, q)\)++ où ++\(p\)++ est dit état de départ ou état source de
+la transition, $a$ est dit lettre ou symbole de la transition, et ++\(q\)++ est
+dit état d'arrivée ou état cible de la transition.
+
+Dans ce document, on parlera d'entité ou d'objet de l'automate
+pour désigner invariablement les états, symboles ou transitions.
+
 == Fonctionnalités détaillées
 
 Ci-dessous, la liste des fonctionnalités par ordre de priorité :
 
 . Définition d'un langage de description d'automate, qui doit :
   * être saisissable dans un champ de texte sur la page Web
-  * être intuitif,
+  * être intuitif
   * être concis - l'utilisateur doit pouvoir produire
-  rapidement des automates,
+  rapidement des automates
   * permettre de contrôler le rendu graphique, c'est-à-dire :
     - le positionnement des états et transitions
     - quelques options de style
@@ -33,7 +52,8 @@ Ci-dessous, la liste des fonctionnalités par ordre de priorité :
     - les états initaux sont identifiés par une petite flêche arrêtée
     au contour pointant vers le centre de l'ellipse
     - le contour des états terminaux est doublé
-    - les transitions qui partent et arrivent à un même état sont représentées
+    - les transitions qui partagent le même état de départ et le même état
+    d'arrivée
     par le même arc
     - les étiquettes des arcs (lettres des transitions) sont lisibles - elles
     ne sont pas rendues par dessus l'arc mais à côté, sans pour autant trop
