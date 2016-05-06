@@ -2,22 +2,35 @@
 
 === Technique
 
-Certaines fonctionnalités n'ont toutefois pas été implémentées. Il a en en effet fallu prioriser les différentes tâches à effectuer et nous nous sommes focalisés sur le cas d'utilisation principal.
-C'est le cas de l'édition graphique, la raison étant que cette fonctionnalité nécéssite des changements dans le modèle.
-Le changement de la vue texte à partir du modèle n'a pas été implémenté non plus. Cela est du au fait que sans édition graphique aucun changement ne surviendra dans le modèle rendant cette fonctionnalité inintéréssante.
-Toutefois l'architecture du modèle permet de l'étendre aisément en proposant les fonctionnalités manquant comme la gestion des algorithmes ou l'export dans d'autres formats.
+Certaines fonctionnalités n'ont pas été implémentées. Il a en en effet fallu prioriser les fonctionnalités et nous nous sommes focalisés sur le cas d'utilisation principal.
+L'application ne propose donc pas d'édition graphique. Cela aurait nécessiter
+un effort trop conséquent pour aboutir à un résultat satisfaisant. De plus,
+le modèle présente certains défauts d'implémentation qu'il aurait d'abord fallu corriger.
+Il est cependant déjà possible de modifier la position des états par glisser-déposer.
+
+Le changement de la vue texte à partir du modèle n'a pas été implémenté non plus. Cela est du au fait que, sans édition graphique, aucun changement ne peut subvenir dans le modèle.
+Cette fonctionnalité n'aurait donc jamais servi.
+
+Les fonctionnalités manquantes comme l'éxécution d'algorithmes sur les automates
+ou l'export dans d'autres formats s'accomodent toutefois très bien de l'architecture.
+Elles devraient être faciles à implémenter.
 
 === Retour d'expérience
 
-// TODO une petite intro
+Notre tuteur était particulièrement intéressé par notre expérience avec les
+technologies Web. Voici nos conclusions.
 
-== Un ecosystème riche
+==== Un ecosystème riche
 
 L'utilisation des technologies Web durant ce projet a donné accés à un écosystème très riche.
-C'est de cet écosystème que sont issues les principales dépendances du projet : D3, PEGjs et Dagre. Toutefois cette richesse peut s'avérer problèmatique. Il est parfois difficile de faire un choix
+C'est de cet écosystème que sont issues les principales dépendances du projet : D3, PEGjs et Dagre. Toutefois cette richesse peut s'avérer problématique. Il est parfois difficile de faire un choix
 puisqu'il évaluer les solutions disponibles.
 
-== Un langage parfois handicapant
+Bien que les technologies Web côté client évoluent relativement lentement,
+les outils à disposition des développeurs sont nombreux et matures.
+L'environnement de développement que nous avons pu mettre en place en témoigne.
+
+==== Un langage parfois handicapant
 
 Le langage Javascript présente certains avantages.
 La manipulation aisée des fonctions permet de changer le comportements des objets durant l'éxécution.
@@ -40,6 +53,22 @@ de vecteurs auraient été bien plus lisibles.
 
 Le fait que la dernière version de Javascript ne soit pas intégralement implémentée par tous les navigateurs peut nuire à la compatibilité. Transpilateurs et polyfills mitigent ce problème.
 Naturellement, nous ne pouvons espérer des performances similaires à des langages compilés.
+
+==== Une interface souple
+
+Pour la programmation d'interfaces graphiques en dehors des applications Web,
+les développeurs doivent jongler entre des API très haut niveau et des API plutôt bas niveau.
+D'un côté, les API haut niveau permettent la création rapide de composants, mais ceux-ci présentent
+des formes et des comportement rigides.
+De l'autre côté, les API bas niveau n'ont de limite que l'imagination du développeur,
+mais au pris d'un effort de programmation très conséquent.
+
+Malgré ses défaut, l'environnement graphique du navigateur nous semble 
+atteindre le parfait compromis. Grâce au DOM et au CSS, il est facile de
+concevoir une vue, de la styliser et d'y enregistrer des écouteurs.
+Nous ne sommes toutefois pas cantonnés à des composants limités.
+Les boîtes à outils GTK3 et Qt5 tentent d'ailleurs de s'inspirer de ces
+technologies Web pour proposer les mêmes avantages.
 
 === Humain
 
