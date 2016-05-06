@@ -1,5 +1,3 @@
-== Modèle
-
 Le modèle permet d'instancier et de manipuler les automates de façon sûre.
 Nous définissons un protocole pour instancier les automates ainsi qu'une
 API séparée en deux niveaux : l'une manipule l'automate en temps qu'objet
@@ -123,10 +121,11 @@ problème anologue pour les graphes orientés pondérés. Il s'agit toutefois
 d'un problème NP-complet ; seules des heuristiques parfois complexes
 permettent d'obtenir un resultant satisfaisant.
 
-L'algorithme utilisé est inspiré des travaux de TODO, eux-mêmes issus de ceux
-de Sugiyama. Ils permettent de placer dans le plan les noeuds d'un graphe
-connexe. La bibliothèque _dagre_ l'implémente ; nous nous contentons de
-l'utiliser.
+L'algorithme utilisé est inspiré des travaux de Ganser et. al <<GKNV>>, eux-mêmes issus de ceux
+de Sugiyama <<STT>>. Hors, l'algoritihme utlisé par GraphViz - logiciel de dessin
+de graphes - est également inspiré do celui de Sugiyama.
+Ces algorithmes permettent de placer dans le plan les noeuds d'un graphe
+connexe. Nous utilisons directement l'implémentation de la bibliothèque _dagre_.
 
 Le principe est simple : les étiquettes des arcs sont transformées en noeuds
 le temps de l'algorithme. Si des cycles sont présents dans le graphe, l'orientation
