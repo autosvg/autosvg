@@ -2,7 +2,10 @@
 
 === Technique
 
-Certaines fonctionnalitées de ce projet n'ont pas pu être développés tels que l'édition graphique. En effet, le choix a été fait de ne pas proposer cette fonctionnalité 
+Certaines fonctionnalités n'ont toutefois pas été implémentées. Il a en en effet fallu prioriser les différentes tâches à effectuer et nous nous sommes focalisés sur le cas d'utilisation principal.
+C'est le cas de l'édition graphique, la raison étant que cette fonctionnalité nécéssite des changements dans le modèle.
+Le changement de la vue texte à partir du modèle n'a pas été implémenté non plus. Cela est du au fait que sans édition graphique aucun changement ne surviendra dans le modèle rendant cette fonctionnalité inintéréssante.
+Toutefois l'architecture du modèle permet de l'étendre aisément en proposant les fonctionnalités manquant comme la gestion des algorithmes ou l'export dans d'autres formats.
 
 === Retour d'expérience
 

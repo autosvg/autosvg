@@ -1,5 +1,11 @@
 == Conclusion
 
+Durant ce projet, nous avons donc développer une application capable de représenter un automate à partir d'un langage d'entrée.
+Ceci peut donc servir de point de départ pour une application plus poussée intégrant par exemple l'édition graphique.
 Ce projet nous a été très profitable, tant au niveau technique qu'au niveau organisationnel.
 En effet l'utilisation de Git au sein d'une équipe nous a permis de collaborer plus efficacement.
+Le fait que le sujet porte sur la représentation d'objets issus de la théorie des langages a permis d'employer nos connaissances de ce sujet.
 
+Le développement du projet ainsi que les différents problèmes rencontrès nous ont appris certaines choses.
+Il faut privilégier la communication au sein du groupe afin que tout le monde se sente impliqué.
+Le fait de fixer des objectifs modestes permet de garder une motivation constante durant tout le projet.

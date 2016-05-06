@@ -43,7 +43,10 @@ d'autre part grâce au protocole qui fût défini en amont par l'èquipe entièr
 === Rencontres
 
 Dès le début du projet, nous avons planifié des réunions hebdomadiares.
-//Raccourcir
-Ces rencontres avaient pour but de faire le bilan de la semaine passée mais aussi de fixer les objectifs de la semaine suivante et de prendre des décisions concernant l'ensemble de l'application tel que le protocole. Enfin cela permettait de préparer la réunion avec notre tuteur, M. Nicart.
-Celle-ci nous donnait l'occasion de faire un retour sur notre avancement et d'obtenir l'avis du tuteur sur les points que nous allions aborder. C'était aussi un moyen de réviser les objectifs et de se concentrer sur l'essentiel.
+Ces rencontes permettaient de faire le bilan de la semaine passée.
+Nous fixions ensuite les objectifs de la semaine suivante selon ce qui avait déjà été fait.
+C'était aussi l'occasion de réfléchir ensemble à des choix concernant l'ensemble de l'application tel que le protocole.
+Enfin cela permettait de préparer la réunion avec notre tuteur, M. Nicart.
+Celle-ci nous donnait l'occasion de faire un retour sur notre avancement et d'obtenir l'avis du tuteur sur les points que nous allions aborder.
+C'était aussi un moyen de réviser les objectifs et de se concentrer sur l'essentiel.
 Nous avions aussi mis en place l'application sur un site accessible facilement afin d'obtenir un suivi optimal.
