@@ -4,7 +4,7 @@ Le troisième composant majeur de l'application est le dessinateur.
 Il est chargé de communiquer avec une instance de `SketchFsm` pour
 le représenter ou mettre à jour les attributs graphiques de ses entités.
 
-Nous faisons issu usage de la bibliothèque *D3* qui facilite
+Nous faisons ici usage de la bibliothèque *D3* qui facilite
 la création et la manipulation d'éléments SVG.
 
 La fonction de dessin appelée lors de la génération de l'automate est

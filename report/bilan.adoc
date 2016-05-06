@@ -34,13 +34,13 @@ L'environnement de développement que nous avons pu mettre en place en témoigne
 
 Le langage Javascript présente certains avantages.
 La manipulation aisée des fonctions permet de changer le comportements des objets durant l'éxécution.
-Cela facilite facilite l'utilisation de techniques de programmation avancée tels que les mixins, le patron de conception de fabrique abstraite ou la métaprogrammation.
+Cela facilite l'utilisation de techniques de programmation avancée tels que les mixins, le patron de conception de fabrique abstraite ou la métaprogrammation.
 
 Malgrè cela, le Javascript souffre de certains inconvénients, notamment l'absence de typage.
 En conséquence, une partie conséquente du code est consacrée au travail de vérification afin
-de pas fragiliser l'application. Le code est aussi moins lisibile.
+de ne pas fragiliser l'application. Le code est aussi moins lisible.
 De plus, aucun compilateur ne peut venir en aide au programmeur pour prévenir certaines
-erreures triviales. Sans une batterie de tests automatisés (qu'il faut également programmer),
+erreurs triviales. Sans une batterie de tests automatisés (qu'il faut également programmer),
 les bugs sont fréquents et viennent impacter la productivité.
 
 Il est difficile et/ou peu efficace d'isoler des variables en Javascript car le langage
@@ -61,9 +61,9 @@ les développeurs doivent jongler entre des API très haut niveau et des API plu
 D'un côté, les API haut niveau permettent la création rapide de composants, mais ceux-ci présentent
 des formes et des comportement rigides.
 De l'autre côté, les API bas niveau n'ont de limite que l'imagination du développeur,
-mais au pris d'un effort de programmation très conséquent.
+mais au prix d'un effort de programmation très conséquent.
 
-Malgré ses défaut, l'environnement graphique du navigateur nous semble 
+Malgré ses défauts, l'environnement graphique du navigateur nous semble 
 atteindre le parfait compromis. Grâce au DOM et au CSS, il est facile de
 concevoir une vue, de la styliser et d'y enregistrer des écouteurs.
 Nous ne sommes toutefois pas cantonnés à des composants limités.

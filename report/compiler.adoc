@@ -14,7 +14,7 @@ Au lieu de contenir les données associées aux tokens lus par le parseur,
 ce second descripteur fournit la position de ces tokens.
 
 La création du parseur s'est faite à partir de sa grammaire à l'aide de PEGjs, une bibliothèque Javascript semblable à Lex/Bison.
-La syntaxe employée par PEGjs pour définir une grammaire est très proche de celle abordée en théorie des langages.
+La syntaxe employée par PEGjs pour définir une grammaire est très proche de celle abordée en théorie des langages, l'extended Backus-Naur form.
 
 A chaque régle de la grammaire peut être associé un bloc de code Javascript permettant ainsi de créer le descripteur sous la forme voulue.
 
