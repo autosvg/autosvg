@@ -6,20 +6,37 @@ Certaines fonctionnalitées de ce projet n'ont pas pu être développés tels qu
 
 === Retour d'expérience
 
-* Écosystème
-L'utilisation des technologies Web durant ce projet a donné accés à un écosystème très riche. Beaucoup de bibliothèques étaient disponibles et implémentaient des fonctionnalités nécéssaires.
-C'est de cet écosystème que sont issues les principales dépendances du projet : D3, PEGjs et Dagre. Toutefois cette richesse peut s'avérer problèmatique au moment de faire un choix car il faut alors savoir quelle solution est la meilleure pour notre problème. 
+// TODO une petite intro
 
-* Langage
+== Un ecosystème riche
 
-Le langage Javascript présente certains avantages ans le cadre du développement d'une application. 
-La manipulation aisée des fonctions permet de changer le comportements des objets durant l'éxécution et facilite donc l'utilisation de techniques de programmation avancée tels que les mixins, le patron de conception de fabrique abstraite ou la métaprogrammation.
+L'utilisation des technologies Web durant ce projet a donné accés à un écosystème très riche.
+C'est de cet écosystème que sont issues les principales dépendances du projet : D3, PEGjs et Dagre. Toutefois cette richesse peut s'avérer problèmatique. Il est parfois difficile de faire un choix
+puisqu'il évaluer les solutions disponibles.
 
-Malgrè cela, le Javascript souffre de certains inconvénients.
-L'absence de typage empèche la construction d'une application robuste sans passer par des tests, ce qui ne facilite pas la lisibilité du code.
+== Un langage parfois handicapant
 
-Le fait que Javascript ne soit pas implémenté complétement sur tous les navigateurs peut nuire à la compatibilité, toutefois ce défaut peut être nuancé par l'utilisation de transpilateurs.
-Le langage étant interpreté, nous ne pouvons espérer les mêmes performances qu'un langage compilé.
+Le langage Javascript présente certains avantages.
+La manipulation aisée des fonctions permet de changer le comportements des objets durant l'éxécution.
+Cela facilite facilite l'utilisation de techniques de programmation avancée tels que les mixins, le patron de conception de fabrique abstraite ou la métaprogrammation.
+
+Malgrè cela, le Javascript souffre de certains inconvénients, notamment l'absence de typage.
+En conséquence, une partie conséquente du code est consacrée au travail de vérification afin
+de pas fragiliser l'application. Le code est aussi moins lisibile.
+De plus, aucun compilateur ne peut venir en aide au programmeur pour prévenir certaines
+erreures triviales. Sans une batterie de tests automatisés (qu'il faut également programmer),
+les bugs sont fréquents et viennent impacter la productivité.
+
+Il est difficile et/ou peu efficace d'isoler des variables en Javascript car le langage
+ne propose pas d'attributs privés. Cela a rendu l'implémentation du modèle plus difficile ;
+la lisibilité du code en a donc été impactée.
+
+Lors de l'implémentation des fonctions de dessin, nous aurions aimer pouvoir définir
+des fonction en notation infixe. Les portions du code relatives à la manipulation
+de vecteurs auraient été bien plus lisibles.
+
+Le fait que la dernière version de Javascript ne soit pas intégralement implémentée par tous les navigateurs peut nuire à la compatibilité. Transpilateurs et polyfills mitigent ce problème.
+Naturellement, nous ne pouvons espérer des performances similaires à des langages compilés.
 
 === Humain
 
@@ -31,16 +48,22 @@ Il aurait été bien de faire plus de tests pour faciliter l'intégration mais a
 
 La réalisation de ce projet laisse entrevoir différentes améliorations possibles. 
 
-* Court terme 
-Il serait possible de finaliser l'édition graphique moyennant un changement de relation entre le modèle et l'agorithme de calcul des positions.
+Finaliser l'édition graphique requiert de revisiter la relation entre le modèle
+et l'algorithme de calcul des positions. Ils nous semblent pour le moment trop
+couplés, bien que des progrès ait déjà été effectués en ce sens. A terme, on souhaiterait pouvoir spécifier dynamiquement l'algorithme de positonnement
+automatique.
 
-Suite à l'utilisation du langage, nous nous sommes rendus compte que des modifications étaient nécessaires pour le rendre plus complet.
-Par exemple, le fait de permettre le positionnement de toutes les entités mais aussi la possibilité de pouvoir grouper les transitions non plus seulement par état d'arrivée mais aussi par symbole.
+Après avoir utilisé le langage CAL sur nos exemples, nous nous sommes rendus compte qu'il est possible de le rendre plus concis encore. En effet, il est naturel de spécifier ensemble des transitions
+qui partagent les mêmes états de départ et d'arrivée.
 
-* Long terme
+Cela réglerait également le problème de positionnement des arcs, moyennant la définition
+de règles de précédence entre les transitions partageant le même arc.
 
-On pourrait grandement améliorer le dessin en définissant une classe pour chaque type d'entité à dessiner.
-Chaque objet saurait alors comment se dessiner et serait en charger de l'enregistrement des écouteurs auprès du modèle.
+La partie de dessin gagnerait également à définir des classes pour chaque type d'entité
+à dessiner. Ces composants seraient alors responsables de leur propre rendu et d'enregister
+leur écouteurs auprès du modèle.
+Pour l'heure, les fonctions de dessin sont codées dans un style très procédural.
 
-Ce type de projet semble tout à fait se préter à un langage de type fonctionnel comme PureScript, Elm ou Haskell.
-L'utilisation d'un transpilateur vers le Javascript étant possible, cette amélioration est tout à fait envisageable.
+Enfin, si le projet était à refaire, nous nous orienterons probablement vers
+un langage fonctionnel fortement typé. Un certain nombre propose des transpilateurs
+Javascript, comme PureScript, Elm ou Haskell.
