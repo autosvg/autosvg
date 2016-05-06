@@ -13,10 +13,23 @@ Une instance de `Fsm` représente un automate au sens mathématique.
 
 ==== Rappel sur les automates
 
-Un automate est définit par un triplet (Σ, Q, I, F, δ)
-//TODO
+Un automate est définit par un quintuplet $(\Sigma, Q, I, F, \delta)$.
 
-==== Trois sous-classes
+$\Sigma$ est l'alphabet de l'automate. On appelle ses éléments des lettres
+ou des symboles.
+
+$Q$ est l'ensemble des états de l'automate. $I$ et $F$, sous-parties de $Q$,
+sont les ensemble des états respectivement initiaux et terminaux.
+
+$\delta$ est l'ensemble des transitions. Une transition est définie par un
+triplet $(p, a, q)$ où $p$ est dit état de départ ou état source de
+la transition, $a$ est dit lettre ou symbole de la transition, et $q$ est
+dit état d'arrivée ou état cible de la transition.
+
+Dans le cadre de ce document, on parlera d'entité ou d'objet de l'automate
+pour désigner invariablement les états, symboles ou transitions.
+
+==== Trois classes internes
 
 La classe `Fsm` n'expose aucune méthode. Elle offre seulement trois
 attributs non mutables appelés `symbols`, `states` et `transitions` qui
@@ -51,7 +64,80 @@ qui renvoit un booléen. Contrairement aux propriétés d'objet,
 Tous les objets de l'automate disposent d'un _getter_ appelé `struct` qui
 renvoit l'automate en question.
 
-==== Des mixins pour étendre les sous-classes
+==== Des mixins pour étendre les classes internes
 
 Il est possible de passer au constructeur des mixins pour chacune des
-sous-classes.
+classes internes.
+
+Une mixin est une fonction qui prend une classe comme paramètre et
+renvoit une autre classe. Les mixins ne devraient pas modifier la sémantique
+des superclasses pour ne pas invalider la spécification de l'API.
+
+=== SketchFsm
+
+Le modèle expose un seconde classe `SketchFsm` qui hérite de `Fsm`.
+Son rôle et d'ajouter à `Fsm` les méthodes nécessaires pour spécifier
+ou obtenir des attributs graphiques comme la position ou la dimension
+des entités.
+
+`SketchFsm` expose également une méthode pour calculer automatiquement
+la position des entités.
+
+==== "Héritage" via mixins
+
+`SketchFsm` n'est techniquement pas une sous-classe de `Fsm`. Elle compose
+`Fsm` mais passe ses propres mixins à l'instanciation. Ce sont donc les
+classes internes qui sont dérivées. Ces classes sont à leur tour exposées
+de la même façon que `Fsm` via les attributs de même nom. 
+L'API proposée par `SketchFsm` est alors entièrement compatible avec celle de `Fsm`.
+
+==== Une quatrième entité : les arcs
+
+Un dessin d'automate présente explicitement les états puisqu'ils sont chacun
+dessinés par une ellipse (ou un cercle).
+L'alphabet est quant à lui implicite puisqu'il n'apparait que via les transitions.
+Alphabet et symbole ne posent donc aucun problème de rendu.
+
+La difficulté provient des transitions ; elles sont bien dessinées, mais
+n'ont pas toujours d'existence propre. En effet, si plusieurs transitions
+ne diffèrent que du symbole qu'elles portent, elles seront représentées
+par le même arc.
+
+Comme `SketchFsm` a pour object d'encapsuler les attributs graphiques des
+entités, il est nécessaire d'en créer une nouvelle pour représenter les arcs.
+Ces arcs dépendent des transitions. Un attribut `edges` s'ajoute aussi
+aux trois autres déjà définis par `Fsm`.
+
+==== Algorithme de positionnement des entités
+
+`SketchFsm` expose également une méthode `layout()`. Cette méthode est chargée
+de calculer une position par défaut pour les états, les arcs et leurs étiquettes.
+Les méthodes d'instance des états et arcs permettant d'obtenir les positions
+ne renvoient les positions calculées que si aucune position n'a été définie
+manuellement. Cela permet une définition partielle des positions par l'utilisateur.
+Toutefois, l'algorithme de positionnement ne prend pas en compte ces nouvelles
+positions, ce qui peut conduire à des dessins peu satisfaisants.
+
+Le placement automatique des objets d'un automate dans le plan se ramène au
+problème anologue pour les graphes orientés pondérés. Il s'agit toutefois
+d'un problème NP-complet ; seules des heuristiques parfois complexes
+permettent d'obtenir un resultant satisfaisant.
+
+L'algorithme utilisé est inspiré des travaux de TODO, eux-mêmes issus de ceux
+de Sugiyama. Ils permettent de placer dans le plan les noeuds d'un graphe
+connexe. La bibliothèque _dagre_ l'implémente ; nous nous contentons de
+l'utiliser.
+
+Le principe est simple : les étiquettes des arcs sont transformées en noeuds
+le temps de l'algorithme. Si des cycles sont présents dans le graphe, l'orientation
+de certains arcs sont inversés pour les briser. L'orientation d'origine est
+rétablie à la fin de l'éxécuction.
+Les noeuds sont ensuite placés dans une grille abstraite définie par un repère
+orthogonal. Une première étape appelée _ranking_ répartit les noeuds dans les
+colonnes. 
+La seconde étape appelée _ordering_ ordonne les noeuds en ligne de façon
+à minimiser les croisement d'arc.
+Ces deux étapes reposent toutes deux sur heuristiques éprouvées.
+Enfin, la grille abstraite est remplacée par le système de coordonnées
+désiré (ici, une matrice de pixels de taille arbitraire)
+
