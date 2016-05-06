@@ -1,0 +1,43 @@
+<svg class="railroad-diagram" width="357" height="72" viewBox="0 0 357 72">
+<g transform="translate(.5 .5)">
+<path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
+<g>
+<path d="M40 41h0"></path>
+<path d="M316 41h0"></path>
+<path d="M40 41h10"></path>
+<g>
+<path d="M50 41h0"></path>
+<path d="M150 41h0"></path>
+<rect x="50" y="30" width="100" height="22"></rect>
+<text x="100" y="45">identifier</text>
+</g>
+<path d="M150 41h10"></path>
+<path d="M160 41h10"></path>
+<g>
+<path d="M170 41h0"></path>
+<path d="M206 41h0"></path>
+<rect x="170" y="30" width="36" height="22"></rect>
+<text x="188" y="45">ws</text>
+</g>
+<path d="M206 41h10"></path>
+<g>
+<path d="M216 41h0"></path>
+<path d="M316 41h0"></path>
+<path d="M216 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path>
+<g>
+<path d="M236 21h60"></path>
+</g>
+<path d="M296 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path>
+<path d="M216 41h20"></path>
+<g>
+<path d="M236 41h0"></path>
+<path d="M296 41h0"></path>
+<rect x="236" y="30" width="60" height="22"></rect>
+<text x="266" y="45">attrs</text>
+</g>
+<path d="M296 41h20"></path>
+</g>
+</g>
+<path d="M 316 41 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+</svg>
